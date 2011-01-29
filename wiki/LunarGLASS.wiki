@@ -3,7 +3,7 @@
 
 = Introduction =
 
-Top Level LunarGLASS wiki page
+This wiki contains developer contributed documentation for the LunarGLASS project.  Architecture and specification documents are also available from [http://lunarglass.org/documentation].
 
 
 = Details =
