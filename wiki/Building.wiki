@@ -1,0 +1,65 @@
+This project is based on the mesa repository from freedesktop.org and LLVM from llvm.org.
+
+== Getting ==
+
+Mesa and LLVM will be sibling tree structures; both children of your LunarGLASS directory.  They will then be overlaid by LunarGLASS files.  
+
+Make your LunarGLASS directory that will map to the svn/trunk/LunarGLASS directory in the google SVN repository for LunarGLASS.
+
+To get mesa, you first need a clone
+{{{
+git clone git://git.freedesktop.org/git/mesa/mesa
+}}}
+We based it on a particular day's snapshot of 7.9:
+{{{
+git checkout 56b4819932b0a44bfef9e10ed5f55649534252a8
+}}}
+Put this so the top "mesa" directory is a child of your LunarGLASS directory.
+
+We are using version 2.8 of LLVM, which you can download from
+{{{
+http://llvm.org/releases/download.html#2.8  "LLVM Source Code"
+}}}
+Put this so the top "LLVM" directory (parent of "llvm-2.8") is a child of your LunarGLASS directory.
+
+Map your LunarGLASS directory to //lunarglass.googlecode.com/svn/trunk/LunarGLASS and do a full check-out.
+
+== Building ==
+
+=== Windows Visual Studio ===
+
+For LLVM, create a visual studio solution that creates all the libs and headers:
+
+ 1. Download and install CMake for Windows (http://www.cmake.org/cmake/resources/software.html)
+ 2. Run CMake as Administrator
+ 3. Put your path to LLVM\llvm-2.8 in your source code location
+ 4. Create a folder called build in LLVM\llvm-2.8 for CMake output and place that path in "Where to build the binaries:"
+ 5. Press "Configure" button in CMake.
+ 6. Select the Visual Studio version you have installed. The highlight "Use default native compilers" and Finish.
+ 7. Press "Configure" button in CMake... look for errors.  Fix them.
+ 8. Change CMAKE_INSTALL_PREFIX to "install", which is where LLVM libraries and headers will be built
+    * it is a relative path to "Where to build the binaries:"
+ 9. Press "Generate" button in CMake.
+ 10. Open new LLVM.sln just created in llvm-2.8\build
+ 11. Build the INSTALL project (Note:  Not the solution, the INSTALL project itself.  This step takes a while...)
+ 12. Now open mesa\src\glsl\Standalone.sln, and it will find the LLVM headers/libs
+
+=== linux ===
+
+1. Install build dependencies
+{{{
+$ sudo apt-get install build-essential libffi-dev # maybe more...
+}}}
+2. Build LLVM 2.8 (with LunarGLASS modifications)
+{{{
+$ mkdir LLVM/llvm-2.8/build
+$ cd LLVM/llvm-2.8/build
+$ ../configure
+$ make
+$ make install DESTDIR=`pwd`/install
+}}}
+3. Build Mesa 7.9 (with LunarGLASS modifications)
+{{{
+$ cd mesa/src/glsl
+$ make -f StandAlone.makefile
+}}}
