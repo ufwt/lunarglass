@@ -1,7 +1,7 @@
-#labels Building,git,svn,mesa
+#labels Building,LunarGLASS
 This project is based on the mesa repository from freedesktop.org and LLVM from llvm.org.
 
-== Getting for both linux and Windows ==
+== Getting the code for linux and Windows ==
 
 Overview:  Mesa and LLVM will be sibling tree structures; both children of your LunarGLASS directory.  They will then be overlaid by LunarGLASS files.  
 
