@@ -1,9 +1,11 @@
 #labels Building,LunarGLASS
 This project is based on a copy of mesa from freedesktop.org and LLVM from llvm.org.  It makes a "stand alone" compiler stack, not integrated with a driver, that outputs text.
 
+It is a bit cumbersome, so far done just for proof of concept purposes.  More streamlined setup and instructions will be forthcoming.
+
 Note: This will overwrite some mesa files, so you will want to do this in a separate location than other mesa development.
 
-== Getting the code for linux and Windows ==
+== Getting the Code for Linux and Windows ==
 
 Overview:  Mesa and LLVM will be sibling tree structures; both children of your LunarGLASS directory.  They will then be overlaid by LunarGLASS files.  
 
@@ -12,8 +14,10 @@ Overview:  Mesa and LLVM will be sibling tree structures; both children of your 
 2. To get mesa, make a directory "mesa" under "LunarGLASS".  Then get  version 7.9 of mesa:
 
 {{{
-cd LunarGLASS/mesa
+# cd to the LunarGLASS directory you made...
+cd LunarGLASS
 git clone git://git.freedesktop.org/git/mesa/mesa
+cd mesa
 git checkout -f mesa-7.9
 }}}
 You could also use the tar release, but it will be missing talloc.  Verify you are left with the directory "LunarGLASS/mesa/src" et. al.
@@ -24,13 +28,16 @@ http://llvm.org/releases/download.html#2.8  "LLVM Source Code"
 }}}
 Expand this download in your "LunarGLASS/LLVM" directory.  Verify this left LLVM in the directory "LunarGLASS/LLVM/llvm-2.8".
 
-4. To get LunarGLASS, use your SVN client to checkout google's code side //lunarglass.googlecode.com/svn/trunk to your directory "LunarGLASS".
+4. To get LunarGLASS, you will need SVN commands or an SVN client like Tortoise.  Use your SVN client to check out from google's code site //lunarglass.googlecode.com/svn/trunk to your directory "LunarGLASS".
 
-This will not yet have replaced files that need to be replace.  To do that, you must use your client to revert all files.  If you are using the command line SVN, these steps look like:
+This got most the files, but did not yet replace files that need to be replace.  To do that, you must revert all files at the LunarGLASS level.  In Tortoise, right click LunarGLASS|Tortoise SVN|Revert...  
+
+If you are using SVN from the command line, these steps look like:
 {{{
+# cd to the LunarGLASS directory you made...
 cd LunarGLASS
-svn checkout http://lunarglass.googlecode.com/svn/trunk/ .
-svn revert --depth=infinity
+svn checkout --force https://lunarglass.googlecode.com/svn/trunk/ .
+svn revert --depth=infinity .
 }}}
 
 == Building ==
@@ -39,30 +46,27 @@ svn revert --depth=infinity
 
 For LLVM, create a visual studio solution that creates all the libs and headers:
 
-1. Download and install CMake for Windows (http://www.cmake.org/cmake/resources/software.html)
+# Download and install CMake for Windows (http://www.cmake.org/cmake/resources/software.html)
 
-2. Run CMake as Administrator
+# Run CMake as Administrator
 
-3. Put your path to LLVM\llvm-2.8 in your source code location
+# Put the path to your LunarGLASS\LLVM\llvm-2.8 location in "Where is the source code:" and add "\build" to it (LunarGLASS\LLVM\llvm-2.8\build) in "Where to build the binaries:"
 
-4. Create a folder called build in LLVM\llvm-2.8 for CMake output and place that path in "Where to build the binaries:"
+# Press "Configure" button in CMake and say yes to create the build directory.
 
-5. Press "Configure" button in CMake.
+# Select Visual Studio 2010 and "Use default native compilers" and "Finish".
 
-6. Select the Visual Studio version you have installed. The highlight "Use default native compilers" and Finish.
+# Change CMAKE_INSTALL_PREFIX to "install" (no path).
 
-7. Press "Configure" button in CMake... look for errors.  Fix them.
+# Press "Configure" again.
 
-8. Change CMAKE_INSTALL_PREFIX to "install", which is where LLVM libraries and headers will be built
-    * it is a relative path to "Where to build the binaries:"
+# Press "Generate" button in CMake.
 
-9. Press "Generate" button in CMake.
+# Open new LLVM.sln just created in llvm-2.8\build and build the INSTALL project (not the solution, just the INSTALL project for "Debug Win32").  This step takes a while...
 
-10. Open new LLVM.sln just created in llvm-2.8\build
+For LunarGLASS
 
-11. Build the INSTALL project (Note:  Not the solution, the INSTALL project itself.  This step takes a while...)
-
-12. Now open mesa\src\glsl\Standalone.sln and build the "standalone" project.
+1. Open mesa\src\glsl\Standalone.sln and build the "standalone" project.
 
 === For linux ===
 
