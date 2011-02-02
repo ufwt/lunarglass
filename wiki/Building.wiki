@@ -22,9 +22,7 @@ git checkout -f mesa-7.9
 You could also use the tar release, but it will be missing talloc. Verify you are left with the directory "LunarGLASS/mesa/src" et. al.
 
 3. To get LLVM, make a directory "LLVM" under "LunarGLASS".  We are using version 2.8 of LLVM, which you download from
-{{{
-http://llvm.org/releases/download.html#2.8  "LLVM Source Code"
-}}}
+http://llvm.org/releases/download.html#2.8  "LLVM Source Code".
 Expand this download in your "LunarGLASS/LLVM" directory.  Verify this left LLVM in the directory "LunarGLASS/LLVM/llvm-2.8".
 
 4. To get LunarGLASS, you will need SVN commands or an SVN client like Tortoise.  Use your SVN client to check out from google's code site //lunarglass.googlecode.com/svn/trunk to your directory "LunarGLASS".
@@ -65,18 +63,22 @@ In the directory "LunarGLASS/mesa/src/LunarGLASS/test" is a run script that show
 
   # Install build dependencies
 {{{
-$ sudo apt-get install build-essential libffi-dev # maybe more...
+sudo apt-get install build-essential libffi-dev # maybe more...
 }}}
   # Build LLVM 2.8 (with LunarGLASS modifications)
 {{{
-$ mkdir LLVM/llvm-2.8/build
-$ cd LLVM/llvm-2.8/build
-$ ../configure
-$ make
-$ make install DESTDIR=`pwd`/install
+mkdir LLVM/llvm-2.8/build
+cd LLVM/llvm-2.8/build
+../configure
+make
+make install DESTDIR=`pwd`/install
 }}}
   # Build Mesa 7.9 (with LunarGLASS modifications)
 {{{
-$ cd mesa/src/glsl
-$ make -f StandAlone.makefile
+cd mesa/src/glsl
+make -f StandAlone.makefile
+}}}
+  # You can execute the compiler on a test in the test directory by
+{{{
+./StandAlone ../LunarGLASS/test/test.frag
 }}}
