@@ -42,33 +42,33 @@ svn revert --depth=infinity .
 
 == Building ==
 
-=== For Visual Studio 2010 ===
+=== On Visual Studio 2010 ===
 
 For LLVM, create a visual studio solution that creates all the libs and headers:
 
-# Download and install CMake for Windows (http://www.cmake.org/cmake/resources/software.html)
+  # Download and install CMake for Windows.  We used version 2.8.3 at http://www.cmake.org/cmake/resources/software.html.
 
-# Run CMake as Administrator
+  # Run CMake as Administrator
 
-# Put the path to your LunarGLASS\LLVM\llvm-2.8 location in "Where is the source code:" and add "\build" to it (LunarGLASS\LLVM\llvm-2.8\build) in "Where to build the binaries:"
+  # Put the path to your LunarGLASS\LLVM\llvm-2.8 location in "Where is the source code:" and add "\build" to it (LunarGLASS\LLVM\llvm-2.8\build) in "Where to build the binaries:"
 
-# Press "Configure" button in CMake and say yes to create the build directory.
+  # Press "Configure" button in CMake and say yes to create the build directory.
 
-# Select Visual Studio 2010 and "Use default native compilers" and "Finish".
+  # Select Visual Studio 2010 and "Use default native compilers" and "Finish".
 
-# Change CMAKE_INSTALL_PREFIX to "install" (no path).
+  # Change CMAKE_INSTALL_PREFIX to "install" (no path).
 
-# Press "Configure" again.
+  # Press "Configure" again.
 
-# Press "Generate" button in CMake.
+  # Press "Generate" button in CMake.
 
-# Open new LLVM.sln just created in llvm-2.8\build and build the INSTALL project (not the solution, just the INSTALL project for "Debug Win32").  This step takes a while...
+  # Open new LLVM.sln just created in llvm-2.8\build and build the INSTALL project (not the solution, just the INSTALL project for "Debug Win32").  This step takes a while...
 
 For LunarGLASS
 
 1. Open mesa\src\glsl\Standalone.sln and build the "standalone" project.
 
-=== For linux ===
+=== On Linux ===
 
 1. Install build dependencies
 {{{
