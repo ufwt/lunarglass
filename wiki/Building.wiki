@@ -5,7 +5,7 @@ This project is based on the mesa repository from freedesktop.org and LLVM from 
 
 Overview:  Mesa and LLVM will be sibling tree structures; both children of your LunarGLASS directory.  They will then be overlaid by LunarGLASS files.  
 
-1. Make your LunarGLASS directory that will map to the svn/trunk/LunarGLASS directory in the google SVN repository for LunarGLASS.
+1. Make a directory (e.g., "LunarGLASS", which will be the name used in these instructions) where you want this project to live.  It will correspond to the svn/trunk/LunarGLASS directory in the google SVN repository for LunarGLASS.
 
 2. To get mesa, you first need a clone
 {{{
@@ -27,7 +27,7 @@ Put this so the top "LLVM" directory (parent of "llvm-2.8") is a child of your L
 
 == Building ==
 
-=== Windows Visual Studio ===
+=== For Visual Studio 2010 ===
 
 For LLVM, create a visual studio solution that creates all the libs and headers:
 
@@ -54,9 +54,9 @@ For LLVM, create a visual studio solution that creates all the libs and headers:
 
 11. Build the INSTALL project (Note:  Not the solution, the INSTALL project itself.  This step takes a while...)
 
-12. Now open mesa\src\glsl\Standalone.sln, and it will find the LLVM headers/libs
+12. Now open mesa\src\glsl\Standalone.sln and build the "standalone" project.
 
-=== linux ===
+=== For linux ===
 
 1. Install build dependencies
 {{{
