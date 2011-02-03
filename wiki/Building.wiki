@@ -63,7 +63,7 @@ In the directory "LunarGLASS/mesa/src/LunarGLASS/test" is a run script that show
 
   # Install build dependencies
 {{{
-sudo apt-get install build-essential libffi-dev # maybe more...
+sudo apt-get install build-essential libffi-dev flex bison
 }}}
   # Build LLVM 2.8 (with LunarGLASS modifications)
 {{{
@@ -76,7 +76,7 @@ make install DESTDIR=`pwd`/install
   # Build Mesa 7.9 (with LunarGLASS modifications)
 {{{
 cd mesa/src/glsl
-make -f StandAlone.makefile
+make -f StandAlone.makefile StandAlone
 }}}
   # You can execute the compiler on a test in the test directory by
 {{{
