@@ -23,8 +23,10 @@ Get this working in an actual driver environment.  This would entail
 This can be done orthogonally WRT "Direction 1"
   # Select some sample shaders (possibly the same ones needed be the application in "Direction 1"
   # Flesh out the stack to support the functionality in these shaders:
+{{{
   * GLSL2 -> Top IR
   * Bottom IR -> mesa IR
+}}}
 
 ==Direction 3==
 This can be done orthogonally WRT "Direction 1" and "Direction 2"
