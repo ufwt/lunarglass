@@ -1,4 +1,6 @@
 #labels Building,LunarGLASS
+# summary Instructions for Building LunarGLASS
+
 This project is based on a copy of mesa from freedesktop.org and LLVM from llvm.org.  It makes a "stand alone" compiler stack, not integrated with a driver, that outputs text.
 
 It is a bit cumbersome, so far done just for proof of concept purposes.  More streamlined setup and instructions will be forthcoming.
