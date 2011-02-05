@@ -1,9 +1,9 @@
 #summary Next things do do for implementing LunarGLASS
 #labels Phase-Implementation,ToDo
 
-After the highest priority of getting feedback on architecture and design, here a things to do.
+After the highest priority of getting feedback on architecture and design, here some possible directions to go in actual implementation.
 
-There are a few directions that could be gone somewhat independently, possibly all at the same time, or not.
+There are several directions that could be gone somewhat independently, possibly all at the same time, or not.
 
 ==Direction 1==
 Get this working in an actual driver environment.  This would entail
