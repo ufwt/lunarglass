@@ -1,5 +1,5 @@
 #summary Next things do do for implementing LunarGLASS
-#labels Phase-Implementation,ToDo
+#labels Phase-Implementation
 
 After the highest priority of getting feedback on architecture and design, here some possible directions to go in actual implementation.
 
