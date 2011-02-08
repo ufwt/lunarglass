@@ -1,0 +1,12 @@
+#summary Discussions related to the Google Code project itself.
+
+= Introduction =
+
+Use this page to discuss how the project itself is administered. 
+
+= Details =
+
+*Desired Features*
+  # Continuous integration system
+  # Finer-tuned emailing on commit
+  # Robust build system
