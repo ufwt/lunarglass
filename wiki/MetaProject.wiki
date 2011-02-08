@@ -7,6 +7,13 @@ Use this page to discuss how the project itself is administered.
 = Details =
 
 *Desired Features*
-  # Continuous integration system (regression testing on commit, ...)
-  # Finer-tuned emailing on commit
-  # Robust build system (simpler instructions, LunarGLASS build tools re-located to the LunarGLASS directory, ...)
+  * Continuous integration system (regression testing on commit, ...)
+    # Set up TeamCity on a server
+    # Use google's post-commit hooks to send data to the TeamCity server
+    # Have a TeamCity agent run tests, email developers, etc.
+  * Finer-tuned emailing on commit
+    * Handle such emailing through TeamCity
+  * Robust build system (simpler instructions, LunarGLASS build tools re-located to the LunarGLASS directory, ...)
+    # Separate out LunarGLASS code from LLVM
+    # Separate out LunarGLASS code from Mesa
+    # Build tool than handles fetching, applying LunarGLASS changes, and building
