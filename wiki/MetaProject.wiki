@@ -7,6 +7,6 @@ Use this page to discuss how the project itself is administered.
 = Details =
 
 *Desired Features*
-  # Continuous integration system
+  # Continuous integration system (regression testing on commit, ...)
   # Finer-tuned emailing on commit
-  # Robust build system
+  # Robust build system (simpler instructions, LunarGLASS build tools re-located to the LunarGLASS directory, ...)
