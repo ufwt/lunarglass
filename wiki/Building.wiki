@@ -24,6 +24,8 @@ To test it out, try
 
 === Manual instructions ===
 
+==== Get the Code ====
+
 First, fetch the code following the method presented in [Building#Getting_the_Code Getting the Code]
 
 ==== Building ====
@@ -57,6 +59,8 @@ make -f StandAlone.makefile StandAlone
 It is a bit cumbersome, so far done just for proof of concept purposes.  More streamlined setup and instructions will be forthcoming.
 
 Note: This will overwrite some mesa files, so you will want to do this in a separate location than other mesa development.
+
+=== Get the Code ===
 
 First, fetch the code following the method presented in [Building#Getting_the_Code Getting the Code]
 
