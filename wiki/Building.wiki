@@ -3,11 +3,30 @@
 
 This project is based on a copy of mesa from freedesktop.org and LLVM from llvm.org.  It makes a "stand alone" compiler stack, not integrated with a driver, that outputs text.
 
+== Build instructions for Linux ==
+{{{
+mkdir LunarGLASS  # or whatever you want to call the directory
+cd LunarGLASS
+svn checkout https://lunarglass.googlecode.com/svn/trunk/ .
+./install
+}}}
+
+That should fetch all the needed code (including Mesa and LLVM), build the project, and put the binary in ./bin.
+
+The install tool assumes you have bash, libffi-dev, flex, bison, and wget installed, in addition to the standard build tools (found in build-essential on Ubuntu).
+
+To test it out, try
+{{{
+./bin/LunarGLASS ./tests/test.frag
+}}}
+
+== Build instructions for Windows ==
+
 It is a bit cumbersome, so far done just for proof of concept purposes.  More streamlined setup and instructions will be forthcoming.
 
 Note: This will overwrite some mesa files, so you will want to do this in a separate location than other mesa development.
 
-== Getting the Code for Linux and Windows ==
+=== Getting the Code ===
 
 Overview:  Mesa and LLVM will be sibling tree structures; both children of your LunarGLASS directory.  They will then be overlaid by LunarGLASS files.  
 
@@ -39,9 +58,9 @@ svn checkout --force https://lunarglass.googlecode.com/svn/trunk/ .
 svn revert --depth=infinity .
 }}}
 
-== Building ==
+=== Building ===
 
-=== On Visual Studio 2010 ===
+==== On Visual Studio 2010 ====
 
 For LLVM, create a visual studio solution that creates all the libs and headers:
 
@@ -60,27 +79,3 @@ For LunarGLASS
   * Open "LunarGLASS/mesa/src/glsl/Standalone.sln" and build the "standalone" project.
 
 In the directory "LunarGLASS/mesa/src/LunarGLASS/test" is a run script that shows how to execute the compiler on a test file.
-
-=== On Linux ===
-
-  # Install build dependencies
-{{{
-sudo apt-get install build-essential libffi-dev flex bison
-}}}
-  # Build LLVM 2.8 (with LunarGLASS modifications)
-{{{
-mkdir LLVM/llvm-2.8/build
-cd LLVM/llvm-2.8/build
-../configure
-make
-make install DESTDIR=`pwd`/install
-}}}
-  # Build Mesa 7.9 (with LunarGLASS modifications)
-{{{
-cd mesa/src/glsl
-make -f StandAlone.makefile StandAlone
-}}}
-  # You can execute the compiler on a test in the test directory by
-{{{
-./StandAlone ../LunarGLASS/test/test.frag
-}}}
