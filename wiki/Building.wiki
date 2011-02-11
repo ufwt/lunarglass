@@ -4,6 +4,8 @@
 This project is based on a copy of mesa from freedesktop.org and LLVM from llvm.org.  It makes a "stand alone" compiler stack, not integrated with a driver, that outputs text.
 
 == Build instructions for Linux ==
+
+=== Automatic instructions ===
 {{{
 mkdir LunarGLASS  # or whatever you want to call the directory
 cd LunarGLASS
@@ -20,13 +22,68 @@ To test it out, try
 ./bin/LunarGLASS ./tests/test.frag
 }}}
 
+=== Manual instructions ===
+
+First, fetch the code following the method presented in [Building#Getting_the_Code Getting the Code]
+
+==== Building ====
+
+  # Install build dependencies
+{{{
+sudo apt-get install build-essential libffi-dev flex bison
+}}}
+  # Build LLVM 2.8 (with LunarGLASS modifications)
+{{{
+mkdir LLVM/llvm-2.8/build
+cd LLVM/llvm-2.8/build
+../configure
+make
+make install DESTDIR=`pwd`/install
+}}}
+  # Build Mesa 7.9 (with LunarGLASS modifications)
+{{{
+cd mesa/src/glsl
+make -f StandAlone.makefile StandAlone
+}}}
+  # You can execute the compiler on a test in the test directory by
+{{{
+./StandAlone ../LunarGLASS/test/test.frag
+}}}
+
+
+
 == Build instructions for Windows ==
 
 It is a bit cumbersome, so far done just for proof of concept purposes.  More streamlined setup and instructions will be forthcoming.
 
 Note: This will overwrite some mesa files, so you will want to do this in a separate location than other mesa development.
 
-=== Getting the Code ===
+First, fetch the code following the method presented in [Building#Getting_the_Code Getting the Code]
+
+=== Building ===
+
+==== On Visual Studio 2010 ====
+
+For LLVM, create a visual studio solution that creates all the libs and headers:
+
+  # Download and install CMake for Windows.  We used version 2.8.3 at http://www.cmake.org/cmake/resources/software.html.
+  # Run CMake as Administrator
+  # Put the path to your LunarGLASS\LLVM\llvm-2.8 location in "Where is the source code:" and add "\build" to it (LunarGLASS\LLVM\llvm-2.8\build) in "Where to build the binaries:"
+  # Press "Configure" button in CMake and say yes to create the build directory.
+  # Select Visual Studio 2010 and "Use default native compilers" and "Finish".
+  # Change CMAKE_INSTALL_PREFIX to "install" (no path).
+  # Press "Configure" again.
+  # Press "Generate" button in CMake.
+  # Open new LLVM.sln just created in llvm-2.8\build and build the INSTALL project (not the solution, just the INSTALL project for "Debug Win32").  This step takes a while...
+
+For LunarGLASS
+
+  * Open "LunarGLASS/mesa/src/glsl/Standalone.sln" and build the "standalone" project.
+
+In the directory "LunarGLASS/mesa/src/LunarGLASS/test" is a run script that shows how to execute the compiler on a test file.
+
+
+== Getting the Code ==
 
 Overview:  Mesa and LLVM will be sibling tree structures; both children of your LunarGLASS directory.  They will then be overlaid by LunarGLASS files.  
 
@@ -57,25 +114,3 @@ cd LunarGLASS
 svn checkout --force https://lunarglass.googlecode.com/svn/trunk/ .
 svn revert --depth=infinity .
 }}}
-
-=== Building ===
-
-==== On Visual Studio 2010 ====
-
-For LLVM, create a visual studio solution that creates all the libs and headers:
-
-  # Download and install CMake for Windows.  We used version 2.8.3 at http://www.cmake.org/cmake/resources/software.html.
-  # Run CMake as Administrator
-  # Put the path to your LunarGLASS\LLVM\llvm-2.8 location in "Where is the source code:" and add "\build" to it (LunarGLASS\LLVM\llvm-2.8\build) in "Where to build the binaries:"
-  # Press "Configure" button in CMake and say yes to create the build directory.
-  # Select Visual Studio 2010 and "Use default native compilers" and "Finish".
-  # Change CMAKE_INSTALL_PREFIX to "install" (no path).
-  # Press "Configure" again.
-  # Press "Generate" button in CMake.
-  # Open new LLVM.sln just created in llvm-2.8\build and build the INSTALL project (not the solution, just the INSTALL project for "Debug Win32").  This step takes a while...
-
-For LunarGLASS
-
-  * Open "LunarGLASS/mesa/src/glsl/Standalone.sln" and build the "standalone" project.
-
-In the directory "LunarGLASS/mesa/src/LunarGLASS/test" is a run script that shows how to execute the compiler on a test file.
