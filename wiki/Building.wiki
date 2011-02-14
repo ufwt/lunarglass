@@ -15,7 +15,7 @@ svn checkout https://lunarglass.googlecode.com/svn/trunk/ .
 
 That should fetch all the needed code (including Mesa and LLVM), build the project, and put the binary in ./bin.
 
-The install tool assumes you have bash, libffi-dev, flex, bison, and wget installed, in addition to the standard build tools (found in build-essential on Ubuntu).
+The install tool assumes you have bash, libffi-dev, flex, bison, git, subversion, and wget installed, in addition to the standard build tools (found in build-essential on Ubuntu).
 
 To test it out, try
 {{{
