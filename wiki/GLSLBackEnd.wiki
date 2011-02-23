@@ -22,6 +22,7 @@ But not yet able to do
   * Reconstruct texturing calls (Cody)
   * Correct symbol names for external linkage (JohnK)
   * Catching our internal errors and functionality checks to provide simple message that functionality was requested beyond what is available
+  * Reduce output to just the shader
   * Ensuring all asserts (or something) are in place for detection of unsupported functionality.
   * Top IR L-value swizzling
   * Top IR arrays for uniforms, inputs
