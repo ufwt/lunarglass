@@ -1,0 +1,32 @@
+#summary Milestones and tasks for the GLSL Back End.
+
+= First Milestone =
+
+Achieve the following functionality
+
+  * 1.2 desktop shaders
+  * the amount of 1.0 (ES) shader functionality that comes with that
+
+But not yet able to do
+
+  * Loops
+  * Function calls
+  * Vertex shaders
+  * outputs other than gl_FragColor
+
+= Things to do (who's currently working on it) in priority order =
+
+  * Correct location of declarations for split control flow (JohnK)
+  * Have regression tests generating both Mesa IR and GLSL outputs
+  * Finish generating Top IR texturing calls (Cody)
+  * Reconstruct texturing calls (Cody)
+  * Correct symbol names for external linkage (JohnK)
+  * Top IR L-value swizzling
+  * Top IR arrays for uniforms, inputs
+  * GLSL back end L-value swizzling
+  * GLSL back end arrays for uniforms, inputs
+  * Handle the (non-texturing) built-in functions
+  * Run-time tests for what mode it's in; simple, obfuscating, or optimizing
+  * Catching our internal errors and functionality checks to provide simple message that functionality was requested beyond what is available
+  * Ensuring all asserts (or something) are in place for detection of unsupported functionality.
+  * Identify flow control we can't handle (Michael)
