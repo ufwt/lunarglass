@@ -30,3 +30,5 @@ But not yet able to do
   * Handle the (non-texturing) built-in functions
   * Run-time tests for what mode it's in; simple, obfuscating, or optimizing
   * Identify flow control we can't handle (Michael)
+  * Run-time #version control of features
+  * Have a better switch than gla::UseTgsiBackend for controlling what backend is used
