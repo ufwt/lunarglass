@@ -20,10 +20,12 @@ But not yet able to do
   * Have regression tests generating both Mesa IR and GLSL outputs (Michael)
   * Finish generating Top IR texturing calls (Cody)
   * Reconstruct texturing calls (Cody)
-  * Correct symbol names for external linkage (JohnK)
+  * Correct symbol names for external linkage (JohnK, finished)
+  * Handle bool types in bottom (JohnK)
   * Catching our internal errors and functionality checks to provide simple message that functionality was requested beyond what is available
   * Reduce output to just the shader (Michael)
   * Ensuring all asserts (or something) are in place for detection of unsupported functionality.
+  * Top IR constructors, for simple common cases
   * Top IR L-value swizzling
   * Top IR arrays for uniforms, inputs
   * GLSL back end L-value swizzling
