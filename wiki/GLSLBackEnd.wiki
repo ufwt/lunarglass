@@ -26,6 +26,7 @@ But not yet able to do
   * Reduce output to just the shader (Michael)
   * Ensuring all asserts (or something) are in place for detection of unsupported functionality.
   * Top IR constructors, for simple common cases
+  * Figure out how to keep matrices through the stack.
   * Top IR L-value swizzling
   * Top IR arrays for uniforms, inputs
   * GLSL back end L-value swizzling
