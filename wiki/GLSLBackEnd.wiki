@@ -13,20 +13,20 @@ But not yet able to do
   * Function calls
   * Vertex shaders
   * outputs other than gl_FragColor
+  * matrices (uncommon in fragment shaders)
 
 = Things to do (who's currently working on it) in priority order =
 
-  * Correct location of declarations for split control flow (JohnK)
+  * Correct location of declarations for split control flow (JohnK, finished)
   * Have regression tests generating both Mesa IR and GLSL outputs (Michael)
   * Finish generating Top IR texturing calls (Cody)
   * Reconstruct texturing calls (Cody)
   * Correct symbol names for external linkage (JohnK, finished)
-  * Handle bool types in bottom (JohnK)
+  * Handle bool types in bottom (JohnK, finished)
   * Catching our internal errors and functionality checks to provide simple message that functionality was requested beyond what is available
   * Reduce output to just the shader (Michael)
   * Ensuring all asserts (or something) are in place for detection of unsupported functionality.
   * Top IR constructors, for simple common cases
-  * Figure out how to keep matrices through the stack.
   * Top IR L-value swizzling
   * Top IR arrays for uniforms, inputs
   * GLSL back end L-value swizzling
@@ -36,3 +36,4 @@ But not yet able to do
   * Identify flow control we can't handle (Michael)
   * Run-time #version control of features
   * Have a better switch than gla::UseTgsiBackend for controlling what backend is used (Michael)
+  * Figure out how to keep matrices through the stack (JohnK)
