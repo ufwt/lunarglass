@@ -23,9 +23,10 @@ But not yet able to do
   * Reconstruct texturing calls (Cody)
   * Correct symbol names for external linkage (JohnK, finished)
   * Handle bool types in bottom (JohnK, finished)
-  * Catching our internal errors and functionality checks to provide simple message that functionality was requested beyond what is available
+  * Install an exception handling model so we can wrap failed runs and report the right error to the user. (Michael)
+  * Check all existing asserts and unsupported prints for correct usage in the exception model. (John)
+  * Ensuring all unsupported functionality has an exception raised
   * Reduce output to just the shader (Michael)
-  * Ensuring all asserts (or something) are in place for detection of unsupported functionality.
   * Top IR constructors, for simple common cases
   * Top IR L-value swizzling
   * Top IR arrays for uniforms, inputs
