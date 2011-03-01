@@ -68,5 +68,5 @@ But not yet able to do
 
 == Things to do (who's currently working on it) not yet in priority order ==
 
-  * - need a parser that can do glsl 3.*, possibly 4.*
+  * - need a parser that can do glsl 3.x, possibly 4.x
   * - investigate cross-stage optimizations, obfuscations, simplifications
