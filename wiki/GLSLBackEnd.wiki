@@ -43,17 +43,30 @@ But not yet able to do
 
 = Second Milestone =
 
-Pretty much all normal shader stuff works for version 1.3.
+  * Pretty much all normal shader stuff works for version 1.3.
+  * All three modes work:  simplification, optimization, and obfuscation
 
 == Things to do (who's currently working on it) not yet in priority order ==
 
-  * - Support line numbers
+  * - original variable names
+  * - original line numbers
   * - 1.3 texturing
   * - Figure out how to keep matrices through the stack (JohnK)
-  * - Loops
-  * - Function calls
-  * - Vertex shaders
+  * - loop detection and support of normal/typical loops
+  * - function calls
+  * - vertex shaders
   * - gl_FragDepth
   * - Fragment shader user-defined outputs
   * - matrices (uncommon in fragment shaders)
-  
+  * - support multiple compilations units for a single stage
+
+= Third Milestone =
+
+  * Post 1.3.
+  * Cross-stage interactions.
+  * All non-goto flow control works.
+
+== Things to do (who's currently working on it) not yet in priority order ==
+
+  * - need a parser that can do glsl 3.*, possibly 4.*
+  * - investigate cross-stage optimizations, obfuscations, simplifications
