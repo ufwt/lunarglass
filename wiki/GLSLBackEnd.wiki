@@ -38,6 +38,7 @@ But not yet able to do
   * - Run-time tests for what mode it's in; simple, obfuscating, or optimizing (Michael)
   * - Identify flow control we can't handle (Michael)
   * - Run-time #version control of features
+  * - Add more LLVM optimizations
   * + Have a better switch than gla::UseTgsiBackend for controlling what back end is used (Michael)
 
 = Second Milestone =
@@ -46,13 +47,13 @@ Pretty much all normal shader stuff works for version 1.3.
 
 == Things to do (who's currently working on it) not yet in priority order ==
 
-  * Support line numbers
-  * 1.3 texturing
-  * Figure out how to keep matrices through the stack (JohnK)
-  * Loops
-  * Function calls
-  * Vertex shaders
-  * gl_FragDepth
-  * Fragment shader user-defined outputs
-  * matrices (uncommon in fragment shaders)
+  * - Support line numbers
+  * - 1.3 texturing
+  * - Figure out how to keep matrices through the stack (JohnK)
+  * - Loops
+  * - Function calls
+  * - Vertex shaders
+  * - gl_FragDepth
+  * - Fragment shader user-defined outputs
+  * - matrices (uncommon in fragment shaders)
   
