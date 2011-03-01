@@ -19,8 +19,8 @@ But not yet able to do
 
   * Correct location of declarations for split control flow (JohnK, finished)
   * Have regression tests generating both Mesa IR and GLSL outputs (Michael)
-  * Finish generating Top IR texturing calls (Cody)
-  * Reconstruct texturing calls (Cody)
+  * Finish generating Top IR texturing calls (Cody, finished)
+  * Reconstruct texturing calls (Cody, finished)
   * Correct symbol names for external linkage (JohnK, finished)
   * Handle bool types in bottom (JohnK, finished)
   * Install an exception handling model so we can wrap failed runs and report the right error to the user. (Michael)
@@ -28,11 +28,11 @@ But not yet able to do
   * Ensuring all unsupported functionality has an exception raised
   * Reduce output to just the shader (Michael)
   * Top IR constructors, for simple common cases
-  * Top IR L-value swizzling
-  * Top IR arrays for uniforms, inputs
+  * Top IR L-value swizzling (Cody)
+  * Top IR arrays for uniforms, inputs (Cody)
   * GLSL back end L-value swizzling
   * GLSL back end arrays for uniforms, inputs
-  * Handle the (non-texturing) built-in functions
+  * Handle the (non-texturing) built-in functions (Cody)
   * Run-time tests for what mode it's in; simple, obfuscating, or optimizing (Michael)
   * Identify flow control we can't handle (Michael)
   * Run-time #version control of features
