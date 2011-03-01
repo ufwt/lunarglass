@@ -14,27 +14,45 @@ But not yet able to do
   * Vertex shaders
   * outputs other than gl_FragColor
   * matrices (uncommon in fragment shaders)
+  * newer texturing; only original texturing is supported
 
-= Things to do (who's currently working on it) in priority order =
+== Things to do (who's currently working on it) in priority order ==
 
-  * Correct location of declarations for split control flow (JohnK, finished)
-  * Have regression tests generating both Mesa IR and GLSL outputs (Michael)
-  * Finish generating Top IR texturing calls (Cody, finished)
-  * Reconstruct texturing calls (Cody, finished)
-  * Correct symbol names for external linkage (JohnK, finished)
-  * Handle bool types in bottom (JohnK, finished)
-  * Install an exception handling model so we can wrap failed runs and report the right error to the user. (Michael)
-  * Check all existing asserts and unsupported prints for correct usage in the exception model. (John)
-  * Ensuring all unsupported functionality has an exception raised
-  * Reduce output to just the shader (Michael)
-  * Top IR constructors, for simple common cases
-  * Top IR L-value swizzling (Cody)
-  * Top IR arrays for uniforms, inputs (Cody)
-  * GLSL back end L-value swizzling
-  * GLSL back end arrays for uniforms, inputs
-  * Handle the (non-texturing) built-in functions (Cody)
-  * Run-time tests for what mode it's in; simple, obfuscating, or optimizing (Michael)
-  * Identify flow control we can't handle (Michael)
-  * Run-time #version control of features
-  * Have a better switch than gla::UseTgsiBackend for controlling what backend is used (Michael)
+  * + Correct location of declarations for split control flow (JohnK)
+  * + Have regression tests generating both Mesa IR and GLSL outputs (Michael)
+  * + Finish generating Top IR texturing calls (Cody)
+  * + Reconstruct texturing calls (Cody)
+  * + Correct symbol names for external linkage (JohnK)
+  * + Handle bool types in bottom (JohnK)
+  * + Install an exception handling model so we can wrap failed runs and report the right error to the user. (Michael)
+  * + Check all existing asserts and unsupported prints for correct usage in the exception model. (John)
+  * - Ensuring all unsupported functionality has an exception raised
+  * - Reduce output to just the shader (Michael)
+  * - Mixing scalars and vectors across operators
+  * - Top IR constructors, for simple common cases
+  * - Top IR L-value swizzling (Cody)
+  * - Top IR arrays for uniforms, inputs (Cody)
+  * - GLSL back end L-value swizzling
+  * - GLSL back end arrays for uniforms, inputs
+  * - Handle the (non-texturing) built-in functions (Cody)
+  * - Run-time tests for what mode it's in; simple, obfuscating, or optimizing (Michael)
+  * - Identify flow control we can't handle (Michael)
+  * - Run-time #version control of features
+  * + Have a better switch than gla::UseTgsiBackend for controlling what back end is used (Michael)
+
+= Second Milestone =
+
+Pretty much all normal shader stuff works for version 1.3.
+
+== Things to do (who's currently working on it) not yet in priority order ==
+
+  * Support line numbers
+  * 1.3 texturing
   * Figure out how to keep matrices through the stack (JohnK)
+  * Loops
+  * Function calls
+  * Vertex shaders
+  * gl_FragDepth
+  * Fragment shader user-defined outputs
+  * matrices (uncommon in fragment shaders)
+  
