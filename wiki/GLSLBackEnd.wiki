@@ -28,7 +28,7 @@ But not yet able to do
   * + Install an exception handling model so we can wrap failed runs and report the right error to the user. (Michael)
   * + Check all existing asserts and unsupported prints for correct usage in the exception model. (John)
   * - Ensuring all unsupported functionality has an exception raised
-  * - Reduce output to just the shader (Michael)
+  * + Reduce output to just the shader (Michael)
   * - Mixing scalars and vectors across operators
   * - Top IR constructors, for simple common cases
   * - Top IR L-value swizzling (Cody)
