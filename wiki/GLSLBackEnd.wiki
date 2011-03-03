@@ -16,6 +16,8 @@ But not yet able to do
   * matrices (uncommon in fragment shaders)
   * newer texturing; only original texturing is supported
   * GLSL2 defects/limitations, for the version we snapshot
+  * arrays with variable indexes
+  * arrays for things other than input interpolants and uniforms
 
 == Things to do (who's currently working on it) in priority order ==
 
@@ -29,12 +31,14 @@ But not yet able to do
   * + Check all existing asserts and unsupported prints for correct usage in the exception model. (John)
   * - Ensuring all unsupported functionality has an exception raised
   * + Reduce output to just the shader (Michael)
+  * - broader set of tests for what this checkpoint (John)
   * - Mixing scalars and vectors across operators
   * - Top IR constructors, for simple common cases
   * - Top IR L-value swizzling (Cody)
-  * - Top IR arrays for uniforms, inputs (Cody)
-  * - GLSL back end L-value swizzling
-  * - GLSL back end arrays for uniforms, inputs
+  * - Top IR arrays for uniforms and inputs (Cody)
+  * - GLSL back end-support for extract/insert (John)
+  * - Middle-end pass to coalesce multiple inserts into an L-value swizzle (Michael)
+  * - GLSL back end support for arrays for uniforms and inputs
   * - Handle the (non-texturing) built-in functions (Cody)
   * - Run-time tests for what mode it's in; simple, obfuscating, or optimizing (Michael)
   * - Identify flow control we can't handle (Michael)
