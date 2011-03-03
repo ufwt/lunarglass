@@ -38,6 +38,7 @@ But not yet able to do
   * - Top IR arrays for uniforms and inputs (Cody)
   * - GLSL back end-support for extract/insert (John)
   * - Middle-end pass to coalesce multiple inserts into an L-value swizzle (Michael)
+  * - Add UnsupportedFunctionality to GLSL Visitor for all unsupported constructs
   * - GLSL back end support for arrays for uniforms and inputs
   * - Handle the (non-texturing) built-in functions (Cody)
   * - Run-time tests for what mode it's in; simple, obfuscating, or optimizing (Michael)
