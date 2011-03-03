@@ -38,14 +38,14 @@ But not yet able to do
   * - Top IR arrays for uniforms and inputs (Cody)
   * - GLSL back end-support for extract/insert (John)
   * - Middle-end pass to coalesce multiple inserts into an L-value swizzle (Michael)
-  * - Add UnsupportedFunctionality to GLSL Visitor for all unsupported constructs
+  * - Add !UnsupportedFunctionality to GLSL Visitor for all unsupported constructs
   * - GLSL back end support for arrays for uniforms and inputs
   * - Handle the (non-texturing) built-in functions (Cody)
   * - Run-time tests for what mode it's in; simple, obfuscating, or optimizing (Michael)
   * - Identify flow control we can't handle (Michael)
   * - Run-time #version control of features
   * - Add more LLVM optimizations
-  * + Have a better switch than gla::UseTgsiBackend for controlling what back end is used (Michael)
+  * + Have a better switch than gla::!UseTgsiBackend for controlling what back end is used (Michael)
 
 = Second Milestone =
 
