@@ -12,7 +12,7 @@ But not yet able to do
   * Loops
   * Function calls
   * Vertex shaders
-  * outputs other than gl_FragColor
+  * outputs other than {{{gl_FragColor}}}
   * matrices (uncommon in fragment shaders)
   * newer texturing; only original texturing is supported
   * GLSL2 defects/limitations, for the version we snapshot
@@ -46,7 +46,7 @@ But not yet able to do
   * - Run-time #version control of features
   * - Add more LLVM optimizations
   * + Have a better switch than gla::!UseTgsiBackend for controlling what back end is used (Michael)
-  * - handle built-in state: gl_* for uniforms, varyings, attributes
+  * - handle built-in state: {{{gl_*}}} for uniforms, varyings, attributes
 
 = Second Milestone =
 
@@ -64,7 +64,7 @@ But not yet able to do
   * - loop detection and support of normal/typical loops
   * - function calls
   * - vertex shaders
-  * - gl_FragDepth, gl_FragData
+  * - {{{gl_FragDepth}}}, {{{gl_FragData}}}
   * - Fragment shader user-defined outputs
   * - matrices (uncommon in fragment shaders)
   * - support multiple compilations units for a single stage
