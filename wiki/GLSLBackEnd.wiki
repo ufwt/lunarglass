@@ -31,24 +31,24 @@ But not yet able to do
   * + Correct symbol names for external linkage (JohnK)
   * + Handle bool types in bottom (JohnK)
   * + Install an exception handling model so we can wrap failed runs and report the right error to the user. (Michael)
-  * + Check all existing asserts and unsupported prints for correct usage in the exception model. (John)
+  * + Check all existing asserts and unsupported prints for correct usage in the exception model. (JohnK)
   * + Ensure all unsupported functionality has an exception raised, preferably going into Top IR, but somewhere
   * + Reduce output to just the shader (Michael)
-  * - handle sampler types top to bottom (John)
-  * - broader set of tests for what is in this checkpoint (John)
+  * - handle sampler types top to bottom (JohnK)
+  * + broader set of tests for what is in this checkpoint (JohnK)
   * - Mixing scalars and vectors across operators (Cody)
   * - Top IR constructors, for simple common cases (Cody)
   * - Top IR L-value swizzling (Cody)
-  * + GLSL back end-support for extract/insert (John)
+  * + GLSL back end-support for extract/insert (JohnK)
   * - Middle-end pass to coalesce multiple inserts into a single L-value swizzle (Michael)
   * - Handle the (non-texturing) built-in functions (Cody)
   * + Run-time #version control of features: this is expected to be done through proper front-end translation to Top IR based on #version
   * - Add more LLVM optimizations
   * + Have a better switch than gla::!UseTgsiBackend for controlling what back end is used (Michael)
   * - handle built-in state?: {{{gl_*}}} for uniforms, varyings, attributes:  revisit/fix the built-in stuff Cody and John turned off when bootstrapping the front-end adapter
-  * - GLSL back-end support for arrays for uniforms and inputs (John)
+  * - GLSL back-end support for arrays for uniforms and inputs (JohnK)
   * - Top IR arrays for uniforms and inputs (Cody)
-  * - Run-time tests for what mode it's in; simple, obfuscating, or optimizing (Michael)
+  * + Run-time tests for what mode it's in; simple, obfuscating, or optimizing (JohnK)
   * - Identify flow control we can't handle in Bottom IR (Michael)
 
 = Second Milestone =
