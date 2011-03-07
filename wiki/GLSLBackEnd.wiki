@@ -36,12 +36,12 @@ But not yet able to do
   * + Reduce output to just the shader (Michael)
   * - handle sampler types top to bottom (JohnK)
   * + broader set of tests for what is in this checkpoint (JohnK)
-  * - Mixing scalars and vectors across operators (Cody)
+  * + Mixing scalars and vectors across operators (Cody)
   * - Top IR constructors, for simple common cases (Cody)
-  * - Top IR L-value swizzling (Cody)
+  * + Top IR L-value swizzling (Cody)
   * + GLSL back end-support for extract/insert (JohnK)
   * - Middle-end pass to coalesce multiple inserts into a single L-value swizzle (Michael)
-  * - Handle the (non-texturing) built-in functions (Cody)
+  * + Handle the (non-texturing) built-in functions (Cody)
   * + Run-time #version control of features: this is expected to be done through proper front-end translation to Top IR based on #version
   * - Add more LLVM optimizations
   * + Have a better switch than gla::!UseTgsiBackend for controlling what back end is used (Michael)
