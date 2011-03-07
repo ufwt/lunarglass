@@ -34,6 +34,7 @@ But not yet able to do
   * + Check all existing asserts and unsupported prints for correct usage in the exception model. (John)
   * + Ensure all unsupported functionality has an exception raised, preferably going into Top IR, but somewhere
   * + Reduce output to just the shader (Michael)
+  * - handle sampler types top to bottom (John)
   * - broader set of tests for what is in this checkpoint (John)
   * - Mixing scalars and vectors across operators (Cody)
   * - Top IR constructors, for simple common cases (Cody)
@@ -60,6 +61,7 @@ But not yet able to do
   * - latest version of GLSL2
   * - original variable names
   * - original line numbers
+  * - control the output version of GLSL
   * - fix the linux/windows output differences in the test files
   * - 1.3 texturing
   * - Figure out how to keep matrices through the stack (JohnK)
