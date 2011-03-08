@@ -34,7 +34,7 @@ But not yet able to do
   * + Check all existing asserts and unsupported prints for correct usage in the exception model. (JohnK)
   * + Ensure all unsupported functionality has an exception raised, preferably going into Top IR, but somewhere
   * + Reduce output to just the shader (Michael)
-  * - handle sampler types top to bottom (JohnK)
+  * + handle sampler types top to bottom (JohnK)
   * + broader set of tests for what is in this checkpoint (JohnK)
   * + Mixing scalars and vectors across operators (Cody)
   * - Top IR constructors, for simple common cases (Cody)
