@@ -21,6 +21,7 @@ But not yet able to do
   * arrays with variable indexes
   * arrays for things other than input interpolants and uniforms
   * support of built-in state?
+  * bitwise assignments e.g. {{{|=}}} and the logical operator {{{^^}}}
 
 == Things to do (who's currently working on it) in priority order ==
 
