@@ -47,6 +47,7 @@ But not yet able to do
   * - Add more LLVM optimizations
   * + Have a better switch than gla::!UseTgsiBackend for controlling what back end is used (Michael)
   * - handle built-in state?: {{{gl_*}}} for uniforms, varyings, attributes:  revisit/fix the built-in stuff Cody and John turned off when bootstrapping the front-end adapter
+  * - get constants working top to bottom (JohnK)
   * - GLSL back-end support for arrays for uniforms and inputs (JohnK)
   * - Top IR arrays for uniforms and inputs (Cody)
   * + Run-time tests for what mode it's in; simple, obfuscating, or optimizing (JohnK)
