@@ -39,7 +39,7 @@ But not yet able to do
   * + handle sampler types top to bottom (JohnK)
   * + broader set of tests for what is in this checkpoint (JohnK)
   * + Mixing scalars and vectors across operators (Cody)
-  * - Top IR constructors, for simple common cases (Cody)
+  * + Top IR constructors, for simple common cases (Cody)
   * + Top IR L-value swizzling (Cody)
   * + GLSL back end-support for extract/insert (JohnK)
   * - Middle-end pass to coalesce multiple inserts into a single L-value swizzle (Michael)
@@ -47,8 +47,8 @@ But not yet able to do
   * + Run-time #version control of features: this is expected to be done through proper front-end translation to Top IR based on #version
   * - Add more LLVM optimizations
   * + Have a better switch than gla::!UseTgsiBackend for controlling what back end is used (Michael)
-  * - handle built-in state?: {{{gl_*}}} for uniforms, varyings, attributes:  revisit/fix the built-in stuff Cody and John turned off when bootstrapping the front-end adapter
-  * - get constants working top to bottom (JohnK)
+  * + handle built-in state?: {{{gl_*}}} for uniforms, varyings, attributes:  revisit/fix the built-in stuff Cody and John turned off when bootstrapping the front-end adapter
+  * + get constants working top to bottom (JohnK)
   * - GLSL back-end support for arrays for uniforms and inputs (JohnK)
   * - Top IR arrays for uniforms and inputs (Cody)
   * + Run-time tests for what mode it's in; simple, obfuscating, or optimizing (JohnK)
