@@ -8,21 +8,17 @@ Achieve the following functionality
 
 But not yet able to do
 
-  * ES-specific features
+  * ES-specific features (e.g. precision qualifiers)
   * Loops
   * Function calls
   * Structures
   * Vertex shaders
   * outputs other than {{{gl_FragColor}}}
   * matrices (uncommon in fragment shaders)
-  * newer texturing; only original texturing is supported
-  * GLSL2 defects/limitations, for the version we snapshot
-  * all arrays?  or...
-  * arrays with variable indexes
-  * arrays for things other than input interpolants and uniforms
-  * support of built-in state?
+  * new-style texturing; only 1.2 texturing is supported
+  * arrays
   * bitwise assignments e.g. {{{|=}}} and the logical operator {{{^^}}}
-  * un-initialized variables
+  * a few built-ins: trunc(), not(), ...
 
 == Things to do (who's currently working on it) in priority order ==
 
@@ -42,17 +38,13 @@ But not yet able to do
   * + Top IR constructors, for simple common cases (Cody)
   * + Top IR L-value swizzling (Cody)
   * + GLSL back end-support for extract/insert (JohnK)
-  * - Middle-end pass to coalesce multiple inserts into a single L-value swizzle (Michael)
   * + Handle the (non-texturing) built-in functions (Cody)
   * + Run-time #version control of features: this is expected to be done through proper front-end translation to Top IR based on #version
-  * - Add more LLVM optimizations
   * + Have a better switch than gla::!UseTgsiBackend for controlling what back end is used (Michael)
   * + handle built-in state?: {{{gl_*}}} for uniforms, varyings, attributes:  revisit/fix the built-in stuff Cody and John turned off when bootstrapping the front-end adapter
   * + get constants working top to bottom (JohnK)
-  * - GLSL back-end support for arrays for uniforms and inputs (JohnK)
-  * - Top IR arrays for uniforms and inputs (Cody)
   * + Run-time tests for what mode it's in; simple, obfuscating, or optimizing (JohnK)
-  * - Identify flow control we can't handle in Bottom IR (Michael)
+  * + latest version of GLSL2 (Cody)
 
 = Second Milestone =
 
@@ -61,7 +53,11 @@ But not yet able to do
 
 == Things to do (who's currently working on it) not yet in priority order ==
 
-  * - latest version of GLSL2
+  * - Add more LLVM optimizations
+  * - Middle-end pass to coalesce multiple inserts into a single L-value swizzle (Michael)
+  * - Identify flow control we can't handle in Bottom IR (Michael)
+  * - Top IR arrays for uniforms and inputs (Cody)
+  * - GLSL back-end support for arrays for uniforms and inputs (JohnK)
   * - original variable names
   * - original line numbers
   * - control the output version of GLSL
