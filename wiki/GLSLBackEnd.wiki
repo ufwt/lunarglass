@@ -54,8 +54,7 @@ But not yet able to do
 
 == Things to do (who's currently working on it) not yet in priority order ==
 
-  * - Add more LLVM optimizations
-(Michael)
+  * - Add more LLVM optimizations (Michael)
   * - Identify flow control we can't handle in Bottom IR (Michael)
   * - Top IR arrays for uniforms and inputs (Cody)
   * - GLSL back-end support for arrays for uniforms and inputs (JohnK)
@@ -73,9 +72,9 @@ But not yet able to do
   * - matrices (uncommon in fragment shaders)
   * - support multiple compilations units for a single stage
   * - top IR driven tests
-  * - destructuring of swizzles in the topir into inserts/extracts
+  * - destructuring of swizzles in the Top IR into inserts/extracts
   * - llvm and gla namespace independent place to put in shared utility functions
-  * - single use copy propagation during code generation
+  * - single-use copy propagation during code generation
 
 = Third Milestone =
 
