@@ -61,6 +61,7 @@ But not yet able to do
 
 === Things to do (who's currently working on it) not yet in priority order ===
 
+  * - Output revision number, in linux at least (Michael)
   * - Add more LLVM optimizations (Michael)
   * - Identify flow control we can't handle in Bottom IR (Michael)
   * - Top IR arrays for uniforms and inputs (Cody)
