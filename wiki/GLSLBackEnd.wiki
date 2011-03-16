@@ -58,10 +58,10 @@ But not yet able to do
 === Tasks Completed ===
 
   * + Middle-end pass to coalesce multiple inserts into a single L-value swizzle (michael, r219) 
+  * + Output revision number, in linux at least (Michael)
 
 === Things to do (who's currently working on it) not yet in priority order ===
 
-  * - Output revision number, in linux at least (Michael)
   * - Add more LLVM optimizations (Michael)
   * - Identify flow control we can't handle in Bottom IR (Michael)
   * - Top IR arrays for uniforms and inputs (Cody)
