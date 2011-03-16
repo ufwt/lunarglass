@@ -82,7 +82,7 @@ But not yet able to do
   * - top IR driven tests
   * - destructuring of swizzles in the Top IR into inserts/extracts
   * - llvm and gla namespace independent place to put in shared utility functions
-  * - single-use copy propagation during code generation
+  * - single-use expression/copy propagation during code generation
 
 == Third Milestone ==
 
