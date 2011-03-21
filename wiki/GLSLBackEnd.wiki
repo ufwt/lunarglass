@@ -57,8 +57,9 @@ But not yet able to do
 
 === Tasks Completed ===
 
-  * + Middle-end pass to coalesce multiple inserts into a single L-value swizzle (michael, r219) 
+  * + Middle-end pass to coalesce multiple inserts into a single L-value swizzle (Michael, r219) 
   * + Output revision number, in linux at least (Michael, r230)
+  * + destructuring of swizzles in the Top IR into inserts/extracts (Michael, r236)
 
 === Things to do (who's currently working on it) not yet in priority order ===
 
@@ -80,9 +81,8 @@ But not yet able to do
   * - matrices (uncommon in fragment shaders)
   * - support multiple compilations units for a single stage
   * - top IR driven tests
-  * - destructuring of swizzles in the Top IR into inserts/extracts (Michael)
   * - llvm and gla namespace independent place to put in shared utility functions
-  * - single-use expression/copy propagation during code generation
+  * - single-use expression/copy propagation during code generation (Michael)
 
 == Third Milestone ==
 
