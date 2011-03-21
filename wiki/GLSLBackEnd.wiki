@@ -83,7 +83,6 @@ But not yet able to do
   * - destructuring of swizzles in the Top IR into inserts/extracts (Michael)
   * - llvm and gla namespace independent place to put in shared utility functions
   * - single-use expression/copy propagation during code generation
-  * - orange book regression tests (Michael)
 
 == Third Milestone ==
 
