@@ -60,12 +60,13 @@ But not yet able to do
   * + Middle-end pass to coalesce multiple inserts into a single L-value swizzle (Michael, r219) 
   * + Output revision number, in linux at least (Michael, r230)
   * + destructuring of swizzles in the Top IR into inserts/extracts (Michael, r236)
+  * + Command-line argument for handling of optimizations (Michael)
 
 === Things to do (who's currently working on it) not yet in priority order ===
 
   * - Add more LLVM optimizations (Michael)
   * - Add motivating examples for LLVM optimizations (Michael)
-  * - Command-line argument for handling of optimizations (Michael)
+  * - Mechanism for specifying what passes are done and when in an external file
   * - Identify flow control we can't handle in Bottom IR (Michael)
   * - Top IR arrays for uniforms and inputs (Cody)
   * - GLSL back-end support for arrays for uniforms and inputs (JohnK)
