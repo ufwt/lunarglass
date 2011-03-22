@@ -66,11 +66,11 @@ But not yet able to do
 
   * - Add more LLVM optimizations (Michael)
   * - Add motivating examples for LLVM optimizations (Michael)
-  * - Mechanism for specifying what passes are done and when in an external file
   * - Identify flow control we can't handle in Bottom IR (Michael)
   * - Top IR arrays for uniforms and inputs (Cody)
+  * - Handle all the logical vs. bitwise operators in the back end (JohnK)
   * - GLSL back-end support for arrays for uniforms and inputs (JohnK)
-  * - original variable names
+  * - original variable names (JohnK)
   * - original line numbers
   * - control the output version of GLSL
   * - fix the linux/windows output differences in the test files
@@ -99,3 +99,4 @@ But not yet able to do
 
   * - need a parser that can do glsl 3.x, possibly 4.x
   * - investigate cross-stage optimizations, obfuscations, simplifications
+  * - Mechanism for specifying what passes are done and when in an external file
