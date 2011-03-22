@@ -1,4 +1,4 @@
-#Things to do with LunarGOO
+#summary Things to do with LunarGOO
 
 = List of possible uses =
   * obfuscation for apps that ship shader source (very easy, so high ROI, even if not a big use)
