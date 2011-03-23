@@ -2,7 +2,7 @@
 
 = Passed Milestones =
 
-== First Milestone - Passed on 2011-03-11 ==
+== First Milestone - Passed on 2011-03-11 (r207) ==
 
 Achieve the following functionality
 
@@ -60,9 +60,9 @@ But not yet able to do
   * + Middle-end pass to coalesce multiple inserts into a single L-value swizzle (Michael, r219) 
   * + Output revision number, in linux at least (Michael, r230)
   * + destructuring of swizzles in the Top IR into inserts/extracts (Michael, r236)
-  * + Command-line argument for handling of optimizations (Michael)
-  * + Handle all the logical vs. bitwise operators in the back end {{{^, ^^, !, ~, not()}}} (JohnK)
-  * + bitwise assignments e.g. {{{|=}}} (JohnK)
+  * + Command-line argument for handling of optimizations (Michael, r240)
+  * + Handle all the logical vs. bitwise operators in the back end {{{^, ^^, !, ~, not()}}} (JohnK, r248)
+  * + bitwise assignments e.g. {{{|=}}} (JohnK, r248)
 
 === Things to do (who's currently working on it) not yet in priority order ===
 
