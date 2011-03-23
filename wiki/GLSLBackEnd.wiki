@@ -78,7 +78,7 @@ But not yet able to do
   * - 1.3 texturing
   * - Figure out how to keep matrices through the stack (JohnK)
   * - loop detection and support of normal/typical loops
-  * - function calls
+  * - function calls (Cody, JohnK)
   * - vertex shaders
   * - {{{gl_FragDepth}}}, {{{gl_FragData}}}
   * - Fragment shader user-defined outputs
