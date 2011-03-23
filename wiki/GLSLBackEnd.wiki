@@ -61,6 +61,8 @@ But not yet able to do
   * + Output revision number, in linux at least (Michael, r230)
   * + destructuring of swizzles in the Top IR into inserts/extracts (Michael, r236)
   * + Command-line argument for handling of optimizations (Michael)
+  * + Handle all the logical vs. bitwise operators in the back end {{{^, ^^, !, ~, not()}}} (JohnK)
+  * + bitwise assignments e.g. {{{|=}}} (JohnK)
 
 === Things to do (who's currently working on it) not yet in priority order ===
 
@@ -68,7 +70,6 @@ But not yet able to do
   * - Add motivating examples for LLVM optimizations (Michael)
   * - Identify flow control we can't handle in Bottom IR (Michael)
   * - Top IR arrays for uniforms and inputs (Cody)
-  * - Handle all the logical vs. bitwise operators in the back end (JohnK)
   * - GLSL back-end support for arrays for uniforms and inputs (JohnK)
   * - original variable names (JohnK)
   * - original line numbers
