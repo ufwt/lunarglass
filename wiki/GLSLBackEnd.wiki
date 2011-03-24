@@ -80,7 +80,7 @@ But not yet able to do
   * - refactor back-end into llvm pass so that analyses are available (Michael)
   * - loop detection and support of normal/typical loops (Michael)
   * - refactor back-end flow control handling to use analysis information (Michael)
-  * - function calls (Cody, JohnK)
+  * - function calls; see FunctionCallPlan (Cody, JohnK)
   * - vertex shaders
   * - {{{gl_FragDepth}}}, {{{gl_FragData}}}
   * - Fragment shader user-defined outputs
