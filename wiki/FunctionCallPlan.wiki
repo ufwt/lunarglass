@@ -1,0 +1,14 @@
+#summary things to do for function calls
+
+  # top: handle void functions
+  # bottom: handle generic function prototypes
+  # top: handle a list input parameters with an output, no structures
+  # top: handle local variables, have to get to the bottom of this.  But, I'm sure all locals, once we know what they are, can be declared in the entry block to the function they are in.
+  # top: early returns in non-main functions
+  # bottom: finish any return support
+  # top: handle arbitrary returns/ins/outs, no structures at the GLSL level
+  # bottom: handle structures needed to do the above
+  # top: handle structures in general
+  # bottom: handle structures in general
+  # top: early returns in main that all must occur before copy out to the pipe (defer)
+  # top: handle name mangling for cross-compilation unit function lookup (defer for now)
