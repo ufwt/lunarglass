@@ -1,0 +1,160 @@
+; ModuleID = 'Top'
+
+@gl_FragColor = internal global <4 x float> zeroinitializer
+
+define fastcc float @foo(<4 x float>) {
+foo:
+  %1 = extractelement <4 x float> %0, i32 0
+  %2 = extractelement <4 x float> %0, i32 1
+  %3 = fadd float %1, %2
+  ret float %3
+}
+
+define void @main() {
+entry:
+  %foo_retval = alloca float
+  %BaseColor = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 0, i32 0)
+  %0 = call float @foo(<4 x float> %BaseColor)
+  store float %0, float* %foo_retval
+  %1 = load float* %foo_retval
+  %2 = insertelement <4 x float> undef, float %1, i32 0
+  %3 = insertelement <4 x float> %2, float %1, i32 1
+  %4 = insertelement <4 x float> %3, float %1, i32 2
+  %5 = insertelement <4 x float> %4, float %1, i32 3
+  store <4 x float> %5, <4 x float>* @gl_FragColor
+  %6 = load <4 x float>* @gl_FragColor
+  call void @llvm.gla.fWriteData.v4f32(i32 0, <4 x float> %6)
+  ret void
+}
+
+declare <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32, i32) nounwind readonly
+
+declare void @llvm.gla.fWriteData.v4f32(i32, <4 x float>) nounwind
+; ModuleID = 'Top'
+
+define fastcc float @foo(<4 x float>) {
+foo:
+  %1 = extractelement <4 x float> %0, i32 0
+  %2 = extractelement <4 x float> %0, i32 1
+  %3 = fadd float %1, %2
+  ret float %3
+}
+
+define void @main() {
+entry:
+  %BaseColor = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 0, i32 0)
+  %0 = call float @foo(<4 x float> %BaseColor)
+  %1 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.f32(<4 x float> undef, i32 15, float %0, i32 -1, float %0, i32 -1, float %0, i32 -1, float %0, i32 -1)
+  call void @llvm.gla.fWriteData.v4f32(i32 0, <4 x float> %1)
+  ret void
+}
+
+declare <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32, i32) nounwind readonly
+
+declare void @llvm.gla.fWriteData.v4f32(i32, <4 x float>) nounwind
+
+declare <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.f32(<4 x float>, i32, float, i32, float, i32, float, i32, float, i32) nounwind readnone
+
+***Unsupported functionality: opcode in Bottom IR: 50
+compiling functionCall.frag...
+uniform vec4 bigColor ; 
+varying vec4 BaseColor ; 
+uniform float d ; 
+float  foo (vec4 bar ){
+return bar . x + bar . y ; }
+
+void  main (){
+vec4 color = vec4 ( foo ( BaseColor ) ) ; gl_FragColor = color ; }
+
+
+
+(
+(declare (uniform ) float d)
+(declare (in ) vec4 BaseColor)
+(declare (uniform ) vec4 bigColor)
+(declare (in ) vec4 gl_FragCoord)
+(declare (in ) bool gl_FrontFacing)
+(declare (out ) vec4 gl_FragColor)
+(declare (out ) float gl_FragDepth)
+(declare (in ) vec4 gl_Color)
+(declare (in ) vec4 gl_SecondaryColor)
+(declare (in ) float gl_FogFragCoord)
+(declare (uniform ) mat4 gl_ModelViewMatrix)
+(declare (uniform ) mat4 gl_ProjectionMatrix)
+(declare (uniform ) mat4 gl_ModelViewProjectionMatrix)
+(declare (uniform ) mat3 gl_NormalMatrix)
+(declare (uniform ) mat4 gl_ModelViewMatrixInverse)
+(declare (uniform ) mat4 gl_ProjectionMatrixInverse)
+(declare (uniform ) mat4 gl_ModelViewProjectionMatrixInverse)
+(declare (uniform ) mat4 gl_ModelViewMatrixTranspose)
+(declare (uniform ) mat4 gl_ProjectionMatrixTranspose)
+(declare (uniform ) mat4 gl_ModelViewProjectionMatrixTranspose)
+(declare (uniform ) mat4 gl_ModelViewMatrixInverseTranspose)
+(declare (uniform ) mat4 gl_ProjectionMatrixInverseTranspose)
+(declare (uniform ) mat4 gl_ModelViewProjectionMatrixInverseTranspose)
+(declare (uniform ) float gl_NormalScale)
+(declare (uniform ) gl_LightModelParameters gl_LightModel)
+(declare () int gl_MaxLights)
+(declare () int gl_MaxClipPlanes)
+(declare () int gl_MaxTextureUnits)
+(declare () int gl_MaxTextureCoords)
+(declare () int gl_MaxVertexAttribs)
+(declare () int gl_MaxVertexUniformComponents)
+(declare () int gl_MaxVaryingFloats)
+(declare () int gl_MaxVertexTextureImageUnits)
+(declare () int gl_MaxCombinedTextureImageUnits)
+(declare () int gl_MaxTextureImageUnits)
+(declare () int gl_MaxFragmentUniformComponents)
+(declare (uniform ) (array mat4 4) gl_TextureMatrix)
+(declare (uniform ) (array mat4 4) gl_TextureMatrixInverse)
+(declare (uniform ) (array mat4 4) gl_TextureMatrixTranspose)
+(declare (uniform ) (array mat4 4) gl_TextureMatrixInverseTranspose)
+(declare (uniform ) gl_DepthRangeParameters gl_DepthRange)
+(declare (uniform ) (array vec4 8) gl_ClipPlane)
+(declare (uniform ) gl_PointParameters gl_Point)
+(declare (uniform ) gl_MaterialParameters gl_FrontMaterial)
+(declare (uniform ) gl_MaterialParameters gl_BackMaterial)
+(declare (uniform ) (array gl_LightSourceParameters 8) gl_LightSource)
+(declare (uniform ) gl_LightModelProducts gl_FrontLightModelProduct)
+(declare (uniform ) gl_LightModelProducts gl_BackLightModelProduct)
+(declare (uniform ) (array gl_LightProducts 8) gl_FrontLightProduct)
+(declare (uniform ) (array gl_LightProducts 8) gl_BackLightProduct)
+(declare (uniform ) (array vec4 2) gl_TextureEnvColor)
+(declare (uniform ) (array vec4 4) gl_EyePlaneS)
+(declare (uniform ) (array vec4 4) gl_EyePlaneT)
+(declare (uniform ) (array vec4 4) gl_EyePlaneR)
+(declare (uniform ) (array vec4 4) gl_EyePlaneQ)
+(declare (uniform ) (array vec4 4) gl_ObjectPlaneS)
+(declare (uniform ) (array vec4 4) gl_ObjectPlaneT)
+(declare (uniform ) (array vec4 4) gl_ObjectPlaneR)
+(declare (uniform ) (array vec4 4) gl_ObjectPlaneQ)
+(declare (uniform ) gl_FogParameters gl_Fog)
+(declare (in ) (array vec4 0) gl_TexCoord)
+(declare () int gl_MaxDrawBuffers)
+(declare (out ) (array vec4 2) gl_FragData)
+(function foo
+  (signature float
+    (parameters
+      (declare (in ) vec4 bar)
+    )
+    (
+      (return (expression float + (swiz x (var_ref bar) )(swiz y (var_ref bar) )) )
+    ))
+
+)
+
+(function main
+  (signature void
+    (parameters
+    )
+    (
+      (declare (temporary ) float foo_retval)
+      (assign (constant bool (1)) (x) (var_ref foo_retval)  (call foo ((var_ref BaseColor) ))
+) 
+      (assign (constant bool (1)) (xyzw) (var_ref gl_FragColor)  (swiz xxxx (var_ref foo_retval) )) 
+    ))
+
+)
+
+
+)

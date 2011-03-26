@@ -1,0 +1,332 @@
+; ModuleID = 'Top'
+
+@u = external addrspace(1) constant <4 x float>
+@p = external addrspace(1) constant i1
+@gl_FragColor = internal global <4 x float> zeroinitializer
+
+define void @main() {
+entry:
+  %mix_retval = alloca <4 x float>
+  %w_undef = alloca <4 x float>
+  %w2 = alloca <4 x float>
+  %w_flow = alloca <4 x float>
+  %w_reorder = alloca <4 x float>
+  %w_dep = alloca <4 x float>
+  %w = alloca <4 x float>
+  %0 = load <4 x float> addrspace(1)* @u
+  store <4 x float> %0, <4 x float>* %w
+  %1 = load <4 x float> addrspace(1)* @u
+  store <4 x float> %1, <4 x float>* %w_dep
+  %2 = load <4 x float> addrspace(1)* @u
+  store <4 x float> %2, <4 x float>* %w_reorder
+  %3 = load <4 x float> addrspace(1)* @u
+  store <4 x float> %3, <4 x float>* %w_flow
+  %4 = load <4 x float>* %w_reorder
+  %5 = insertelement <4 x float> %4, float 0x3FFC9FBE80000000, i32 2
+  store <4 x float> %5, <4 x float>* %w_reorder
+  %t = call <2 x float> @llvm.gla.fReadInterpolant.v2f32(i32 0, i32 0)
+  %6 = extractelement <2 x float> %t, i32 1
+  %7 = insertelement <2 x float> undef, float %6, i32 0
+  %8 = extractelement <2 x float> %t, i32 0
+  %9 = insertelement <2 x float> %7, float %8, i32 1
+  %10 = load <4 x float>* %w
+  %11 = extractelement <2 x float> %9, i32 0
+  %12 = insertelement <4 x float> %10, float %11, i32 1
+  %13 = extractelement <2 x float> %9, i32 1
+  %14 = insertelement <4 x float> %12, float %13, i32 3
+  store <4 x float> %14, <4 x float>* %w
+  %15 = load <4 x float>* %w_reorder
+  %16 = insertelement <4 x float> %15, float 0x3FFC9FBE80000000, i32 0
+  store <4 x float> %16, <4 x float>* %w_reorder
+  %17 = load <4 x float> addrspace(1)* @u
+  %18 = extractelement <4 x float> %17, i32 2
+  %19 = insertelement <4 x float> undef, float %18, i32 0
+  %20 = extractelement <4 x float> %17, i32 3
+  %21 = insertelement <4 x float> %19, float %20, i32 1
+  %22 = extractelement <4 x float> %17, i32 0
+  %23 = insertelement <4 x float> %21, float %22, i32 2
+  %24 = extractelement <4 x float> %17, i32 1
+  %25 = insertelement <4 x float> %23, float %24, i32 3
+  store <4 x float> %25, <4 x float>* %w2
+  %26 = load <4 x float>* %w_reorder
+  %27 = insertelement <4 x float> %26, float 0x3FFC9FBE80000000, i32 1
+  store <4 x float> %27, <4 x float>* %w_reorder
+  %28 = load <4 x float>* %w2
+  %29 = extractelement <4 x float> %28, i32 0
+  %30 = insertelement <2 x float> undef, float %29, i32 0
+  %31 = extractelement <4 x float> %28, i32 2
+  %32 = insertelement <2 x float> %30, float %31, i32 1
+  %33 = load <4 x float>* %w_dep
+  %34 = extractelement <2 x float> %32, i32 0
+  %35 = insertelement <4 x float> %33, float %34, i32 0
+  %36 = extractelement <2 x float> %32, i32 1
+  %37 = insertelement <4 x float> %35, float %36, i32 1
+  store <4 x float> %37, <4 x float>* %w_dep
+  %t1 = call <2 x float> @llvm.gla.fReadInterpolant.v2f32(i32 0, i32 0)
+  %38 = load <4 x float>* %w_dep
+  %39 = extractelement <2 x float> %t1, i32 0
+  %40 = insertelement <4 x float> %38, float %39, i32 2
+  %41 = extractelement <2 x float> %t1, i32 1
+  %42 = insertelement <4 x float> %40, float %41, i32 3
+  store <4 x float> %42, <4 x float>* %w_dep
+  %43 = load <4 x float> addrspace(1)* @u
+  %44 = extractelement <4 x float> %43, i32 2
+  %45 = insertelement <2 x float> undef, float %44, i32 0
+  %46 = extractelement <4 x float> %43, i32 3
+  %47 = insertelement <2 x float> %45, float %46, i32 1
+  %48 = load <4 x float>* %w_undef
+  %49 = extractelement <2 x float> %47, i32 0
+  %50 = insertelement <4 x float> %48, float %49, i32 0
+  %51 = extractelement <2 x float> %47, i32 1
+  %52 = insertelement <4 x float> %50, float %51, i32 1
+  store <4 x float> %52, <4 x float>* %w_undef
+  %53 = load i1 addrspace(1)* @p
+  br i1 %53, label %then, label %else
+
+then:                                             ; preds = %entry
+  %t2 = call <2 x float> @llvm.gla.fReadInterpolant.v2f32(i32 0, i32 0)
+  %54 = extractelement <2 x float> %t2, i32 0
+  %55 = load <4 x float>* %w_flow
+  %56 = insertelement <4 x float> %55, float %54, i32 0
+  store <4 x float> %56, <4 x float>* %w_flow
+  br label %ifmerge
+
+else:                                             ; preds = %entry
+  %t3 = call <2 x float> @llvm.gla.fReadInterpolant.v2f32(i32 0, i32 0)
+  %57 = extractelement <2 x float> %t3, i32 1
+  %58 = load <4 x float>* %w_flow
+  %59 = insertelement <4 x float> %58, float %57, i32 0
+  store <4 x float> %59, <4 x float>* %w_flow
+  br label %ifmerge
+
+ifmerge:                                          ; preds = %else, %then
+  %60 = load <4 x float>* %w_reorder
+  %61 = load <4 x float>* %w_undef
+  %62 = load <4 x float>* %w
+  %63 = load <4 x float>* %w2
+  %64 = fmul <4 x float> %62, %63
+  %65 = load <4 x float>* %w_dep
+  %66 = fmul <4 x float> %64, %65
+  %67 = load <4 x float>* %w_flow
+  %68 = fmul <4 x float> %66, %67
+  %mix = call <4 x float> @llvm.gla.fMix.v4f32.v4f32.v4f32.v4f32(<4 x float> %60, <4 x float> %61, <4 x float> %68)
+  store <4 x float> %mix, <4 x float>* %mix_retval
+  %69 = load <4 x float>* %mix_retval
+  store <4 x float> %69, <4 x float>* @gl_FragColor
+  %70 = load <4 x float>* @gl_FragColor
+  call void @llvm.gla.fWriteData.v4f32(i32 0, <4 x float> %70)
+  ret void
+}
+
+declare <2 x float> @llvm.gla.fReadInterpolant.v2f32(i32, i32) nounwind readonly
+
+declare <4 x float> @llvm.gla.fMix.v4f32.v4f32.v4f32.v4f32(<4 x float>, <4 x float>, <4 x float>) nounwind readnone
+
+declare void @llvm.gla.fWriteData.v4f32(i32, <4 x float>) nounwind
+; ModuleID = 'Top'
+
+@u = external addrspace(1) constant <4 x float>
+@p = external addrspace(1) constant i1
+
+define void @main() {
+entry:
+  %0 = load <4 x float> addrspace(1)* @u
+  %t = call <2 x float> @llvm.gla.fReadInterpolant.v2f32(i32 0, i32 0)
+  %1 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.v2f32.f32.v2f32(<4 x float> %0, i32 10, float 0.000000e+00, i32 -1, <2 x float> %t, i32 1, float 0.000000e+00, i32 -1, <2 x float> %t, i32 0)
+  %2 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.v4f32.v4f32.v4f32.v4f32(<4 x float> undef, i32 15, <4 x float> %0, i32 2, <4 x float> %0, i32 3, <4 x float> %0, i32 0, <4 x float> %0, i32 1)
+  %3 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.f32(<4 x float> %0, i32 7, float 0x3FFC9FBE80000000, i32 -1, float 0x3FFC9FBE80000000, i32 -1, float 0x3FFC9FBE80000000, i32 -1, float 0.000000e+00, i32 -1)
+  %4 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.v4f32.v4f32.v2f32.v2f32(<4 x float> %0, i32 15, <4 x float> %0, i32 2, <4 x float> %0, i32 0, <2 x float> %t, i32 0, <2 x float> %t, i32 1)
+  %5 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.v4f32.v4f32.f32.f32(<4 x float> undef, i32 3, <4 x float> %0, i32 2, <4 x float> %0, i32 3, float 0.000000e+00, i32 -1, float 0.000000e+00, i32 -1)
+  %6 = load i1 addrspace(1)* @p
+  br i1 %6, label %then, label %else
+
+then:                                             ; preds = %entry
+  %7 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.v2f32.f32.f32.f32(<4 x float> %0, i32 1, <2 x float> %t, i32 0, float 0.000000e+00, i32 -1, float 0.000000e+00, i32 -1, float 0.000000e+00, i32 -1)
+  br label %ifmerge
+
+else:                                             ; preds = %entry
+  %8 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.v2f32.f32.f32.f32(<4 x float> %0, i32 1, <2 x float> %t, i32 1, float 0.000000e+00, i32 -1, float 0.000000e+00, i32 -1, float 0.000000e+00, i32 -1)
+  br label %ifmerge
+
+ifmerge:                                          ; preds = %else, %then
+  %w_flow.0 = phi <4 x float> [ %7, %then ], [ %8, %else ]
+  %9 = fmul <4 x float> %1, %2
+  %10 = fmul <4 x float> %9, %4
+  %11 = fmul <4 x float> %10, %w_flow.0
+  %mix = call <4 x float> @llvm.gla.fMix.v4f32.v4f32.v4f32.v4f32(<4 x float> %3, <4 x float> %5, <4 x float> %11)
+  call void @llvm.gla.fWriteData.v4f32(i32 0, <4 x float> %mix)
+  ret void
+}
+
+declare <2 x float> @llvm.gla.fReadInterpolant.v2f32(i32, i32) nounwind readonly
+
+declare <4 x float> @llvm.gla.fMix.v4f32.v4f32.v4f32.v4f32(<4 x float>, <4 x float>, <4 x float>) nounwind readnone
+
+declare void @llvm.gla.fWriteData.v4f32(i32, <4 x float>) nounwind
+
+declare <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.v4f32.v4f32.f32.f32(<4 x float>, i32, <4 x float>, i32, <4 x float>, i32, float, i32, float, i32) nounwind readnone
+
+declare <2 x float> @llvm.gla.fMultiInsert.v2f32.v2f32.v4f32.v4f32.f32.f32(<2 x float>, i32, <4 x float>, i32, <4 x float>, i32, float, i32, float, i32) nounwind readnone
+
+declare <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.v4f32.v4f32.v2f32.v2f32(<4 x float>, i32, <4 x float>, i32, <4 x float>, i32, <2 x float>, i32, <2 x float>, i32) nounwind readnone
+
+declare <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.f32(<4 x float>, i32, float, i32, float, i32, float, i32, float, i32) nounwind readnone
+
+declare <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.v4f32.v4f32.v4f32.v4f32(<4 x float>, i32, <4 x float>, i32, <4 x float>, i32, <4 x float>, i32, <4 x float>, i32) nounwind readnone
+
+declare <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.v2f32.f32.v2f32(<4 x float>, i32, float, i32, <2 x float>, i32, float, i32, <2 x float>, i32) nounwind readnone
+
+declare <2 x float> @llvm.gla.fMultiInsert.v2f32.v2f32.v2f32.v2f32.f32.f32(<2 x float>, i32, <2 x float>, i32, <2 x float>, i32, float, i32, float, i32) nounwind readnone
+
+declare <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.v2f32.f32.f32.f32(<4 x float>, i32, <2 x float>, i32, float, i32, float, i32, float, i32) nounwind readnone
+compiling swizzle.frag...
+uniform float blend ; 
+uniform vec4 u ; 
+uniform bool p ; 
+varying vec2 t ; 
+void  main (){
+float blendscale = 1.789000 ; vec4 w = u ; vec4 w_undef ; vec4 w_dep = u ; vec4 w_reorder = u ; vec4 w2 = u ; vec4 w_flow = u ; w_reorder . z = blendscale ; w . wy = t ; w_reorder . x = blendscale ; w2 . xyzw = u . zwxy ; w_reorder . y = blendscale ; w_dep . xy = w2 . xz ; w_dep . zw = t ; w_undef . xy = u . zw ; if ( p ) w_flow . x = t . x ; else w_flow . x = t . y ; gl_FragColor = mix ( w_reorder , w_undef , w * w2 * w_dep * w_flow ) ; }
+
+
+
+(
+(declare (in ) vec2 t)
+(declare (uniform ) bool p)
+(declare (uniform ) vec4 u)
+(declare (uniform ) float blend)
+(declare (in ) vec4 gl_FragCoord)
+(declare (in ) bool gl_FrontFacing)
+(declare (out ) vec4 gl_FragColor)
+(declare (out ) float gl_FragDepth)
+(declare (in ) vec4 gl_Color)
+(declare (in ) vec4 gl_SecondaryColor)
+(declare (in ) float gl_FogFragCoord)
+(declare (uniform ) mat4 gl_ModelViewMatrix)
+(declare (uniform ) mat4 gl_ProjectionMatrix)
+(declare (uniform ) mat4 gl_ModelViewProjectionMatrix)
+(declare (uniform ) mat3 gl_NormalMatrix)
+(declare (uniform ) mat4 gl_ModelViewMatrixInverse)
+(declare (uniform ) mat4 gl_ProjectionMatrixInverse)
+(declare (uniform ) mat4 gl_ModelViewProjectionMatrixInverse)
+(declare (uniform ) mat4 gl_ModelViewMatrixTranspose)
+(declare (uniform ) mat4 gl_ProjectionMatrixTranspose)
+(declare (uniform ) mat4 gl_ModelViewProjectionMatrixTranspose)
+(declare (uniform ) mat4 gl_ModelViewMatrixInverseTranspose)
+(declare (uniform ) mat4 gl_ProjectionMatrixInverseTranspose)
+(declare (uniform ) mat4 gl_ModelViewProjectionMatrixInverseTranspose)
+(declare (uniform ) float gl_NormalScale)
+(declare (uniform ) gl_LightModelParameters gl_LightModel)
+(declare () int gl_MaxLights)
+(declare () int gl_MaxClipPlanes)
+(declare () int gl_MaxTextureUnits)
+(declare () int gl_MaxTextureCoords)
+(declare () int gl_MaxVertexAttribs)
+(declare () int gl_MaxVertexUniformComponents)
+(declare () int gl_MaxVaryingFloats)
+(declare () int gl_MaxVertexTextureImageUnits)
+(declare () int gl_MaxCombinedTextureImageUnits)
+(declare () int gl_MaxTextureImageUnits)
+(declare () int gl_MaxFragmentUniformComponents)
+(declare (uniform ) (array mat4 4) gl_TextureMatrix)
+(declare (uniform ) (array mat4 4) gl_TextureMatrixInverse)
+(declare (uniform ) (array mat4 4) gl_TextureMatrixTranspose)
+(declare (uniform ) (array mat4 4) gl_TextureMatrixInverseTranspose)
+(declare (uniform ) gl_DepthRangeParameters gl_DepthRange)
+(declare (uniform ) (array vec4 8) gl_ClipPlane)
+(declare (uniform ) gl_PointParameters gl_Point)
+(declare (uniform ) gl_MaterialParameters gl_FrontMaterial)
+(declare (uniform ) gl_MaterialParameters gl_BackMaterial)
+(declare (uniform ) (array gl_LightSourceParameters 8) gl_LightSource)
+(declare (uniform ) gl_LightModelProducts gl_FrontLightModelProduct)
+(declare (uniform ) gl_LightModelProducts gl_BackLightModelProduct)
+(declare (uniform ) (array gl_LightProducts 8) gl_FrontLightProduct)
+(declare (uniform ) (array gl_LightProducts 8) gl_BackLightProduct)
+(declare (uniform ) (array vec4 2) gl_TextureEnvColor)
+(declare (uniform ) (array vec4 4) gl_EyePlaneS)
+(declare (uniform ) (array vec4 4) gl_EyePlaneT)
+(declare (uniform ) (array vec4 4) gl_EyePlaneR)
+(declare (uniform ) (array vec4 4) gl_EyePlaneQ)
+(declare (uniform ) (array vec4 4) gl_ObjectPlaneS)
+(declare (uniform ) (array vec4 4) gl_ObjectPlaneT)
+(declare (uniform ) (array vec4 4) gl_ObjectPlaneR)
+(declare (uniform ) (array vec4 4) gl_ObjectPlaneQ)
+(declare (uniform ) gl_FogParameters gl_Fog)
+(declare (in ) (array vec4 0) gl_TexCoord)
+(declare () int gl_MaxDrawBuffers)
+(declare (out ) (array vec4 2) gl_FragData)
+(function main
+  (signature void
+    (parameters
+    )
+    (
+      (declare () vec4 w_flow)
+      (declare () vec4 w2)
+      (declare () vec4 w_reorder)
+      (declare () vec4 w_dep)
+      (declare () vec4 w_undef)
+      (declare () vec4 w)
+      (assign (constant bool (1)) (xyzw) (var_ref w)  (var_ref u) ) 
+      (assign (constant bool (1)) (xyzw) (var_ref w_dep)  (var_ref u) ) 
+      (assign (constant bool (1)) (xyzw) (var_ref w_reorder)  (var_ref u) ) 
+      (assign (constant bool (1)) (xyzw) (var_ref w_flow)  (var_ref u) ) 
+      (assign (constant bool (1)) (z) (var_ref w_reorder)  (constant float (1.789000)) ) 
+      (assign (constant bool (1)) (yw) (var_ref w)  (swiz yx (var_ref t) )) 
+      (assign (constant bool (1)) (x) (var_ref w_reorder)  (constant float (1.789000)) ) 
+      (assign (constant bool (1)) (xyzw) (var_ref w2)  (swiz zwxy (var_ref u) )) 
+      (assign (constant bool (1)) (y) (var_ref w_reorder)  (constant float (1.789000)) ) 
+      (assign (constant bool (1)) (xy) (var_ref w_dep)  (swiz xz (var_ref w2) )) 
+      (assign (constant bool (1)) (zw) (var_ref w_dep)  (var_ref t) ) 
+      (assign (constant bool (1)) (xy) (var_ref w_undef)  (swiz zw (var_ref u) )) 
+      (if (var_ref p) (
+        (assign (constant bool (1)) (x) (var_ref w_flow)  (swiz x (var_ref t) )) 
+      )
+      (
+        (assign (constant bool (1)) (x) (var_ref w_flow)  (swiz y (var_ref t) )) 
+      ))
+
+      (declare (temporary ) vec4 mix_retval)
+      (assign (constant bool (1)) (xyzw) (var_ref mix_retval)  (call mix ((var_ref w_reorder) (var_ref w_undef) (expression vec4 * (expression vec4 * (expression vec4 * (var_ref w) (var_ref w2) ) (var_ref w_dep) ) (var_ref w_flow) ) ))
+) 
+      (assign (constant bool (1)) (xyzw) (var_ref gl_FragColor)  (var_ref mix_retval) ) 
+    ))
+
+)
+
+
+)
+// LunarGOO output
+#version 130
+uniform vec4 u;
+uniform bool p;
+in vec2 t;
+const float const25 = 1.789;
+
+void main()
+{
+    vec4 temp21;
+    vec4 temp22 = u;
+    temp22.yw = t.yx;
+    vec4 temp23 = u.zwxy;
+    vec4 temp24 = u;
+    temp24.xyz = vec3(const25, const25, const25);
+    vec4 temp26 = vec4(u.z, u.x, t.x, t.y);
+    vec4 temp27;
+    temp27.xy = u.zw;
+    if (p) {
+        vec4 temp28 = u;
+        temp28.x = t.x;
+        temp21 = temp28;
+    }
+    else {
+        vec4 temp29 = u;
+        temp29.x = t.y;
+        temp21 = temp29;
+    }
+    
+    vec4 temp30 = temp22 * temp23;
+    vec4 temp31 = temp30 * temp26;
+    vec4 temp32 = temp31 * temp21;
+    vec4 temp33 = mix(temp24, temp27, temp32);
+    gl_FragColor = temp33;
+    
+}
