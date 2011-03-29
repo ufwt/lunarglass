@@ -57,38 +57,36 @@ But not yet able to do
 
 === Tasks Completed ===
 
-  * + Middle-end pass to coalesce multiple inserts into a single L-value swizzle (Michael, r219) 
-  * + Output revision number, in linux at least (Michael, r230)
-  * + destructuring of swizzles in the Top IR into inserts/extracts (Michael, r236)
-  * + Command-line argument for handling of optimizations (Michael, r240)
-  * + Handle all the logical vs. bitwise operators in the back end {{{^, ^^, !, ~, not()}}} (JohnK, r248)
-  * + bitwise assignments e.g. {{{|=}}} (JohnK, r248)
+  * Middle-end pass to coalesce multiple inserts into a single L-value swizzle (Michael, r219) 
+  * Output revision number, in linux at least (Michael, r230)
+  * destructuring of swizzles in the Top IR into inserts/extracts (Michael, r236)
+  * Command-line argument for handling of optimizations (Michael, r240)
+  * Handle all the logical vs. bitwise operators in the back end {{{^, ^^, !, ~, not()}}} (JohnK, r248)
+  * bitwise assignments e.g. {{{|=}}} (JohnK, r248)
+  * refactor back-end into llvm pass so that analyses are available (Michael, r260)
 
-=== Things to do (who's currently working on it) not yet in priority order ===
+=== Things to do (who's currently working on it) in priority order ===
 
-  * - Add more LLVM optimizations (Michael)
-  * - Add motivating examples for LLVM optimizations (Michael)
-  * - Identify flow control we can't handle in Bottom IR (Michael)
-  * - Top IR arrays for uniforms and inputs (Cody)
-  * - GLSL back-end support for arrays for uniforms and inputs (JohnK)
-  * - original variable names (JohnK)
-  * - original line numbers
-  * - control the output version of GLSL
-  * - fix the linux/windows output differences in the test files
-  * - 1.3 texturing
-  * - Figure out how to keep matrices through the stack (JohnK)
-  * - refactor back-end into llvm pass so that analyses are available (Michael)
-  * - loop detection and support of normal/typical loops (Michael)
-  * - refactor back-end flow control handling to use analysis information (Michael)
-  * - function calls; see FunctionCallPlan (Cody, JohnK)
-  * - vertex shaders
-  * - {{{gl_FragDepth}}}, {{{gl_FragData}}}
-  * - Fragment shader user-defined outputs
-  * - matrices (uncommon in fragment shaders)
-  * - support multiple compilations units for a single stage
-  * - top IR driven tests
-  * - llvm and gla namespace independent place to put in shared utility functions
-  * - single-use expression/copy propagation during code generation (Michael)
+  * Add more LLVM optimizations (Michael)
+  * Add motivating examples for LLVM optimizations (Michael)
+  * Top IR arrays for uniforms and inputs (Cody)
+  * GLSL back-end support for arrays for uniforms and inputs (JohnK)
+  * original variable names (JohnK)
+  * control the output version of GLSL (JohnK, Michael)
+  * fix the linux/windows output differences in the test files (JohnK)
+  * 1.3 texturing (Cody)
+  * Identify flow control we can't handle in Bottom IR (Michael)
+  * loop detection and support of normal/typical loops (Michael)
+  * {{{gl_FragDepth}}}, {{{gl_FragData}}}
+  * Fragment shader user-defined outputs
+  * function calls; see FunctionCallPlan (Cody, JohnK)
+  * Figure out how to keep matrices through the stack (JohnK)
+  * vertex shaders
+  * original line numbers
+  * llvm and gla namespace independent place to put in shared utility functions
+  * support multiple compilations units for a single stage
+  * single-use expression/copy propagation during code generation (Michael)
+  * top IR driven tests
 
 == Third Milestone ==
 
