@@ -82,9 +82,9 @@ But not yet able to do
   * 1.3 texturing (Cody)
   * Fragment shader user-defined outputs
   * Identify flow control we can't handle in Bottom IR (Michael)
-  * fix the linux/windows output differences in the test files (JohnK)
+  * fix the linux/windows output differences in the test files; the 00 vs. 000 is done, but not the [0] vs. [1] (JohnK)
   * function calls; see FunctionCallPlan (Cody, JohnK)
-  * Figure out how to keep matrices through the stack (JohnK)
+  * Figure out how to keep matrices through the stack for re manifestation in LunarGoo output(JohnK)
   * single-use expression/copy propagation during code generation (Michael)
 
 == Third Milestone ==
