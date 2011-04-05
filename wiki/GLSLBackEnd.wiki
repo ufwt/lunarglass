@@ -75,16 +75,16 @@ But not yet able to do
   * Top IR matrix conversion to vectors (JohnK)
   * support for arrays of compile time constant indexes for uniforms and inputs (JohnK, Cody)
   * loop detection and support of normal/typical loops (Michael)
-  * structure support
-  * vertex shaders
+  * structure support in Top IR
   * 1.3 texturing (Cody)
-  * {{{gl_FragDepth}}}, {{{gl_FragData}}}
-  * Fragment shader user-defined outputs
+  * {{{gl_FragDepth}}}, {{{gl_FragData}}}, and fragment shader user-defined outputs
   * Identify flow control we can't handle in Bottom IR (Michael)
   * fix the linux/windows output differences in the test files; the 00 vs. 000 is done, but not the [0] vs. [1] (JohnK)
+-------------------
   * function calls; see FunctionCallPlan (Cody, JohnK)
   * Figure out how to keep matrices through the stack for re manifestation in LunarGoo output(JohnK)
   * single-use expression/copy propagation during code generation (Michael)
+  * structure printing
 
 == Third Milestone ==
 
@@ -92,7 +92,8 @@ But not yet able to do
   * OpenGL ES
   * multiple compilation units in a stage
   * Cross-stage interactions
-  * All non-goto flow control works.
+  * All non-goto flow control works
+  * vertex shaders
 
 === Tasks Completed ===
 
