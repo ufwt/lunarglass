@@ -68,24 +68,23 @@ But not yet able to do
   * control the output version of GLSL (JohnK, Michael r260)
   * llvm and gla namespace independent place to put in shared utility functions (JohnK)
   * fix the the 00 vs. 000 linux/windows output differences (JohnK)
-
+  * support for arrays of compile-time constant indexes for uniforms and inputs (JohnK, Cody, r288, r293)
 
 === Things to do (who's currently working on it) in priority order ===
 
   * Add more LLVM optimizations (Michael)
   * Add motivating examples for LLVM optimizations (Michael)
   * Top IR matrix conversion to vectors (JohnK)
-  * support for arrays of compile-time constant indexes for uniforms and inputs (JohnK, Cody)
   * loop detection and support of normal/typical loops (Michael)
   * transform LLVM CFG to structured flow control (Michael)
-  * structure support in Top IR
+  * structure support in Top IR (Cody)
   * fix problem of initializing constants
   * 1.3 texturing (Cody)
   * {{{gl_FragDepth}}}, {{{gl_FragData}}}, and fragment shader user-defined outputs
   * {{{gl_Position}}} et. al., pipeline outputs, and attributes for vertex shader support
   * Identify flow control we can't handle in Bottom IR (Michael)
-  * support for arrays with variable indexes for uniforms and inputs
-  * support for writable arrays
+  * support for arrays with variable indexes for uniforms and inputs (Cody)
+  * support for writable arrays (Cody)
   * handle complex l-values ({{{like a[3].m[2][++z]}}})
   * fix the {{{[0] vs. [1]}}} linux/windows output differences
 -------------------
