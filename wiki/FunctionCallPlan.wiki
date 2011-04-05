@@ -1,9 +1,12 @@
 #summary things to do for function calls
 
-  # top: handle void functions
-  # bottom: handle generic function prototypes
-  # top: handle a list input parameters with an output, no structures
-  # top: handle local variables, have to get to the bottom of this.  But, I'm sure all locals, once we know what they are, can be declared in the entry block to the function they are in.
+Done:
+  # top: handle void functions (Cody, r262) 
+  # bottom: handle generic function prototypes (JohnK, r264)
+  # top: handle a list input parameters with an output, no structures (Cody, r265)
+  # top: handle local variables, have to get to the bottom of this.  But, I'm sure all locals, once we know what they are, can be declared in the entry block to the function they are in. (JohnK, r269)
+
+Todo:
   # top: early returns in non-main functions
   # bottom: finish any return support
   # top: handle arbitrary returns/ins/outs, no structures at the GLSL level
