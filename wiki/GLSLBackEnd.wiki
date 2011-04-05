@@ -68,7 +68,8 @@ But not yet able to do
   * control the output version of GLSL (JohnK, Michael r260)
   * llvm and gla namespace independent place to put in shared utility functions (JohnK)
   * fix the the 00 vs. 000 linux/windows output differences (JohnK)
-  * support for arrays of compile-time constant indexes for uniforms and inputs (JohnK, Cody, r288, r293)
+  * support for arrays of compile-time constant indexes for uniforms and inputs (JohnK, Cody)
+  * inline all functions, until we handle them (JohnK)
 
 === Things to do (who's currently working on it) in priority order ===
 
