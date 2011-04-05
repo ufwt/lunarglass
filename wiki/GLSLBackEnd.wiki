@@ -86,8 +86,8 @@ But not yet able to do
   * Identify flow control we can't handle in Bottom IR (Michael)
   * support for arrays with variable indexes for uniforms and inputs
   * support for writable arrays
-  * handle complex l-values (like a[3].m[2][++z])
-  * fix the [0] vs. [1] linux/windows output differences
+  * handle complex l-values ({{{like a[3].m[2][++z]}}})
+  * fix the {{{[0] vs. [1]}}} linux/windows output differences
 -------------------
   * function calls; see FunctionCallPlan (Cody, JohnK)
   * Figure out how to keep matrices through the stack for re manifestation in LunarGoo output(JohnK)
