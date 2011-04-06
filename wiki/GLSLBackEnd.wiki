@@ -63,13 +63,17 @@ But not yet able to do
   * Command-line argument for handling of optimizations (Michael, r240)
   * Handle all the logical vs. bitwise operators in the back end {{{^, ^^, !, ~, not()}}} (JohnK, r248)
   * bitwise assignments e.g. {{{|=}}} (JohnK, r248)
-  * refactor back-end into llvm pass so that analyses are available (Michael, r260)
-  * original variable names (JohnK)
-  * control the output version of GLSL (JohnK, Michael r260)
-  * llvm and gla namespace independent place to put in shared utility functions (JohnK)
-  * fix the the 00 vs. 000 linux/windows output differences (JohnK)
-  * support for arrays of compile-time constant indexes for uniforms and inputs (JohnK, Cody)
-  * inline all functions, until we handle them (JohnK)
+  * refactor back-end into llvm pass so that analyses are available (Michael, r318)
+  * original variable names (JohnK, r318)
+  * control the output version of GLSL (JohnK, Michael r318)
+  * llvm and gla namespace independent place to put in shared utility functions (JohnK, r318)
+  * fix the the 00 vs. 000 linux/windows output differences (JohnK, r318)
+  * support for arrays of compile-time constant indexes for uniforms and inputs (JohnK, Cody, r318)
+  * collection of bugs fixed for the website (Cody, Michael, JohnK, r318)
+    * inline all functions, until we handle them
+    * vectors of constants
+    * others
+
 
 === Things to do (who's currently working on it) in priority order ===
 
