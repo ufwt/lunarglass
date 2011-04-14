@@ -69,30 +69,30 @@ But not yet able to do
   * llvm and gla namespace independent place to put in shared utility functions (JohnK, r318)
   * fix the the 00 vs. 000 linux/windows output differences (JohnK, r318)
   * support for arrays of compile-time constant indexes for uniforms and inputs (JohnK, Cody, r318)
+  * fix problem of initializing constants (JohnK, r318)
   * collection of bugs fixed for the website (Cody, Michael, JohnK, r318)
     * inline all functions, until we handle them
     * vectors of constants
     * others
 
-
 === Things to do (who's currently working on it) in priority order ===
 
   * Add more LLVM optimizations (Michael)
   * Add motivating examples for LLVM optimizations (Michael)
-  * Top IR matrix conversion to vectors (JohnK)
+  * Lossy top-IR matrix conversion to vectors through GLSL2 (JohnK)
   * loop detection and support of normal/typical loops (Michael)
   * transform LLVM CFG to structured flow control (Michael)
   * structure support in Top IR (Cody)
-  * fix problem of initializing constants
   * 1.3 texturing (Cody)
   * {{{gl_FragDepth}}}, {{{gl_FragData}}}, and fragment shader user-defined outputs
   * {{{gl_Position}}} et. al., pipeline outputs, and attributes for vertex shader support
   * Identify flow control we can't handle in Bottom IR (Michael)
   * support for arrays with variable indexes for uniforms and inputs (Cody)
   * support for writable arrays (Cody)
-  * handle complex l-values ({{{like a[3].m[2][++z]}}})
+  * handle complex r-values and l-values ({{{like a[3].m[2][++z]}}}) (Cody)
   * fix the {{{[0] vs. [1]}}} linux/windows output differences
 -------------------
+  * Non-lossy top-IR matrix conversion to vectors (JohnK)
   * function calls; see FunctionCallPlan (Cody, JohnK)
   * Figure out how to keep matrices through the stack for re manifestation in LunarGoo output(JohnK)
   * single-use expression/copy propagation during code generation (Michael)
