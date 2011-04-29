@@ -1,0 +1,7 @@
+#summary Tasks relating to the middle of LunarGLASS, independent of backends and frontends.
+
+= Tasks =
+
+== Performance Concerns ==
+  * Document algorithmic complexity of LunarGLASS transforms/analyses/procedures
+  * Improve algorithmic complexity of LunarGLASS transforms/analyses/procedures
