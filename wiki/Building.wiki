@@ -95,11 +95,28 @@ Overview:  Mesa and LLVM will be sibling tree structures; both children of your 
 
 2. To get mesa, make a directory "mesa" under "LunarGLASS".  Then get [ftp://freedesktop.org/pub/mesa/7.10.1/MesaLib-7.10.1.tar.bz2 Mesa 7.10.1].  Extract to the LunarGLASS/mesa directory.
 
+Example:
+{{{
+cd LunarGLASS
+wget ftp://freedesktop.org/pub/mesa/7.10.1/MesaLib-7.10.1.tar.bz2
+tar -xjf MesaLib-7.10.1.tar.bz2
+mv Mesa-7.10.1 mesa
+rm MesaLib-7.10.1*
+}}}
+
 Verify you are left with the directory "LunarGLASS/mesa/src" et. al.
 
-3. To get LLVM, make a directory "LLVM" under "LunarGLASS".  We are using version 2.9 of LLVM, which you download from
-http://llvm.org/releases/download.html#2.9  "LLVM Source Code".
-Expand this download in your "LunarGLASS/LLVM" directory.  Verify this left LLVM in the directory "LunarGLASS/LLVM/llvm-2.9".
+3. To get LLVM, make a directory "LLVM" under "LunarGLASS". Download [http://llvm.org/releases/2.9/llvm-2.9.tgz LLVM 2.9] and extract it into your "LunarGLASS/LLVM" directory.  Verify this left LLVM in the directory "LunarGLASS/LLVM/llvm-2.9".
+
+Example:
+{{{
+cd LunarGLASS
+mkdir LLVM
+cd LLVM
+wget http://llvm.org/releases/2.9/llvm-2.9.tgz
+tar -zxf llvm-2.9.tgz
+rm llvm-2.9.tgz
+}}}
 
 4. To get LunarGLASS, you will need SVN commands or an SVN client like Tortoise.  Use your SVN client to check out from google's code site //lunarglass.googlecode.com/svn/trunk to your directory "LunarGLASS".
 
