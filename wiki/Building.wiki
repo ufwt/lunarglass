@@ -42,7 +42,7 @@ cd LLVM/llvm-2.9/build
 make
 make install DESTDIR=`pwd`/install
 }}}
-  # Build Mesa 7.9 (with LunarGLASS modifications)
+  # Build Mesa 7.10.1 (with LunarGLASS modifications)
 {{{
 cd mesa/src/glsl
 make -f StandAlone.makefile StandAlone
@@ -93,15 +93,9 @@ Overview:  Mesa and LLVM will be sibling tree structures; both children of your 
 
 1. Make a directory (e.g., "LunarGLASS", which will be the name used in these instructions) where you want this project to live.  It will correspond to the svn/trunk/ directory in the google SVN repository for LunarGLASS.
 
-2. To get mesa, make a directory "mesa" under "LunarGLASS".  Then get  version 7.9 of mesa:
-{{{
-# cd to the LunarGLASS directory you made...
-cd LunarGLASS
-git clone git://git.freedesktop.org/git/mesa/mesa
-cd mesa
-git checkout -f mesa-7.9
-}}} 
-You could also use the tar release, but it will be missing talloc. Verify you are left with the directory "LunarGLASS/mesa/src" et. al.
+2. To get mesa, make a directory "mesa" under "LunarGLASS".  Then get [ftp://freedesktop.org/pub/mesa/7.10.1/MesaLib-7.10.1.tar.bz2 Mesa 7.10.1].  Extract to the LunarGLASS/mesa directory.
+
+Verify you are left with the directory "LunarGLASS/mesa/src" et. al.
 
 3. To get LLVM, make a directory "LLVM" under "LunarGLASS".  We are using version 2.9 of LLVM, which you download from
 http://llvm.org/releases/download.html#2.9  "LLVM Source Code".
