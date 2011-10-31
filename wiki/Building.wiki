@@ -19,7 +19,7 @@ The install tool assumes you have bash, libffi-dev, flex, bison, git, subversion
 
 To test it out, try
 {{{
-./bin/LunarGLASS ./tests/test.frag
+./tools/LunarGLASS ./test/test.frag
 }}}
 
 === Manual instructions ===
@@ -36,20 +36,20 @@ sudo apt-get install build-essential libffi-dev flex bison
 }}}
   # Build LLVM 2.9 (with LunarGLASS modifications)
 {{{
-mkdir LLVM/llvm-2.9/build
-cd LLVM/llvm-2.9/build
+mkdir Core/LLVM/llvm-2.9/build
+cd Core/LLVM/llvm-2.9/build
 ../configure
 make
 make install DESTDIR=`pwd`/install
 }}}
   # Build Mesa 7.10.1 (with LunarGLASS modifications)
 {{{
-cd mesa/src/glsl
-make -f StandAlone.makefile StandAlone
+cd Standalone
+make
 }}}
   # You can execute the compiler on a test in the test directory by
 {{{
-./StandAlone ../LunarGLASS/test/test.frag
+./StandAlone ../test/test.frag
 }}}
 
 
@@ -72,7 +72,7 @@ For LLVM, create a visual studio solution that creates all the libs and headers:
 
   # Download and install CMake for Windows.  We used version 2.8.3 at http://www.cmake.org/cmake/resources/software.html.
   # Run CMake as Administrator
-  # Put the path to your LunarGLASS\LLVM\llvm-2.9 location in "Where is the source code:" and add "\build" to it (LunarGLASS\LLVM\llvm-2.9\build) in "Where to build the binaries:"
+  # Put the path to your LunarGLASS\Core\LLVM\llvm-2.9 location in "Where is the source code:" and add "\build" to it (LunarGLASS\Core\LLVM\llvm-2.9\build) in "Where to build the binaries:"
   # Press "Configure" button in CMake and say yes to create the build directory.
   # Select Visual Studio 10 and "Use default native compilers" and "Finish".
   # Change CMAKE_INSTALL_PREFIX to "install" (no path).
@@ -82,9 +82,9 @@ For LLVM, create a visual studio solution that creates all the libs and headers:
 
 For LunarGLASS
 
-  * Open "LunarGLASS/mesa/src/glsl/Standalone.sln" and build the "standalone" project.
+  * Open "LunarGLASS/Standalone/StandAlone.sln" and build the "standalone" project.
 
-In the directory "LunarGLASS/mesa/src/LunarGLASS/test" is a run script that shows how to execute the compiler on a test file.
+In the directory "LunarGLASS/test" is a run script that shows how to execute the compiler on a test file.
 
 
 == Getting the Code ==
@@ -106,13 +106,13 @@ rm MesaLib-7.10.1*
 
 Verify you are left with the directory "LunarGLASS/mesa/src" et. al.
 
-3. To get LLVM, make a directory "LLVM" under "LunarGLASS". Download [http://llvm.org/releases/2.9/llvm-2.9.tgz LLVM 2.9] and extract it into your "LunarGLASS/LLVM" directory.  Verify this left LLVM in the directory "LunarGLASS/LLVM/llvm-2.9".
+3. To get LLVM, make a directory "LLVM" under "LunarGLASS". Download [http://llvm.org/releases/2.9/llvm-2.9.tgz LLVM 2.9] and extract it into your "LunarGLASS/Core/LLVM" directory.  Verify this left LLVM in the directory "LunarGLASS/Core/LLVM/llvm-2.9".
 
 Example:
 {{{
 cd LunarGLASS
-mkdir LLVM
-cd LLVM
+mkdir -p Core/LLVM
+cd Core/LLVM
 wget http://llvm.org/releases/2.9/llvm-2.9.tgz
 tar -zxf llvm-2.9.tgz
 rm llvm-2.9.tgz
