@@ -1,0 +1,328 @@
+
+Top IR:
+; ModuleID = 'Top'
+
+%s0 = type { i32 }
+%s00 = type { %s0 }
+%s1 = type { i32, float, %s0 }
+%s2 = type { i32, float, %s1 }
+%s3 = type { [12 x %s2], i32, float, %s1 }
+
+@foo3 = external addrspace(2) constant %s3
+@foo1 = external addrspace(2) constant %s1
+@coord_shadow = internal global <2 x float> zeroinitializer
+@foo0 = external addrspace(2) constant %s0
+@foo00 = external addrspace(2) constant %s00
+@FragColor_shadow = internal global <4 x float> zeroinitializer
+@"sampler2D sampler" = external addrspace(1) constant i32
+
+define fastcc void @main() {
+entry:
+  %constructed = alloca %s1
+  %locals00 = alloca %s00
+  %locals0 = alloca %s0
+  %locals1Array = alloca [10 x %s1]
+  %fArray = alloca [6 x float]
+  %locals2 = alloca %s2
+  %0 = load i32 addrspace(2)* getelementptr inbounds (%s3 addrspace(2)* @foo3, i32 0, i32 0, i32 9, i32 0)
+  %1 = icmp sgt i32 %0, 0
+  br i1 %1, label %then, label %else
+
+then:                                             ; preds = %entry
+  %2 = getelementptr %s2* %locals2, i32 0, i32 1
+  store float 1.000000e+00, float* %2
+  %3 = getelementptr %s2* %locals2, i32 0, i32 2
+  store %s1 { i32 0, float 1.000000e+00, %s0 zeroinitializer }, %s1* %3
+  store [6 x float] zeroinitializer, [6 x float]* %fArray
+  %4 = load %s1 addrspace(2)* @foo1
+  %5 = getelementptr [10 x %s1]* %locals1Array, i32 0, i32 6
+  store %s1 %4, %s1* %5
+  store %s0 zeroinitializer, %s0* %locals0
+  store %s00 zeroinitializer, %s00* %locals00
+  br label %ifmerge
+
+else:                                             ; preds = %entry
+  %coord__ = call <2 x float> @llvm.gla.fReadInterpolant.v2f32(i32 0, i32 -1, i32 1)
+  store <2 x float> %coord__, <2 x float>* @coord_shadow
+  %6 = load <2 x float>* @coord_shadow
+  %7 = extractelement <2 x float> %6, i32 0
+  %8 = getelementptr %s2* %locals2, i32 0, i32 1
+  store float %7, float* %8
+  %coord__1 = call <2 x float> @llvm.gla.fReadInterpolant.v2f32(i32 0, i32 -1, i32 1)
+  store <2 x float> %coord__1, <2 x float>* @coord_shadow
+  %9 = load <2 x float>* @coord_shadow
+  %10 = extractelement <2 x float> %9, i32 1
+  %11 = load %s0 addrspace(2)* @foo0
+  %12 = getelementptr %s1* %constructed, i32 0, i32 0
+  store i32 1, i32* %12
+  %13 = getelementptr %s1* %constructed, i32 0, i32 1
+  store float %10, float* %13
+  %14 = getelementptr %s1* %constructed, i32 0, i32 2
+  store %s0 %11, %s0* %14
+  %15 = load %s1* %constructed
+  %16 = getelementptr %s2* %locals2, i32 0, i32 2
+  store %s1 %15, %s1* %16
+  store [6 x float] [float 0.000000e+00, float 1.000000e+00, float 2.000000e+00, float 3.000000e+00, float 4.000000e+00, float 5.000000e+00], [6 x float]* %fArray
+  %17 = getelementptr %s2* %locals2, i32 0, i32 2
+  %18 = load %s1* %17
+  %19 = getelementptr [10 x %s1]* %locals1Array, i32 0, i32 6
+  store %s1 %18, %s1* %19
+  %locals02 = load %s0 addrspace(2)* getelementptr inbounds (%s1 addrspace(2)* @foo1, i32 0, i32 2)
+  store %s0 %locals02, %s0* %locals0
+  %locals003 = load %s00 addrspace(2)* @foo00
+  store %s00 %locals003, %s00* %locals00
+  br label %ifmerge
+
+ifmerge:                                          ; preds = %else, %then
+  %20 = getelementptr %s0* %locals0, i32 0, i32 0
+  %21 = load i32* %20
+  %22 = icmp sgt i32 %21, 5
+  br i1 %22, label %then4, label %ifmerge6
+
+then4:                                            ; preds = %ifmerge
+  %23 = getelementptr %s00* %locals00, i32 0, i32 0
+  %locals05 = load %s0* %23
+  store %s0 %locals05, %s0* %locals0
+  br label %ifmerge6
+
+ifmerge6:                                         ; preds = %ifmerge, %then4
+  %24 = getelementptr %s0* %locals0, i32 0, i32 0
+  %25 = load i32* %24
+  %26 = sitofp i32 %25 to float
+  %27 = getelementptr [10 x %s1]* %locals1Array, i32 0, i32 6, i32 1
+  %28 = load float* %27
+  %29 = fadd float %26, %28
+  %30 = getelementptr [6 x float]* %fArray, i32 0, i32 3
+  %31 = load float* %30
+  %32 = fadd float %29, %31
+  %33 = getelementptr %s2* %locals2, i32 0, i32 2, i32 1
+  %34 = load float* %33
+  %35 = fadd float %32, %34
+  %36 = load i32 addrspace(1)* @"sampler2D sampler"
+  %coord__7 = call <2 x float> @llvm.gla.fReadInterpolant.v2f32(i32 0, i32 -1, i32 1)
+  store <2 x float> %coord__7, <2 x float>* @coord_shadow
+  %37 = load <2 x float>* @coord_shadow
+  %38 = call <4 x float> @llvm.gla.fTextureSample.v4f32.v2f32(i32 2, i32 %36, i32 0, <2 x float> %37)
+  %39 = insertelement <4 x float> undef, float %35, i32 0
+  %40 = insertelement <4 x float> %39, float %35, i32 1
+  %41 = insertelement <4 x float> %40, float %35, i32 2
+  %42 = insertelement <4 x float> %41, float %35, i32 3
+  %FragColor_shadow = fmul <4 x float> %42, %38
+  store <4 x float> %FragColor_shadow, <4 x float>* @FragColor_shadow
+  br label %stage-epilogue
+
+stage-epilogue:                                   ; preds = %ifmerge6
+  %43 = load <4 x float>* @FragColor_shadow
+  call void @llvm.gla.fWriteData.v4f32(i32 0, i32 -1, <4 x float> %43)
+  br label %stage-exit
+
+stage-exit:                                       ; preds = %stage-epilogue
+  ret void
+}
+
+declare <2 x float> @llvm.gla.fReadInterpolant.v2f32(i32, i32, i32) nounwind readnone
+
+declare <4 x float> @llvm.gla.fTextureSample.v4f32.v2f32(i32, i32, i32, <2 x float>) nounwind readnone
+
+declare void @llvm.gla.fWriteData.v4f32(i32, i32, <4 x float>) nounwind
+
+
+Bottom IR:
+; ModuleID = 'Top'
+
+%s0 = type { i32 }
+%s00 = type { %s0 }
+%s1 = type { i32, float, %s0 }
+%s2 = type { i32, float, %s1 }
+%s3 = type { [12 x %s2], i32, float, %s1 }
+
+@foo3 = external addrspace(2) constant %s3
+@foo1 = external addrspace(2) constant %s1
+@foo0 = external addrspace(2) constant %s0
+@foo00 = external addrspace(2) constant %s00
+@"sampler2D sampler" = external addrspace(1) constant i32
+
+define fastcc void @main() {
+entry:
+  %gla_constGEP = getelementptr %s3 addrspace(2)* @foo3, i32 0, i32 0, i32 9, i32 0
+  %0 = load i32 addrspace(2)* %gla_constGEP, align 4
+  %1 = icmp sgt i32 %0, 0
+  %gla_constGEP72 = getelementptr %s1 addrspace(2)* @foo1, i32 0, i32 1
+  %2 = load float addrspace(2)* %gla_constGEP72, align 4
+  %coord__1 = call <2 x float> @llvm.gla.fReadInterpolant.v2f32(i32 0, i32 -1, i32 1)
+  %3 = extractelement <2 x float> %coord__1, i32 1
+  %gla_constGEP73 = getelementptr %s1 addrspace(2)* @foo1, i32 0, i32 2, i32 0
+  %4 = load i32 addrspace(2)* %gla_constGEP73, align 4
+  %gla_constGEP74 = getelementptr %s00 addrspace(2)* @foo00, i32 0, i32 0, i32 0
+  %5 = load i32 addrspace(2)* %gla_constGEP74, align 4
+  %select = select i1 %1, float 0.000000e+00, float 3.000000e+00
+  %select68 = select i1 %1, i32 0, i32 %4
+  %select69 = select i1 %1, i32 0, i32 %5
+  %select70 = select i1 %1, float 1.000000e+00, float %3
+  %select71 = select i1 %1, float %2, float %3
+  %6 = icmp sgt i32 %select68, 5
+  %locals0.0.1 = select i1 %6, i32 %select69, i32 %select68
+  %7 = sitofp i32 %locals0.0.1 to float
+  %8 = fadd float %7, %select71
+  %9 = fadd float %8, %select
+  %10 = fadd float %9, %select70
+  %11 = call <4 x float> @llvm.gla.fSwizzle.v4f32.f32.v4i32(float %10, <4 x i32> zeroinitializer)
+  %12 = load i32 addrspace(1)* @"sampler2D sampler", align 4
+  %13 = call <4 x float> @llvm.gla.fTextureSample.v4f32.v2f32(i32 2, i32 %12, i32 0, <2 x float> %coord__1)
+  %FragColor_shadow = fmul <4 x float> %11, %13
+  call void @llvm.gla.fWriteData.v4f32(i32 0, i32 -1, <4 x float> %FragColor_shadow)
+  br label %stage-epilogue
+
+stage-epilogue:                                   ; preds = %entry
+  br label %stage-exit
+
+stage-exit:                                       ; preds = %stage-epilogue
+  ret void
+}
+
+declare <2 x float> @llvm.gla.fReadInterpolant.v2f32(i32, i32, i32) nounwind readnone
+
+declare <4 x float> @llvm.gla.fTextureSample.v4f32.v2f32(i32, i32, i32, <2 x float>) nounwind readnone
+
+declare void @llvm.gla.fWriteData.v4f32(i32, i32, <4 x float>) nounwind
+
+declare <4 x float> @llvm.gla.fSwizzle.v4f32.f32.v4i32(float, <4 x i32>) nounwind readnone
+#### BEGIN COMPILER 0 INFO LOG ####
+#### END COMPILER 0 INFO LOG ####
+#### BEGIN LINKER INFO LOG ####
+#### END LINKER INFO LOG ####
+
+// LunarGOO(r722) output
+#version 130
+struct s0 {
+    int member0;
+};
+
+struct s00 {
+    s0 member0;
+};
+
+struct s1 {
+    int member0;
+    float member1;
+    s0 member2;
+};
+
+struct s2 {
+    int member0;
+    float member1;
+    s1 member2;
+};
+
+struct s3 {
+    s2[12] member0;
+    int member1;
+    float member2;
+    s1 member3;
+};
+
+uniform s3 foo3;
+uniform s1 foo1;
+uniform s0 foo0;
+uniform s00 foo00;
+uniform sampler2D sampler;
+const int const23_0 = 0;
+in vec2 coord;
+const float const28_0f = 0.0;
+const float const29_3f = 3.0;
+const float const33_1f = 1.0;
+const int const36_5 = 5;
+
+void main()
+{
+    int temp21 = foo3.member0[9].member0;
+    bool temp22 = temp21 > const23_0;
+    float temp24 = foo1.member1;
+    int temp25 = foo1.member2.member0;
+    int temp26 = foo00.member0.member0;
+    float select = temp22 ? const28_0f : const29_3f;
+    int select68 = temp22 ? const23_0 : temp25;
+    int select69 = temp22 ? const23_0 : temp26;
+    float select70 = temp22 ? const33_1f : coord.y;
+    float select71 = temp22 ? temp24 : coord.y;
+    bool temp35 = select68 > const36_5;
+    int locals0_0_1 = temp35 ? select69 : select68;
+    float temp38 = float(locals0_0_1);
+    float temp39 = temp38 + select71;
+    float temp40 = temp39 + select;
+    float temp41 = temp40 + select70;
+    vec4 temp42 = vec4(temp41);
+    vec4 temp43 = texture2D(sampler, coord);
+    vec4 FragColor_shadow = temp42 * temp43;
+    gl_FragColor = FragColor_shadow;
+    
+}
+#### BEGIN COMPILER 0 INFO LOG ####
+#### END COMPILER 0 INFO LOG ####
+#### BEGIN LINKER INFO LOG ####
+#### END LINKER INFO LOG ####
+
+// LunarGOO(r722) output
+#version 130
+struct s0 {
+    int member0;
+};
+
+struct s00 {
+    s0 member0;
+};
+
+struct s1 {
+    int member0;
+    float member1;
+    s0 member2;
+};
+
+struct s2 {
+    int member0;
+    float member1;
+    s1 member2;
+};
+
+struct s3 {
+    s2[12] member0;
+    int member1;
+    float member2;
+    s1 member3;
+};
+
+uniform s3 foo3;
+uniform s1 foo1;
+uniform s00 foo00;
+uniform sampler2D sampler;
+const int const23_0 = 0;
+const float const27_0f = 0.0;
+const float const28_3f = 3.0;
+in vec2 coord;
+const float const32_1f = 1.0;
+const int const36_5 = 5;
+
+void main()
+{
+    int temp211 = foo3.member0[9].member0;
+    bool temp222 = temp211 > const23_0;
+    int temp254 = foo1.member2.member0;
+    int temp265 = foo00.member0.member0;
+    float temp26 = temp222 ? const27_0f : const28_3f;
+    int ternary7_0 = temp222 ? const23_0 : temp254;
+    int _temp265 = temp222 ? const23_0 : temp265;
+    float select = temp222 ? const32_1f : coord.y;
+    float temp243 = foo1.member1;
+    float select51 = temp222 ? temp243 : coord.y;
+    bool temp3533 = ternary7_0 > const36_5;
+    int _temp265_ternary7_0 = temp3533 ? _temp265 : ternary7_0;
+    float temp3841 = float(_temp265_ternary7_0);
+    float temp3942 = temp3841 + select51;
+    float temp4043 = temp3942 + temp26;
+    float temp4144 = temp4043 + select;
+    vec4 temp42 = vec4(temp4144);
+    vec4 temp4347 = texture2D(sampler, coord);
+    vec4 FragColor_shadow48 = temp42 * temp4347;
+    gl_FragColor = FragColor_shadow48;
+    
+}

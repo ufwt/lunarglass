@@ -1,0 +1,1996 @@
+
+Top IR:
+; ModuleID = 'Top'
+
+@colorTransform = external addrspace(2) constant [3 x <3 x float>]
+@un34 = external addrspace(2) constant [4 x <4 x float>]
+@FragColor_shadow = internal global <4 x float> zeroinitializer
+@m = external addrspace(2) constant [4 x <4 x float>]
+@n = external addrspace(2) constant [4 x <4 x float>]
+@um43 = external addrspace(2) constant [4 x <4 x float>]
+
+define fastcc void @main() {
+entry:
+  %assignment_tmp203 = alloca [4 x <4 x float>]
+  %mat_ctor175 = alloca [4 x <4 x float>]
+  %mat_ctor_vec = alloca <4 x float>
+  %mat_ctor164 = alloca [4 x <4 x float>]
+  %mat_ctor = alloca [4 x <4 x float>]
+  %assignment_tmp = alloca <4 x float>
+  %vec_ctor = alloca <4 x float>
+  %0 = load <4 x float>* %vec_ctor
+  %vec_ctor1 = insertelement <4 x float> %0, float 1.000000e+00, i32 3
+  store <4 x float> %vec_ctor1, <4 x float>* %vec_ctor
+  %Color = call <3 x float> @llvm.gla.fReadInterpolant.v3f32(i32 0, i32 -1, i32 1)
+  %__matrix = load [3 x <3 x float>] addrspace(2)* @colorTransform
+  %1 = alloca <3 x float>
+  %2 = load <3 x float>* %1
+  %__column = extractvalue [3 x <3 x float>] %__matrix, 0
+  %__dot = call float @llvm.gla.fDot3.f32.v3f32.v3f32(<3 x float> %Color, <3 x float> %__column)
+  %3 = insertelement <3 x float> %2, float %__dot, i32 0
+  %__column2 = extractvalue [3 x <3 x float>] %__matrix, 1
+  %__dot3 = call float @llvm.gla.fDot3.f32.v3f32.v3f32(<3 x float> %Color, <3 x float> %__column2)
+  %4 = insertelement <3 x float> %3, float %__dot3, i32 1
+  %__column4 = extractvalue [3 x <3 x float>] %__matrix, 2
+  %__dot5 = call float @llvm.gla.fDot3.f32.v3f32.v3f32(<3 x float> %Color, <3 x float> %__column4)
+  %5 = insertelement <3 x float> %4, float %__dot5, i32 2
+  %6 = load <4 x float>* %vec_ctor
+  %7 = extractelement <3 x float> %5, i32 0
+  %8 = insertelement <4 x float> %6, float %7, i32 0
+  %9 = extractelement <3 x float> %5, i32 1
+  %10 = insertelement <4 x float> %8, float %9, i32 1
+  %11 = extractelement <3 x float> %5, i32 2
+  %vec_ctor6 = insertelement <4 x float> %10, float %11, i32 2
+  store <4 x float> %vec_ctor6, <4 x float>* %vec_ctor
+  %12 = load <4 x float> addrspace(2)* getelementptr inbounds ([4 x <4 x float>] addrspace(2)* @un34, i32 0, i32 1)
+  %13 = load <4 x float>* %vec_ctor
+  %assignment_tmp7 = fadd <4 x float> %12, %13
+  store <4 x float> %assignment_tmp7, <4 x float>* %assignment_tmp
+  %FragColor_shadow = load <4 x float>* %assignment_tmp
+  store <4 x float> %FragColor_shadow, <4 x float>* @FragColor_shadow
+  %__matrix8 = load [4 x <4 x float>] addrspace(2)* @m
+  %__matrix9 = load [4 x <4 x float>] addrspace(2)* @n
+  %element1 = extractvalue [4 x <4 x float>] %__matrix8, 0
+  %element2 = extractvalue [4 x <4 x float>] %__matrix9, 0
+  %14 = fcmp one <4 x float> %element1, %element2
+  %15 = call i1 @llvm.gla.any.v4i1(<4 x i1> %14)
+  %element110 = extractvalue [4 x <4 x float>] %__matrix8, 1
+  %element211 = extractvalue [4 x <4 x float>] %__matrix9, 1
+  %16 = fcmp one <4 x float> %element110, %element211
+  %17 = call i1 @llvm.gla.any.v4i1(<4 x i1> %16)
+  %18 = or i1 %15, %17
+  %element112 = extractvalue [4 x <4 x float>] %__matrix8, 2
+  %element213 = extractvalue [4 x <4 x float>] %__matrix9, 2
+  %19 = fcmp one <4 x float> %element112, %element213
+  %20 = call i1 @llvm.gla.any.v4i1(<4 x i1> %19)
+  %21 = or i1 %18, %20
+  %element114 = extractvalue [4 x <4 x float>] %__matrix8, 3
+  %element215 = extractvalue [4 x <4 x float>] %__matrix9, 3
+  %22 = fcmp one <4 x float> %element114, %element215
+  %23 = call i1 @llvm.gla.any.v4i1(<4 x i1> %22)
+  %24 = or i1 %21, %23
+  br i1 %24, label %then, label %else
+
+then:                                             ; preds = %entry
+  %25 = load <4 x float>* %assignment_tmp
+  %v = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %FragColor_shadow16 = fadd <4 x float> %25, %v
+  store <4 x float> %FragColor_shadow16, <4 x float>* @FragColor_shadow
+  br label %ifmerge
+
+else:                                             ; preds = %entry
+  %26 = load <4 x float>* @FragColor_shadow
+  %__matrix17 = load [4 x <4 x float>] addrspace(2)* @m
+  %v18 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %27 = alloca <4 x float>
+  %28 = load <4 x float>* %27
+  %__component = extractelement <4 x float> %v18, i32 0
+  %__component19 = extractelement <4 x float> %v18, i32 1
+  %__component20 = extractelement <4 x float> %v18, i32 2
+  %__component21 = extractelement <4 x float> %v18, i32 3
+  %__column22 = extractvalue [4 x <4 x float>] %__matrix17, 0
+  %__element = extractelement <4 x float> %__column22, i32 0
+  %__product = fmul float %__element, %__component
+  %__column23 = extractvalue [4 x <4 x float>] %__matrix17, 1
+  %__element24 = extractelement <4 x float> %__column23, i32 0
+  %__product25 = fmul float %__element24, %__component19
+  %__dotProduct = fadd float %__product, %__product25
+  %__column26 = extractvalue [4 x <4 x float>] %__matrix17, 2
+  %__element27 = extractelement <4 x float> %__column26, i32 0
+  %__product28 = fmul float %__element27, %__component20
+  %__dotProduct29 = fadd float %__dotProduct, %__product28
+  %__column30 = extractvalue [4 x <4 x float>] %__matrix17, 3
+  %__element31 = extractelement <4 x float> %__column30, i32 0
+  %__product32 = fmul float %__element31, %__component21
+  %__dotProduct33 = fadd float %__dotProduct29, %__product32
+  %29 = insertelement <4 x float> %28, float %__dotProduct33, i32 0
+  %__column34 = extractvalue [4 x <4 x float>] %__matrix17, 0
+  %__element35 = extractelement <4 x float> %__column34, i32 1
+  %__product36 = fmul float %__element35, %__component
+  %__column37 = extractvalue [4 x <4 x float>] %__matrix17, 1
+  %__element38 = extractelement <4 x float> %__column37, i32 1
+  %__product39 = fmul float %__element38, %__component19
+  %__dotProduct40 = fadd float %__product36, %__product39
+  %__column41 = extractvalue [4 x <4 x float>] %__matrix17, 2
+  %__element42 = extractelement <4 x float> %__column41, i32 1
+  %__product43 = fmul float %__element42, %__component20
+  %__dotProduct44 = fadd float %__dotProduct40, %__product43
+  %__column45 = extractvalue [4 x <4 x float>] %__matrix17, 3
+  %__element46 = extractelement <4 x float> %__column45, i32 1
+  %__product47 = fmul float %__element46, %__component21
+  %__dotProduct48 = fadd float %__dotProduct44, %__product47
+  %30 = insertelement <4 x float> %29, float %__dotProduct48, i32 1
+  %__column49 = extractvalue [4 x <4 x float>] %__matrix17, 0
+  %__element50 = extractelement <4 x float> %__column49, i32 2
+  %__product51 = fmul float %__element50, %__component
+  %__column52 = extractvalue [4 x <4 x float>] %__matrix17, 1
+  %__element53 = extractelement <4 x float> %__column52, i32 2
+  %__product54 = fmul float %__element53, %__component19
+  %__dotProduct55 = fadd float %__product51, %__product54
+  %__column56 = extractvalue [4 x <4 x float>] %__matrix17, 2
+  %__element57 = extractelement <4 x float> %__column56, i32 2
+  %__product58 = fmul float %__element57, %__component20
+  %__dotProduct59 = fadd float %__dotProduct55, %__product58
+  %__column60 = extractvalue [4 x <4 x float>] %__matrix17, 3
+  %__element61 = extractelement <4 x float> %__column60, i32 2
+  %__product62 = fmul float %__element61, %__component21
+  %__dotProduct63 = fadd float %__dotProduct59, %__product62
+  %31 = insertelement <4 x float> %30, float %__dotProduct63, i32 2
+  %__column64 = extractvalue [4 x <4 x float>] %__matrix17, 0
+  %__element65 = extractelement <4 x float> %__column64, i32 3
+  %__product66 = fmul float %__element65, %__component
+  %__column67 = extractvalue [4 x <4 x float>] %__matrix17, 1
+  %__element68 = extractelement <4 x float> %__column67, i32 3
+  %__product69 = fmul float %__element68, %__component19
+  %__dotProduct70 = fadd float %__product66, %__product69
+  %__column71 = extractvalue [4 x <4 x float>] %__matrix17, 2
+  %__element72 = extractelement <4 x float> %__column71, i32 3
+  %__product73 = fmul float %__element72, %__component20
+  %__dotProduct74 = fadd float %__dotProduct70, %__product73
+  %__column75 = extractvalue [4 x <4 x float>] %__matrix17, 3
+  %__element76 = extractelement <4 x float> %__column75, i32 3
+  %__product77 = fmul float %__element76, %__component21
+  %__dotProduct78 = fadd float %__dotProduct74, %__product77
+  %32 = insertelement <4 x float> %31, float %__dotProduct78, i32 3
+  %33 = fadd <4 x float> %26, %32
+  %v79 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %__matrix80 = load [4 x <4 x float>] addrspace(2)* @m
+  %__matrix81 = load [4 x <4 x float>] addrspace(2)* @n
+  %34 = alloca [4 x <4 x float>]
+  %35 = load [4 x <4 x float>]* %34
+  %__leftColumn = extractvalue [4 x <4 x float>] %__matrix80, 0
+  %__rightColumn = extractvalue [4 x <4 x float>] %__matrix81, 0
+  %__column82 = fsub <4 x float> %__leftColumn, %__rightColumn
+  %36 = insertvalue [4 x <4 x float>] %35, <4 x float> %__column82, 0
+  %__leftColumn83 = extractvalue [4 x <4 x float>] %__matrix80, 1
+  %__rightColumn84 = extractvalue [4 x <4 x float>] %__matrix81, 1
+  %__column85 = fsub <4 x float> %__leftColumn83, %__rightColumn84
+  %37 = insertvalue [4 x <4 x float>] %36, <4 x float> %__column85, 1
+  %__leftColumn86 = extractvalue [4 x <4 x float>] %__matrix80, 2
+  %__rightColumn87 = extractvalue [4 x <4 x float>] %__matrix81, 2
+  %__column88 = fsub <4 x float> %__leftColumn86, %__rightColumn87
+  %38 = insertvalue [4 x <4 x float>] %37, <4 x float> %__column88, 2
+  %__leftColumn89 = extractvalue [4 x <4 x float>] %__matrix80, 3
+  %__rightColumn90 = extractvalue [4 x <4 x float>] %__matrix81, 3
+  %__column91 = fsub <4 x float> %__leftColumn89, %__rightColumn90
+  %39 = insertvalue [4 x <4 x float>] %38, <4 x float> %__column91, 3
+  %40 = alloca <4 x float>
+  %41 = load <4 x float>* %40
+  %__column92 = extractvalue [4 x <4 x float>] %39, 0
+  %__dot93 = call float @llvm.gla.fDot4.f32.v4f32.v4f32(<4 x float> %v79, <4 x float> %__column92)
+  %42 = insertelement <4 x float> %41, float %__dot93, i32 0
+  %__column94 = extractvalue [4 x <4 x float>] %39, 1
+  %__dot95 = call float @llvm.gla.fDot4.f32.v4f32.v4f32(<4 x float> %v79, <4 x float> %__column94)
+  %43 = insertelement <4 x float> %42, float %__dot95, i32 1
+  %__column96 = extractvalue [4 x <4 x float>] %39, 2
+  %__dot97 = call float @llvm.gla.fDot4.f32.v4f32.v4f32(<4 x float> %v79, <4 x float> %__column96)
+  %44 = insertelement <4 x float> %43, float %__dot97, i32 2
+  %__column98 = extractvalue [4 x <4 x float>] %39, 3
+  %__dot99 = call float @llvm.gla.fDot4.f32.v4f32.v4f32(<4 x float> %v79, <4 x float> %__column98)
+  %45 = insertelement <4 x float> %44, float %__dot99, i32 3
+  %FragColor_shadow100 = fadd <4 x float> %33, %45
+  store <4 x float> %FragColor_shadow100, <4 x float>* @FragColor_shadow
+  br label %ifmerge
+
+ifmerge:                                          ; preds = %else, %then
+  %v101 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %46 = extractelement <4 x float> %v101, i32 0
+  %u = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %47 = extractelement <4 x float> %u, i32 0
+  %48 = fmul float %46, %47
+  %__matrix102 = load [4 x <4 x float>]* %mat_ctor
+  %49 = extractvalue [4 x <4 x float>] %__matrix102, 0
+  %50 = insertelement <4 x float> %49, float %48, i32 0
+  %mat_ctor103 = insertvalue [4 x <4 x float>] %__matrix102, <4 x float> %50, 0
+  store [4 x <4 x float>] %mat_ctor103, [4 x <4 x float>]* %mat_ctor
+  %v104 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %51 = extractelement <4 x float> %v104, i32 0
+  %u105 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %52 = extractelement <4 x float> %u105, i32 1
+  %53 = fmul float %51, %52
+  %__matrix106 = load [4 x <4 x float>]* %mat_ctor
+  %54 = extractvalue [4 x <4 x float>] %__matrix106, 0
+  %55 = insertelement <4 x float> %54, float %53, i32 1
+  %mat_ctor107 = insertvalue [4 x <4 x float>] %__matrix106, <4 x float> %55, 0
+  store [4 x <4 x float>] %mat_ctor107, [4 x <4 x float>]* %mat_ctor
+  %v108 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %56 = extractelement <4 x float> %v108, i32 0
+  %u109 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %57 = extractelement <4 x float> %u109, i32 2
+  %58 = fmul float %56, %57
+  %__matrix110 = load [4 x <4 x float>]* %mat_ctor
+  %59 = extractvalue [4 x <4 x float>] %__matrix110, 0
+  %60 = insertelement <4 x float> %59, float %58, i32 2
+  %mat_ctor111 = insertvalue [4 x <4 x float>] %__matrix110, <4 x float> %60, 0
+  store [4 x <4 x float>] %mat_ctor111, [4 x <4 x float>]* %mat_ctor
+  %v112 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %61 = extractelement <4 x float> %v112, i32 0
+  %u113 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %62 = extractelement <4 x float> %u113, i32 3
+  %63 = fmul float %61, %62
+  %__matrix114 = load [4 x <4 x float>]* %mat_ctor
+  %64 = extractvalue [4 x <4 x float>] %__matrix114, 0
+  %65 = insertelement <4 x float> %64, float %63, i32 3
+  %mat_ctor115 = insertvalue [4 x <4 x float>] %__matrix114, <4 x float> %65, 0
+  store [4 x <4 x float>] %mat_ctor115, [4 x <4 x float>]* %mat_ctor
+  %v116 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %66 = extractelement <4 x float> %v116, i32 1
+  %u117 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %67 = extractelement <4 x float> %u117, i32 0
+  %68 = fmul float %66, %67
+  %__matrix118 = load [4 x <4 x float>]* %mat_ctor
+  %69 = extractvalue [4 x <4 x float>] %__matrix118, 1
+  %70 = insertelement <4 x float> %69, float %68, i32 0
+  %mat_ctor119 = insertvalue [4 x <4 x float>] %__matrix118, <4 x float> %70, 1
+  store [4 x <4 x float>] %mat_ctor119, [4 x <4 x float>]* %mat_ctor
+  %v120 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %71 = extractelement <4 x float> %v120, i32 1
+  %u121 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %72 = extractelement <4 x float> %u121, i32 1
+  %73 = fmul float %71, %72
+  %__matrix122 = load [4 x <4 x float>]* %mat_ctor
+  %74 = extractvalue [4 x <4 x float>] %__matrix122, 1
+  %75 = insertelement <4 x float> %74, float %73, i32 1
+  %mat_ctor123 = insertvalue [4 x <4 x float>] %__matrix122, <4 x float> %75, 1
+  store [4 x <4 x float>] %mat_ctor123, [4 x <4 x float>]* %mat_ctor
+  %v124 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %76 = extractelement <4 x float> %v124, i32 1
+  %u125 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %77 = extractelement <4 x float> %u125, i32 2
+  %78 = fmul float %76, %77
+  %__matrix126 = load [4 x <4 x float>]* %mat_ctor
+  %79 = extractvalue [4 x <4 x float>] %__matrix126, 1
+  %80 = insertelement <4 x float> %79, float %78, i32 2
+  %mat_ctor127 = insertvalue [4 x <4 x float>] %__matrix126, <4 x float> %80, 1
+  store [4 x <4 x float>] %mat_ctor127, [4 x <4 x float>]* %mat_ctor
+  %v128 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %81 = extractelement <4 x float> %v128, i32 1
+  %u129 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %82 = extractelement <4 x float> %u129, i32 3
+  %83 = fmul float %81, %82
+  %__matrix130 = load [4 x <4 x float>]* %mat_ctor
+  %84 = extractvalue [4 x <4 x float>] %__matrix130, 1
+  %85 = insertelement <4 x float> %84, float %83, i32 3
+  %mat_ctor131 = insertvalue [4 x <4 x float>] %__matrix130, <4 x float> %85, 1
+  store [4 x <4 x float>] %mat_ctor131, [4 x <4 x float>]* %mat_ctor
+  %v132 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %86 = extractelement <4 x float> %v132, i32 2
+  %u133 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %87 = extractelement <4 x float> %u133, i32 0
+  %88 = fmul float %86, %87
+  %__matrix134 = load [4 x <4 x float>]* %mat_ctor
+  %89 = extractvalue [4 x <4 x float>] %__matrix134, 2
+  %90 = insertelement <4 x float> %89, float %88, i32 0
+  %mat_ctor135 = insertvalue [4 x <4 x float>] %__matrix134, <4 x float> %90, 2
+  store [4 x <4 x float>] %mat_ctor135, [4 x <4 x float>]* %mat_ctor
+  %v136 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %91 = extractelement <4 x float> %v136, i32 2
+  %u137 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %92 = extractelement <4 x float> %u137, i32 1
+  %93 = fmul float %91, %92
+  %__matrix138 = load [4 x <4 x float>]* %mat_ctor
+  %94 = extractvalue [4 x <4 x float>] %__matrix138, 2
+  %95 = insertelement <4 x float> %94, float %93, i32 1
+  %mat_ctor139 = insertvalue [4 x <4 x float>] %__matrix138, <4 x float> %95, 2
+  store [4 x <4 x float>] %mat_ctor139, [4 x <4 x float>]* %mat_ctor
+  %v140 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %96 = extractelement <4 x float> %v140, i32 2
+  %u141 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %97 = extractelement <4 x float> %u141, i32 2
+  %98 = fmul float %96, %97
+  %__matrix142 = load [4 x <4 x float>]* %mat_ctor
+  %99 = extractvalue [4 x <4 x float>] %__matrix142, 2
+  %100 = insertelement <4 x float> %99, float %98, i32 2
+  %mat_ctor143 = insertvalue [4 x <4 x float>] %__matrix142, <4 x float> %100, 2
+  store [4 x <4 x float>] %mat_ctor143, [4 x <4 x float>]* %mat_ctor
+  %v144 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %101 = extractelement <4 x float> %v144, i32 2
+  %u145 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %102 = extractelement <4 x float> %u145, i32 3
+  %103 = fmul float %101, %102
+  %__matrix146 = load [4 x <4 x float>]* %mat_ctor
+  %104 = extractvalue [4 x <4 x float>] %__matrix146, 2
+  %105 = insertelement <4 x float> %104, float %103, i32 3
+  %mat_ctor147 = insertvalue [4 x <4 x float>] %__matrix146, <4 x float> %105, 2
+  store [4 x <4 x float>] %mat_ctor147, [4 x <4 x float>]* %mat_ctor
+  %v148 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %106 = extractelement <4 x float> %v148, i32 3
+  %u149 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %107 = extractelement <4 x float> %u149, i32 0
+  %108 = fmul float %106, %107
+  %__matrix150 = load [4 x <4 x float>]* %mat_ctor
+  %109 = extractvalue [4 x <4 x float>] %__matrix150, 3
+  %110 = insertelement <4 x float> %109, float %108, i32 0
+  %mat_ctor151 = insertvalue [4 x <4 x float>] %__matrix150, <4 x float> %110, 3
+  store [4 x <4 x float>] %mat_ctor151, [4 x <4 x float>]* %mat_ctor
+  %v152 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %111 = extractelement <4 x float> %v152, i32 3
+  %u153 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %112 = extractelement <4 x float> %u153, i32 1
+  %113 = fmul float %111, %112
+  %__matrix154 = load [4 x <4 x float>]* %mat_ctor
+  %114 = extractvalue [4 x <4 x float>] %__matrix154, 3
+  %115 = insertelement <4 x float> %114, float %113, i32 1
+  %mat_ctor155 = insertvalue [4 x <4 x float>] %__matrix154, <4 x float> %115, 3
+  store [4 x <4 x float>] %mat_ctor155, [4 x <4 x float>]* %mat_ctor
+  %v156 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %116 = extractelement <4 x float> %v156, i32 3
+  %u157 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %117 = extractelement <4 x float> %u157, i32 2
+  %118 = fmul float %116, %117
+  %__matrix158 = load [4 x <4 x float>]* %mat_ctor
+  %119 = extractvalue [4 x <4 x float>] %__matrix158, 3
+  %120 = insertelement <4 x float> %119, float %118, i32 2
+  %mat_ctor159 = insertvalue [4 x <4 x float>] %__matrix158, <4 x float> %120, 3
+  store [4 x <4 x float>] %mat_ctor159, [4 x <4 x float>]* %mat_ctor
+  %v160 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %121 = extractelement <4 x float> %v160, i32 3
+  %u161 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %122 = extractelement <4 x float> %u161, i32 3
+  %123 = fmul float %121, %122
+  %__matrix162 = load [4 x <4 x float>]* %mat_ctor
+  %124 = extractvalue [4 x <4 x float>] %__matrix162, 3
+  %125 = insertelement <4 x float> %124, float %123, i32 3
+  %mat_ctor163 = insertvalue [4 x <4 x float>] %__matrix162, <4 x float> %125, 3
+  store [4 x <4 x float>] %mat_ctor163, [4 x <4 x float>]* %mat_ctor
+  store <4 x float> zeroinitializer, <4 x float>* %mat_ctor_vec
+  %v165 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %126 = extractelement <4 x float> %v165, i32 0
+  %127 = load <4 x float>* %mat_ctor_vec
+  %mat_ctor_vec166 = insertelement <4 x float> %127, float %126, i32 0
+  store <4 x float> %mat_ctor_vec166, <4 x float>* %mat_ctor_vec
+  %128 = load <4 x float>* %mat_ctor_vec
+  %129 = extractelement <4 x float> %128, i32 0
+  %130 = insertelement <4 x float> undef, float %129, i32 0
+  %131 = extractelement <4 x float> %128, i32 1
+  %132 = insertelement <4 x float> %130, float %131, i32 1
+  %133 = extractelement <4 x float> %128, i32 1
+  %134 = insertelement <4 x float> %132, float %133, i32 2
+  %135 = extractelement <4 x float> %128, i32 1
+  %136 = insertelement <4 x float> %134, float %135, i32 3
+  %__matrix167 = load [4 x <4 x float>]* %mat_ctor164
+  %137 = extractvalue [4 x <4 x float>] %__matrix167, 0
+  %138 = extractelement <4 x float> %136, i32 0
+  %139 = insertelement <4 x float> %137, float %138, i32 0
+  %140 = extractelement <4 x float> %136, i32 1
+  %141 = insertelement <4 x float> %139, float %140, i32 1
+  %142 = extractelement <4 x float> %136, i32 2
+  %143 = insertelement <4 x float> %141, float %142, i32 2
+  %144 = extractelement <4 x float> %136, i32 3
+  %145 = insertelement <4 x float> %143, float %144, i32 3
+  %mat_ctor164168 = insertvalue [4 x <4 x float>] %__matrix167, <4 x float> %145, 0
+  store [4 x <4 x float>] %mat_ctor164168, [4 x <4 x float>]* %mat_ctor164
+  %146 = load <4 x float>* %mat_ctor_vec
+  %147 = extractelement <4 x float> %146, i32 1
+  %148 = insertelement <4 x float> undef, float %147, i32 0
+  %149 = extractelement <4 x float> %146, i32 0
+  %150 = insertelement <4 x float> %148, float %149, i32 1
+  %151 = extractelement <4 x float> %146, i32 1
+  %152 = insertelement <4 x float> %150, float %151, i32 2
+  %153 = extractelement <4 x float> %146, i32 1
+  %154 = insertelement <4 x float> %152, float %153, i32 3
+  %__matrix169 = load [4 x <4 x float>]* %mat_ctor164
+  %155 = extractvalue [4 x <4 x float>] %__matrix169, 1
+  %156 = extractelement <4 x float> %154, i32 0
+  %157 = insertelement <4 x float> %155, float %156, i32 0
+  %158 = extractelement <4 x float> %154, i32 1
+  %159 = insertelement <4 x float> %157, float %158, i32 1
+  %160 = extractelement <4 x float> %154, i32 2
+  %161 = insertelement <4 x float> %159, float %160, i32 2
+  %162 = extractelement <4 x float> %154, i32 3
+  %163 = insertelement <4 x float> %161, float %162, i32 3
+  %mat_ctor164170 = insertvalue [4 x <4 x float>] %__matrix169, <4 x float> %163, 1
+  store [4 x <4 x float>] %mat_ctor164170, [4 x <4 x float>]* %mat_ctor164
+  %164 = load <4 x float>* %mat_ctor_vec
+  %165 = extractelement <4 x float> %164, i32 1
+  %166 = insertelement <4 x float> undef, float %165, i32 0
+  %167 = extractelement <4 x float> %164, i32 1
+  %168 = insertelement <4 x float> %166, float %167, i32 1
+  %169 = extractelement <4 x float> %164, i32 0
+  %170 = insertelement <4 x float> %168, float %169, i32 2
+  %171 = extractelement <4 x float> %164, i32 1
+  %172 = insertelement <4 x float> %170, float %171, i32 3
+  %__matrix171 = load [4 x <4 x float>]* %mat_ctor164
+  %173 = extractvalue [4 x <4 x float>] %__matrix171, 2
+  %174 = extractelement <4 x float> %172, i32 0
+  %175 = insertelement <4 x float> %173, float %174, i32 0
+  %176 = extractelement <4 x float> %172, i32 1
+  %177 = insertelement <4 x float> %175, float %176, i32 1
+  %178 = extractelement <4 x float> %172, i32 2
+  %179 = insertelement <4 x float> %177, float %178, i32 2
+  %180 = extractelement <4 x float> %172, i32 3
+  %181 = insertelement <4 x float> %179, float %180, i32 3
+  %mat_ctor164172 = insertvalue [4 x <4 x float>] %__matrix171, <4 x float> %181, 2
+  store [4 x <4 x float>] %mat_ctor164172, [4 x <4 x float>]* %mat_ctor164
+  %182 = load <4 x float>* %mat_ctor_vec
+  %183 = extractelement <4 x float> %182, i32 1
+  %184 = insertelement <4 x float> undef, float %183, i32 0
+  %185 = extractelement <4 x float> %182, i32 1
+  %186 = insertelement <4 x float> %184, float %185, i32 1
+  %187 = extractelement <4 x float> %182, i32 1
+  %188 = insertelement <4 x float> %186, float %187, i32 2
+  %189 = extractelement <4 x float> %182, i32 0
+  %190 = insertelement <4 x float> %188, float %189, i32 3
+  %__matrix173 = load [4 x <4 x float>]* %mat_ctor164
+  %191 = extractvalue [4 x <4 x float>] %__matrix173, 3
+  %192 = extractelement <4 x float> %190, i32 0
+  %193 = insertelement <4 x float> %191, float %192, i32 0
+  %194 = extractelement <4 x float> %190, i32 1
+  %195 = insertelement <4 x float> %193, float %194, i32 1
+  %196 = extractelement <4 x float> %190, i32 2
+  %197 = insertelement <4 x float> %195, float %196, i32 2
+  %198 = extractelement <4 x float> %190, i32 3
+  %199 = insertelement <4 x float> %197, float %198, i32 3
+  %mat_ctor164174 = insertvalue [4 x <4 x float>] %__matrix173, <4 x float> %199, 3
+  store [4 x <4 x float>] %mat_ctor164174, [4 x <4 x float>]* %mat_ctor164
+  %u176 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %__matrix177 = load [4 x <4 x float>]* %mat_ctor175
+  %200 = extractvalue [4 x <4 x float>] %__matrix177, 0
+  %201 = extractelement <4 x float> %u176, i32 0
+  %202 = insertelement <4 x float> %200, float %201, i32 0
+  %203 = extractelement <4 x float> %u176, i32 1
+  %204 = insertelement <4 x float> %202, float %203, i32 1
+  %205 = extractelement <4 x float> %u176, i32 2
+  %206 = insertelement <4 x float> %204, float %205, i32 2
+  %207 = extractelement <4 x float> %u176, i32 3
+  %208 = insertelement <4 x float> %206, float %207, i32 3
+  %mat_ctor175178 = insertvalue [4 x <4 x float>] %__matrix177, <4 x float> %208, 0
+  store [4 x <4 x float>] %mat_ctor175178, [4 x <4 x float>]* %mat_ctor175
+  %u179 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %209 = extractelement <4 x float> %u179, i32 0
+  %__matrix180 = load [4 x <4 x float>]* %mat_ctor175
+  %210 = extractvalue [4 x <4 x float>] %__matrix180, 1
+  %211 = insertelement <4 x float> %210, float %209, i32 0
+  %mat_ctor175181 = insertvalue [4 x <4 x float>] %__matrix180, <4 x float> %211, 1
+  store [4 x <4 x float>] %mat_ctor175181, [4 x <4 x float>]* %mat_ctor175
+  %u182 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %212 = extractelement <4 x float> %u182, i32 0
+  %213 = insertelement <3 x float> undef, float %212, i32 0
+  %214 = extractelement <4 x float> %u182, i32 1
+  %215 = insertelement <3 x float> %213, float %214, i32 1
+  %216 = extractelement <4 x float> %u182, i32 2
+  %217 = insertelement <3 x float> %215, float %216, i32 2
+  %__matrix183 = load [4 x <4 x float>]* %mat_ctor175
+  %218 = extractvalue [4 x <4 x float>] %__matrix183, 1
+  %219 = extractelement <3 x float> %217, i32 0
+  %220 = insertelement <4 x float> %218, float %219, i32 1
+  %221 = extractelement <3 x float> %217, i32 1
+  %222 = insertelement <4 x float> %220, float %221, i32 2
+  %223 = extractelement <3 x float> %217, i32 2
+  %224 = insertelement <4 x float> %222, float %223, i32 3
+  %mat_ctor175184 = insertvalue [4 x <4 x float>] %__matrix183, <4 x float> %224, 1
+  store [4 x <4 x float>] %mat_ctor175184, [4 x <4 x float>]* %mat_ctor175
+  %u185 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %225 = extractelement <4 x float> %u185, i32 3
+  %__matrix186 = load [4 x <4 x float>]* %mat_ctor175
+  %226 = extractvalue [4 x <4 x float>] %__matrix186, 2
+  %227 = insertelement <4 x float> %226, float %225, i32 0
+  %mat_ctor175187 = insertvalue [4 x <4 x float>] %__matrix186, <4 x float> %227, 2
+  store [4 x <4 x float>] %mat_ctor175187, [4 x <4 x float>]* %mat_ctor175
+  %u188 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %228 = extractelement <4 x float> %u188, i32 0
+  %__matrix189 = load [4 x <4 x float>]* %mat_ctor175
+  %229 = extractvalue [4 x <4 x float>] %__matrix189, 2
+  %230 = insertelement <4 x float> %229, float %228, i32 1
+  %mat_ctor175190 = insertvalue [4 x <4 x float>] %__matrix189, <4 x float> %230, 2
+  store [4 x <4 x float>] %mat_ctor175190, [4 x <4 x float>]* %mat_ctor175
+  %u191 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %231 = extractelement <4 x float> %u191, i32 0
+  %232 = insertelement <2 x float> undef, float %231, i32 0
+  %233 = extractelement <4 x float> %u191, i32 1
+  %234 = insertelement <2 x float> %232, float %233, i32 1
+  %__matrix192 = load [4 x <4 x float>]* %mat_ctor175
+  %235 = extractvalue [4 x <4 x float>] %__matrix192, 2
+  %236 = extractelement <2 x float> %234, i32 0
+  %237 = insertelement <4 x float> %235, float %236, i32 2
+  %238 = extractelement <2 x float> %234, i32 1
+  %239 = insertelement <4 x float> %237, float %238, i32 3
+  %mat_ctor175193 = insertvalue [4 x <4 x float>] %__matrix192, <4 x float> %239, 2
+  store [4 x <4 x float>] %mat_ctor175193, [4 x <4 x float>]* %mat_ctor175
+  %u194 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %240 = extractelement <4 x float> %u194, i32 2
+  %241 = insertelement <2 x float> undef, float %240, i32 0
+  %242 = extractelement <4 x float> %u194, i32 3
+  %243 = insertelement <2 x float> %241, float %242, i32 1
+  %__matrix195 = load [4 x <4 x float>]* %mat_ctor175
+  %244 = extractvalue [4 x <4 x float>] %__matrix195, 3
+  %245 = extractelement <2 x float> %243, i32 0
+  %246 = insertelement <4 x float> %244, float %245, i32 0
+  %247 = extractelement <2 x float> %243, i32 1
+  %248 = insertelement <4 x float> %246, float %247, i32 1
+  %mat_ctor175196 = insertvalue [4 x <4 x float>] %__matrix195, <4 x float> %248, 3
+  store [4 x <4 x float>] %mat_ctor175196, [4 x <4 x float>]* %mat_ctor175
+  %u197 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %249 = extractelement <4 x float> %u197, i32 0
+  %__matrix198 = load [4 x <4 x float>]* %mat_ctor175
+  %250 = extractvalue [4 x <4 x float>] %__matrix198, 3
+  %251 = insertelement <4 x float> %250, float %249, i32 2
+  %mat_ctor175199 = insertvalue [4 x <4 x float>] %__matrix198, <4 x float> %251, 3
+  store [4 x <4 x float>] %mat_ctor175199, [4 x <4 x float>]* %mat_ctor175
+  %u200 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %252 = extractelement <4 x float> %u200, i32 0
+  %__matrix201 = load [4 x <4 x float>]* %mat_ctor175
+  %253 = extractvalue [4 x <4 x float>] %__matrix201, 3
+  %254 = insertelement <4 x float> %253, float %252, i32 3
+  %mat_ctor175202 = insertvalue [4 x <4 x float>] %__matrix201, <4 x float> %254, 3
+  store [4 x <4 x float>] %mat_ctor175202, [4 x <4 x float>]* %mat_ctor175
+  %__matrix204 = load [4 x <4 x float>]* %mat_ctor
+  %__matrix205 = load [4 x <4 x float>]* %mat_ctor164
+  %255 = alloca [4 x <4 x float>]
+  %256 = load [4 x <4 x float>]* %255
+  %__leftColumn206 = extractvalue [4 x <4 x float>] %__matrix204, 0
+  %__rightColumn207 = extractvalue [4 x <4 x float>] %__matrix205, 0
+  %__column208 = fadd <4 x float> %__leftColumn206, %__rightColumn207
+  %257 = insertvalue [4 x <4 x float>] %256, <4 x float> %__column208, 0
+  %__leftColumn209 = extractvalue [4 x <4 x float>] %__matrix204, 1
+  %__rightColumn210 = extractvalue [4 x <4 x float>] %__matrix205, 1
+  %__column211 = fadd <4 x float> %__leftColumn209, %__rightColumn210
+  %258 = insertvalue [4 x <4 x float>] %257, <4 x float> %__column211, 1
+  %__leftColumn212 = extractvalue [4 x <4 x float>] %__matrix204, 2
+  %__rightColumn213 = extractvalue [4 x <4 x float>] %__matrix205, 2
+  %__column214 = fadd <4 x float> %__leftColumn212, %__rightColumn213
+  %259 = insertvalue [4 x <4 x float>] %258, <4 x float> %__column214, 2
+  %__leftColumn215 = extractvalue [4 x <4 x float>] %__matrix204, 3
+  %__rightColumn216 = extractvalue [4 x <4 x float>] %__matrix205, 3
+  %__column217 = fadd <4 x float> %__leftColumn215, %__rightColumn216
+  %260 = insertvalue [4 x <4 x float>] %259, <4 x float> %__column217, 3
+  %__matrix218 = load [4 x <4 x float>]* %mat_ctor175
+  %261 = alloca [4 x <4 x float>]
+  %262 = load [4 x <4 x float>]* %261
+  %__leftColumn219 = extractvalue [4 x <4 x float>] %260, 0
+  %__rightColumn220 = extractvalue [4 x <4 x float>] %__matrix218, 0
+  %__column221 = fadd <4 x float> %__leftColumn219, %__rightColumn220
+  %263 = insertvalue [4 x <4 x float>] %262, <4 x float> %__column221, 0
+  %__leftColumn222 = extractvalue [4 x <4 x float>] %260, 1
+  %__rightColumn223 = extractvalue [4 x <4 x float>] %__matrix218, 1
+  %__column224 = fadd <4 x float> %__leftColumn222, %__rightColumn223
+  %264 = insertvalue [4 x <4 x float>] %263, <4 x float> %__column224, 1
+  %__leftColumn225 = extractvalue [4 x <4 x float>] %260, 2
+  %__rightColumn226 = extractvalue [4 x <4 x float>] %__matrix218, 2
+  %__column227 = fadd <4 x float> %__leftColumn225, %__rightColumn226
+  %265 = insertvalue [4 x <4 x float>] %264, <4 x float> %__column227, 2
+  %__leftColumn228 = extractvalue [4 x <4 x float>] %260, 3
+  %__rightColumn229 = extractvalue [4 x <4 x float>] %__matrix218, 3
+  %__column230 = fadd <4 x float> %__leftColumn228, %__rightColumn229
+  %assignment_tmp203231 = insertvalue [4 x <4 x float>] %265, <4 x float> %__column230, 3
+  store [4 x <4 x float>] %assignment_tmp203231, [4 x <4 x float>]* %assignment_tmp203
+  %__matrix232 = load [4 x <4 x float>]* %assignment_tmp203
+  %__matrix233 = load [4 x <4 x float>] addrspace(2)* @un34
+  %element1234 = extractvalue [4 x <4 x float>] %__matrix232, 0
+  %element2235 = extractvalue [4 x <4 x float>] %__matrix233, 0
+  %266 = fcmp oeq <4 x float> %element1234, %element2235
+  %267 = call i1 @llvm.gla.all.v4i1(<4 x i1> %266)
+  %element1236 = extractvalue [4 x <4 x float>] %__matrix232, 1
+  %element2237 = extractvalue [4 x <4 x float>] %__matrix233, 1
+  %268 = fcmp oeq <4 x float> %element1236, %element2237
+  %269 = call i1 @llvm.gla.all.v4i1(<4 x i1> %268)
+  %270 = and i1 %267, %269
+  %element1238 = extractvalue [4 x <4 x float>] %__matrix232, 2
+  %element2239 = extractvalue [4 x <4 x float>] %__matrix233, 2
+  %271 = fcmp oeq <4 x float> %element1238, %element2239
+  %272 = call i1 @llvm.gla.all.v4i1(<4 x i1> %271)
+  %273 = and i1 %270, %272
+  %element1240 = extractvalue [4 x <4 x float>] %__matrix232, 3
+  %element2241 = extractvalue [4 x <4 x float>] %__matrix233, 3
+  %274 = fcmp oeq <4 x float> %element1240, %element2241
+  %275 = call i1 @llvm.gla.all.v4i1(<4 x i1> %274)
+  %276 = and i1 %273, %275
+  br i1 %276, label %then242, label %else310
+
+then242:                                          ; preds = %ifmerge
+  %277 = load <4 x float>* @FragColor_shadow
+  %__matrix243 = load [4 x <4 x float>]* %assignment_tmp203
+  %u244 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %278 = alloca <4 x float>
+  %279 = load <4 x float>* %278
+  %__component245 = extractelement <4 x float> %u244, i32 0
+  %__component246 = extractelement <4 x float> %u244, i32 1
+  %__component247 = extractelement <4 x float> %u244, i32 2
+  %__component248 = extractelement <4 x float> %u244, i32 3
+  %__column249 = extractvalue [4 x <4 x float>] %__matrix243, 0
+  %__element250 = extractelement <4 x float> %__column249, i32 0
+  %__product251 = fmul float %__element250, %__component245
+  %__column252 = extractvalue [4 x <4 x float>] %__matrix243, 1
+  %__element253 = extractelement <4 x float> %__column252, i32 0
+  %__product254 = fmul float %__element253, %__component246
+  %__dotProduct255 = fadd float %__product251, %__product254
+  %__column256 = extractvalue [4 x <4 x float>] %__matrix243, 2
+  %__element257 = extractelement <4 x float> %__column256, i32 0
+  %__product258 = fmul float %__element257, %__component247
+  %__dotProduct259 = fadd float %__dotProduct255, %__product258
+  %__column260 = extractvalue [4 x <4 x float>] %__matrix243, 3
+  %__element261 = extractelement <4 x float> %__column260, i32 0
+  %__product262 = fmul float %__element261, %__component248
+  %__dotProduct263 = fadd float %__dotProduct259, %__product262
+  %280 = insertelement <4 x float> %279, float %__dotProduct263, i32 0
+  %__column264 = extractvalue [4 x <4 x float>] %__matrix243, 0
+  %__element265 = extractelement <4 x float> %__column264, i32 1
+  %__product266 = fmul float %__element265, %__component245
+  %__column267 = extractvalue [4 x <4 x float>] %__matrix243, 1
+  %__element268 = extractelement <4 x float> %__column267, i32 1
+  %__product269 = fmul float %__element268, %__component246
+  %__dotProduct270 = fadd float %__product266, %__product269
+  %__column271 = extractvalue [4 x <4 x float>] %__matrix243, 2
+  %__element272 = extractelement <4 x float> %__column271, i32 1
+  %__product273 = fmul float %__element272, %__component247
+  %__dotProduct274 = fadd float %__dotProduct270, %__product273
+  %__column275 = extractvalue [4 x <4 x float>] %__matrix243, 3
+  %__element276 = extractelement <4 x float> %__column275, i32 1
+  %__product277 = fmul float %__element276, %__component248
+  %__dotProduct278 = fadd float %__dotProduct274, %__product277
+  %281 = insertelement <4 x float> %280, float %__dotProduct278, i32 1
+  %__column279 = extractvalue [4 x <4 x float>] %__matrix243, 0
+  %__element280 = extractelement <4 x float> %__column279, i32 2
+  %__product281 = fmul float %__element280, %__component245
+  %__column282 = extractvalue [4 x <4 x float>] %__matrix243, 1
+  %__element283 = extractelement <4 x float> %__column282, i32 2
+  %__product284 = fmul float %__element283, %__component246
+  %__dotProduct285 = fadd float %__product281, %__product284
+  %__column286 = extractvalue [4 x <4 x float>] %__matrix243, 2
+  %__element287 = extractelement <4 x float> %__column286, i32 2
+  %__product288 = fmul float %__element287, %__component247
+  %__dotProduct289 = fadd float %__dotProduct285, %__product288
+  %__column290 = extractvalue [4 x <4 x float>] %__matrix243, 3
+  %__element291 = extractelement <4 x float> %__column290, i32 2
+  %__product292 = fmul float %__element291, %__component248
+  %__dotProduct293 = fadd float %__dotProduct289, %__product292
+  %282 = insertelement <4 x float> %281, float %__dotProduct293, i32 2
+  %__column294 = extractvalue [4 x <4 x float>] %__matrix243, 0
+  %__element295 = extractelement <4 x float> %__column294, i32 3
+  %__product296 = fmul float %__element295, %__component245
+  %__column297 = extractvalue [4 x <4 x float>] %__matrix243, 1
+  %__element298 = extractelement <4 x float> %__column297, i32 3
+  %__product299 = fmul float %__element298, %__component246
+  %__dotProduct300 = fadd float %__product296, %__product299
+  %__column301 = extractvalue [4 x <4 x float>] %__matrix243, 2
+  %__element302 = extractelement <4 x float> %__column301, i32 3
+  %__product303 = fmul float %__element302, %__component247
+  %__dotProduct304 = fadd float %__dotProduct300, %__product303
+  %__column305 = extractvalue [4 x <4 x float>] %__matrix243, 3
+  %__element306 = extractelement <4 x float> %__column305, i32 3
+  %__product307 = fmul float %__element306, %__component248
+  %__dotProduct308 = fadd float %__dotProduct304, %__product307
+  %283 = insertelement <4 x float> %282, float %__dotProduct308, i32 3
+  %FragColor_shadow309 = fadd <4 x float> %277, %283
+  store <4 x float> %FragColor_shadow309, <4 x float>* @FragColor_shadow
+  br label %ifmerge705
+
+else310:                                          ; preds = %ifmerge
+  %284 = load <4 x float>* @FragColor_shadow
+  %__matrix311 = load [4 x <4 x float>] addrspace(2)* @un34
+  %__matrix312 = load [4 x <4 x float>] addrspace(2)* @um43
+  %285 = alloca [4 x <4 x float>]
+  %__resultMatrix = load [4 x <4 x float>]* %285
+  %286 = alloca <4 x float>
+  %__tempColumn = load <4 x float>* %286
+  %__rightColumn313 = extractvalue [4 x <4 x float>] %__matrix312, 0
+  %__leftColumn314 = extractvalue [4 x <4 x float>] %__matrix311, 0
+  %__leftComp = extractelement <4 x float> %__leftColumn314, i32 0
+  %__rightComp = extractelement <4 x float> %__rightColumn313, i32 0
+  %__product315 = fmul float %__leftComp, %__rightComp
+  %__leftColumn316 = extractvalue [4 x <4 x float>] %__matrix311, 1
+  %__leftComp317 = extractelement <4 x float> %__leftColumn316, i32 0
+  %__rightComp318 = extractelement <4 x float> %__rightColumn313, i32 1
+  %__product319 = fmul float %__leftComp317, %__rightComp318
+  %__dotProduct320 = fadd float %__product315, %__product319
+  %__leftColumn321 = extractvalue [4 x <4 x float>] %__matrix311, 2
+  %__leftComp322 = extractelement <4 x float> %__leftColumn321, i32 0
+  %__rightComp323 = extractelement <4 x float> %__rightColumn313, i32 2
+  %__product324 = fmul float %__leftComp322, %__rightComp323
+  %__dotProduct325 = fadd float %__dotProduct320, %__product324
+  %__leftColumn326 = extractvalue [4 x <4 x float>] %__matrix311, 3
+  %__leftComp327 = extractelement <4 x float> %__leftColumn326, i32 0
+  %__rightComp328 = extractelement <4 x float> %__rightColumn313, i32 3
+  %__product329 = fmul float %__leftComp327, %__rightComp328
+  %__dotProduct330 = fadd float %__dotProduct325, %__product329
+  %__column331 = insertelement <4 x float> %__tempColumn, float %__dotProduct330, i32 0
+  %__leftColumn332 = extractvalue [4 x <4 x float>] %__matrix311, 0
+  %__leftComp333 = extractelement <4 x float> %__leftColumn332, i32 1
+  %__rightComp334 = extractelement <4 x float> %__rightColumn313, i32 0
+  %__product335 = fmul float %__leftComp333, %__rightComp334
+  %__leftColumn336 = extractvalue [4 x <4 x float>] %__matrix311, 1
+  %__leftComp337 = extractelement <4 x float> %__leftColumn336, i32 1
+  %__rightComp338 = extractelement <4 x float> %__rightColumn313, i32 1
+  %__product339 = fmul float %__leftComp337, %__rightComp338
+  %__dotProduct340 = fadd float %__product335, %__product339
+  %__leftColumn341 = extractvalue [4 x <4 x float>] %__matrix311, 2
+  %__leftComp342 = extractelement <4 x float> %__leftColumn341, i32 1
+  %__rightComp343 = extractelement <4 x float> %__rightColumn313, i32 2
+  %__product344 = fmul float %__leftComp342, %__rightComp343
+  %__dotProduct345 = fadd float %__dotProduct340, %__product344
+  %__leftColumn346 = extractvalue [4 x <4 x float>] %__matrix311, 3
+  %__leftComp347 = extractelement <4 x float> %__leftColumn346, i32 1
+  %__rightComp348 = extractelement <4 x float> %__rightColumn313, i32 3
+  %__product349 = fmul float %__leftComp347, %__rightComp348
+  %__dotProduct350 = fadd float %__dotProduct345, %__product349
+  %__column351 = insertelement <4 x float> %__column331, float %__dotProduct350, i32 1
+  %__leftColumn352 = extractvalue [4 x <4 x float>] %__matrix311, 0
+  %__leftComp353 = extractelement <4 x float> %__leftColumn352, i32 2
+  %__rightComp354 = extractelement <4 x float> %__rightColumn313, i32 0
+  %__product355 = fmul float %__leftComp353, %__rightComp354
+  %__leftColumn356 = extractvalue [4 x <4 x float>] %__matrix311, 1
+  %__leftComp357 = extractelement <4 x float> %__leftColumn356, i32 2
+  %__rightComp358 = extractelement <4 x float> %__rightColumn313, i32 1
+  %__product359 = fmul float %__leftComp357, %__rightComp358
+  %__dotProduct360 = fadd float %__product355, %__product359
+  %__leftColumn361 = extractvalue [4 x <4 x float>] %__matrix311, 2
+  %__leftComp362 = extractelement <4 x float> %__leftColumn361, i32 2
+  %__rightComp363 = extractelement <4 x float> %__rightColumn313, i32 2
+  %__product364 = fmul float %__leftComp362, %__rightComp363
+  %__dotProduct365 = fadd float %__dotProduct360, %__product364
+  %__leftColumn366 = extractvalue [4 x <4 x float>] %__matrix311, 3
+  %__leftComp367 = extractelement <4 x float> %__leftColumn366, i32 2
+  %__rightComp368 = extractelement <4 x float> %__rightColumn313, i32 3
+  %__product369 = fmul float %__leftComp367, %__rightComp368
+  %__dotProduct370 = fadd float %__dotProduct365, %__product369
+  %__column371 = insertelement <4 x float> %__column351, float %__dotProduct370, i32 2
+  %__leftColumn372 = extractvalue [4 x <4 x float>] %__matrix311, 0
+  %__leftComp373 = extractelement <4 x float> %__leftColumn372, i32 3
+  %__rightComp374 = extractelement <4 x float> %__rightColumn313, i32 0
+  %__product375 = fmul float %__leftComp373, %__rightComp374
+  %__leftColumn376 = extractvalue [4 x <4 x float>] %__matrix311, 1
+  %__leftComp377 = extractelement <4 x float> %__leftColumn376, i32 3
+  %__rightComp378 = extractelement <4 x float> %__rightColumn313, i32 1
+  %__product379 = fmul float %__leftComp377, %__rightComp378
+  %__dotProduct380 = fadd float %__product375, %__product379
+  %__leftColumn381 = extractvalue [4 x <4 x float>] %__matrix311, 2
+  %__leftComp382 = extractelement <4 x float> %__leftColumn381, i32 3
+  %__rightComp383 = extractelement <4 x float> %__rightColumn313, i32 2
+  %__product384 = fmul float %__leftComp382, %__rightComp383
+  %__dotProduct385 = fadd float %__dotProduct380, %__product384
+  %__leftColumn386 = extractvalue [4 x <4 x float>] %__matrix311, 3
+  %__leftComp387 = extractelement <4 x float> %__leftColumn386, i32 3
+  %__rightComp388 = extractelement <4 x float> %__rightColumn313, i32 3
+  %__product389 = fmul float %__leftComp387, %__rightComp388
+  %__dotProduct390 = fadd float %__dotProduct385, %__product389
+  %__column391 = insertelement <4 x float> %__column371, float %__dotProduct390, i32 3
+  %__resultMatrix392 = insertvalue [4 x <4 x float>] %__resultMatrix, <4 x float> %__column391, 0
+  %__rightColumn393 = extractvalue [4 x <4 x float>] %__matrix312, 1
+  %__leftColumn394 = extractvalue [4 x <4 x float>] %__matrix311, 0
+  %__leftComp395 = extractelement <4 x float> %__leftColumn394, i32 0
+  %__rightComp396 = extractelement <4 x float> %__rightColumn393, i32 0
+  %__product397 = fmul float %__leftComp395, %__rightComp396
+  %__leftColumn398 = extractvalue [4 x <4 x float>] %__matrix311, 1
+  %__leftComp399 = extractelement <4 x float> %__leftColumn398, i32 0
+  %__rightComp400 = extractelement <4 x float> %__rightColumn393, i32 1
+  %__product401 = fmul float %__leftComp399, %__rightComp400
+  %__dotProduct402 = fadd float %__product397, %__product401
+  %__leftColumn403 = extractvalue [4 x <4 x float>] %__matrix311, 2
+  %__leftComp404 = extractelement <4 x float> %__leftColumn403, i32 0
+  %__rightComp405 = extractelement <4 x float> %__rightColumn393, i32 2
+  %__product406 = fmul float %__leftComp404, %__rightComp405
+  %__dotProduct407 = fadd float %__dotProduct402, %__product406
+  %__leftColumn408 = extractvalue [4 x <4 x float>] %__matrix311, 3
+  %__leftComp409 = extractelement <4 x float> %__leftColumn408, i32 0
+  %__rightComp410 = extractelement <4 x float> %__rightColumn393, i32 3
+  %__product411 = fmul float %__leftComp409, %__rightComp410
+  %__dotProduct412 = fadd float %__dotProduct407, %__product411
+  %__column413 = insertelement <4 x float> %__column391, float %__dotProduct412, i32 0
+  %__leftColumn414 = extractvalue [4 x <4 x float>] %__matrix311, 0
+  %__leftComp415 = extractelement <4 x float> %__leftColumn414, i32 1
+  %__rightComp416 = extractelement <4 x float> %__rightColumn393, i32 0
+  %__product417 = fmul float %__leftComp415, %__rightComp416
+  %__leftColumn418 = extractvalue [4 x <4 x float>] %__matrix311, 1
+  %__leftComp419 = extractelement <4 x float> %__leftColumn418, i32 1
+  %__rightComp420 = extractelement <4 x float> %__rightColumn393, i32 1
+  %__product421 = fmul float %__leftComp419, %__rightComp420
+  %__dotProduct422 = fadd float %__product417, %__product421
+  %__leftColumn423 = extractvalue [4 x <4 x float>] %__matrix311, 2
+  %__leftComp424 = extractelement <4 x float> %__leftColumn423, i32 1
+  %__rightComp425 = extractelement <4 x float> %__rightColumn393, i32 2
+  %__product426 = fmul float %__leftComp424, %__rightComp425
+  %__dotProduct427 = fadd float %__dotProduct422, %__product426
+  %__leftColumn428 = extractvalue [4 x <4 x float>] %__matrix311, 3
+  %__leftComp429 = extractelement <4 x float> %__leftColumn428, i32 1
+  %__rightComp430 = extractelement <4 x float> %__rightColumn393, i32 3
+  %__product431 = fmul float %__leftComp429, %__rightComp430
+  %__dotProduct432 = fadd float %__dotProduct427, %__product431
+  %__column433 = insertelement <4 x float> %__column413, float %__dotProduct432, i32 1
+  %__leftColumn434 = extractvalue [4 x <4 x float>] %__matrix311, 0
+  %__leftComp435 = extractelement <4 x float> %__leftColumn434, i32 2
+  %__rightComp436 = extractelement <4 x float> %__rightColumn393, i32 0
+  %__product437 = fmul float %__leftComp435, %__rightComp436
+  %__leftColumn438 = extractvalue [4 x <4 x float>] %__matrix311, 1
+  %__leftComp439 = extractelement <4 x float> %__leftColumn438, i32 2
+  %__rightComp440 = extractelement <4 x float> %__rightColumn393, i32 1
+  %__product441 = fmul float %__leftComp439, %__rightComp440
+  %__dotProduct442 = fadd float %__product437, %__product441
+  %__leftColumn443 = extractvalue [4 x <4 x float>] %__matrix311, 2
+  %__leftComp444 = extractelement <4 x float> %__leftColumn443, i32 2
+  %__rightComp445 = extractelement <4 x float> %__rightColumn393, i32 2
+  %__product446 = fmul float %__leftComp444, %__rightComp445
+  %__dotProduct447 = fadd float %__dotProduct442, %__product446
+  %__leftColumn448 = extractvalue [4 x <4 x float>] %__matrix311, 3
+  %__leftComp449 = extractelement <4 x float> %__leftColumn448, i32 2
+  %__rightComp450 = extractelement <4 x float> %__rightColumn393, i32 3
+  %__product451 = fmul float %__leftComp449, %__rightComp450
+  %__dotProduct452 = fadd float %__dotProduct447, %__product451
+  %__column453 = insertelement <4 x float> %__column433, float %__dotProduct452, i32 2
+  %__leftColumn454 = extractvalue [4 x <4 x float>] %__matrix311, 0
+  %__leftComp455 = extractelement <4 x float> %__leftColumn454, i32 3
+  %__rightComp456 = extractelement <4 x float> %__rightColumn393, i32 0
+  %__product457 = fmul float %__leftComp455, %__rightComp456
+  %__leftColumn458 = extractvalue [4 x <4 x float>] %__matrix311, 1
+  %__leftComp459 = extractelement <4 x float> %__leftColumn458, i32 3
+  %__rightComp460 = extractelement <4 x float> %__rightColumn393, i32 1
+  %__product461 = fmul float %__leftComp459, %__rightComp460
+  %__dotProduct462 = fadd float %__product457, %__product461
+  %__leftColumn463 = extractvalue [4 x <4 x float>] %__matrix311, 2
+  %__leftComp464 = extractelement <4 x float> %__leftColumn463, i32 3
+  %__rightComp465 = extractelement <4 x float> %__rightColumn393, i32 2
+  %__product466 = fmul float %__leftComp464, %__rightComp465
+  %__dotProduct467 = fadd float %__dotProduct462, %__product466
+  %__leftColumn468 = extractvalue [4 x <4 x float>] %__matrix311, 3
+  %__leftComp469 = extractelement <4 x float> %__leftColumn468, i32 3
+  %__rightComp470 = extractelement <4 x float> %__rightColumn393, i32 3
+  %__product471 = fmul float %__leftComp469, %__rightComp470
+  %__dotProduct472 = fadd float %__dotProduct467, %__product471
+  %__column473 = insertelement <4 x float> %__column453, float %__dotProduct472, i32 3
+  %__resultMatrix474 = insertvalue [4 x <4 x float>] %__resultMatrix392, <4 x float> %__column473, 1
+  %__rightColumn475 = extractvalue [4 x <4 x float>] %__matrix312, 2
+  %__leftColumn476 = extractvalue [4 x <4 x float>] %__matrix311, 0
+  %__leftComp477 = extractelement <4 x float> %__leftColumn476, i32 0
+  %__rightComp478 = extractelement <4 x float> %__rightColumn475, i32 0
+  %__product479 = fmul float %__leftComp477, %__rightComp478
+  %__leftColumn480 = extractvalue [4 x <4 x float>] %__matrix311, 1
+  %__leftComp481 = extractelement <4 x float> %__leftColumn480, i32 0
+  %__rightComp482 = extractelement <4 x float> %__rightColumn475, i32 1
+  %__product483 = fmul float %__leftComp481, %__rightComp482
+  %__dotProduct484 = fadd float %__product479, %__product483
+  %__leftColumn485 = extractvalue [4 x <4 x float>] %__matrix311, 2
+  %__leftComp486 = extractelement <4 x float> %__leftColumn485, i32 0
+  %__rightComp487 = extractelement <4 x float> %__rightColumn475, i32 2
+  %__product488 = fmul float %__leftComp486, %__rightComp487
+  %__dotProduct489 = fadd float %__dotProduct484, %__product488
+  %__leftColumn490 = extractvalue [4 x <4 x float>] %__matrix311, 3
+  %__leftComp491 = extractelement <4 x float> %__leftColumn490, i32 0
+  %__rightComp492 = extractelement <4 x float> %__rightColumn475, i32 3
+  %__product493 = fmul float %__leftComp491, %__rightComp492
+  %__dotProduct494 = fadd float %__dotProduct489, %__product493
+  %__column495 = insertelement <4 x float> %__column473, float %__dotProduct494, i32 0
+  %__leftColumn496 = extractvalue [4 x <4 x float>] %__matrix311, 0
+  %__leftComp497 = extractelement <4 x float> %__leftColumn496, i32 1
+  %__rightComp498 = extractelement <4 x float> %__rightColumn475, i32 0
+  %__product499 = fmul float %__leftComp497, %__rightComp498
+  %__leftColumn500 = extractvalue [4 x <4 x float>] %__matrix311, 1
+  %__leftComp501 = extractelement <4 x float> %__leftColumn500, i32 1
+  %__rightComp502 = extractelement <4 x float> %__rightColumn475, i32 1
+  %__product503 = fmul float %__leftComp501, %__rightComp502
+  %__dotProduct504 = fadd float %__product499, %__product503
+  %__leftColumn505 = extractvalue [4 x <4 x float>] %__matrix311, 2
+  %__leftComp506 = extractelement <4 x float> %__leftColumn505, i32 1
+  %__rightComp507 = extractelement <4 x float> %__rightColumn475, i32 2
+  %__product508 = fmul float %__leftComp506, %__rightComp507
+  %__dotProduct509 = fadd float %__dotProduct504, %__product508
+  %__leftColumn510 = extractvalue [4 x <4 x float>] %__matrix311, 3
+  %__leftComp511 = extractelement <4 x float> %__leftColumn510, i32 1
+  %__rightComp512 = extractelement <4 x float> %__rightColumn475, i32 3
+  %__product513 = fmul float %__leftComp511, %__rightComp512
+  %__dotProduct514 = fadd float %__dotProduct509, %__product513
+  %__column515 = insertelement <4 x float> %__column495, float %__dotProduct514, i32 1
+  %__leftColumn516 = extractvalue [4 x <4 x float>] %__matrix311, 0
+  %__leftComp517 = extractelement <4 x float> %__leftColumn516, i32 2
+  %__rightComp518 = extractelement <4 x float> %__rightColumn475, i32 0
+  %__product519 = fmul float %__leftComp517, %__rightComp518
+  %__leftColumn520 = extractvalue [4 x <4 x float>] %__matrix311, 1
+  %__leftComp521 = extractelement <4 x float> %__leftColumn520, i32 2
+  %__rightComp522 = extractelement <4 x float> %__rightColumn475, i32 1
+  %__product523 = fmul float %__leftComp521, %__rightComp522
+  %__dotProduct524 = fadd float %__product519, %__product523
+  %__leftColumn525 = extractvalue [4 x <4 x float>] %__matrix311, 2
+  %__leftComp526 = extractelement <4 x float> %__leftColumn525, i32 2
+  %__rightComp527 = extractelement <4 x float> %__rightColumn475, i32 2
+  %__product528 = fmul float %__leftComp526, %__rightComp527
+  %__dotProduct529 = fadd float %__dotProduct524, %__product528
+  %__leftColumn530 = extractvalue [4 x <4 x float>] %__matrix311, 3
+  %__leftComp531 = extractelement <4 x float> %__leftColumn530, i32 2
+  %__rightComp532 = extractelement <4 x float> %__rightColumn475, i32 3
+  %__product533 = fmul float %__leftComp531, %__rightComp532
+  %__dotProduct534 = fadd float %__dotProduct529, %__product533
+  %__column535 = insertelement <4 x float> %__column515, float %__dotProduct534, i32 2
+  %__leftColumn536 = extractvalue [4 x <4 x float>] %__matrix311, 0
+  %__leftComp537 = extractelement <4 x float> %__leftColumn536, i32 3
+  %__rightComp538 = extractelement <4 x float> %__rightColumn475, i32 0
+  %__product539 = fmul float %__leftComp537, %__rightComp538
+  %__leftColumn540 = extractvalue [4 x <4 x float>] %__matrix311, 1
+  %__leftComp541 = extractelement <4 x float> %__leftColumn540, i32 3
+  %__rightComp542 = extractelement <4 x float> %__rightColumn475, i32 1
+  %__product543 = fmul float %__leftComp541, %__rightComp542
+  %__dotProduct544 = fadd float %__product539, %__product543
+  %__leftColumn545 = extractvalue [4 x <4 x float>] %__matrix311, 2
+  %__leftComp546 = extractelement <4 x float> %__leftColumn545, i32 3
+  %__rightComp547 = extractelement <4 x float> %__rightColumn475, i32 2
+  %__product548 = fmul float %__leftComp546, %__rightComp547
+  %__dotProduct549 = fadd float %__dotProduct544, %__product548
+  %__leftColumn550 = extractvalue [4 x <4 x float>] %__matrix311, 3
+  %__leftComp551 = extractelement <4 x float> %__leftColumn550, i32 3
+  %__rightComp552 = extractelement <4 x float> %__rightColumn475, i32 3
+  %__product553 = fmul float %__leftComp551, %__rightComp552
+  %__dotProduct554 = fadd float %__dotProduct549, %__product553
+  %__column555 = insertelement <4 x float> %__column535, float %__dotProduct554, i32 3
+  %__resultMatrix556 = insertvalue [4 x <4 x float>] %__resultMatrix474, <4 x float> %__column555, 2
+  %__rightColumn557 = extractvalue [4 x <4 x float>] %__matrix312, 3
+  %__leftColumn558 = extractvalue [4 x <4 x float>] %__matrix311, 0
+  %__leftComp559 = extractelement <4 x float> %__leftColumn558, i32 0
+  %__rightComp560 = extractelement <4 x float> %__rightColumn557, i32 0
+  %__product561 = fmul float %__leftComp559, %__rightComp560
+  %__leftColumn562 = extractvalue [4 x <4 x float>] %__matrix311, 1
+  %__leftComp563 = extractelement <4 x float> %__leftColumn562, i32 0
+  %__rightComp564 = extractelement <4 x float> %__rightColumn557, i32 1
+  %__product565 = fmul float %__leftComp563, %__rightComp564
+  %__dotProduct566 = fadd float %__product561, %__product565
+  %__leftColumn567 = extractvalue [4 x <4 x float>] %__matrix311, 2
+  %__leftComp568 = extractelement <4 x float> %__leftColumn567, i32 0
+  %__rightComp569 = extractelement <4 x float> %__rightColumn557, i32 2
+  %__product570 = fmul float %__leftComp568, %__rightComp569
+  %__dotProduct571 = fadd float %__dotProduct566, %__product570
+  %__leftColumn572 = extractvalue [4 x <4 x float>] %__matrix311, 3
+  %__leftComp573 = extractelement <4 x float> %__leftColumn572, i32 0
+  %__rightComp574 = extractelement <4 x float> %__rightColumn557, i32 3
+  %__product575 = fmul float %__leftComp573, %__rightComp574
+  %__dotProduct576 = fadd float %__dotProduct571, %__product575
+  %__column577 = insertelement <4 x float> %__column555, float %__dotProduct576, i32 0
+  %__leftColumn578 = extractvalue [4 x <4 x float>] %__matrix311, 0
+  %__leftComp579 = extractelement <4 x float> %__leftColumn578, i32 1
+  %__rightComp580 = extractelement <4 x float> %__rightColumn557, i32 0
+  %__product581 = fmul float %__leftComp579, %__rightComp580
+  %__leftColumn582 = extractvalue [4 x <4 x float>] %__matrix311, 1
+  %__leftComp583 = extractelement <4 x float> %__leftColumn582, i32 1
+  %__rightComp584 = extractelement <4 x float> %__rightColumn557, i32 1
+  %__product585 = fmul float %__leftComp583, %__rightComp584
+  %__dotProduct586 = fadd float %__product581, %__product585
+  %__leftColumn587 = extractvalue [4 x <4 x float>] %__matrix311, 2
+  %__leftComp588 = extractelement <4 x float> %__leftColumn587, i32 1
+  %__rightComp589 = extractelement <4 x float> %__rightColumn557, i32 2
+  %__product590 = fmul float %__leftComp588, %__rightComp589
+  %__dotProduct591 = fadd float %__dotProduct586, %__product590
+  %__leftColumn592 = extractvalue [4 x <4 x float>] %__matrix311, 3
+  %__leftComp593 = extractelement <4 x float> %__leftColumn592, i32 1
+  %__rightComp594 = extractelement <4 x float> %__rightColumn557, i32 3
+  %__product595 = fmul float %__leftComp593, %__rightComp594
+  %__dotProduct596 = fadd float %__dotProduct591, %__product595
+  %__column597 = insertelement <4 x float> %__column577, float %__dotProduct596, i32 1
+  %__leftColumn598 = extractvalue [4 x <4 x float>] %__matrix311, 0
+  %__leftComp599 = extractelement <4 x float> %__leftColumn598, i32 2
+  %__rightComp600 = extractelement <4 x float> %__rightColumn557, i32 0
+  %__product601 = fmul float %__leftComp599, %__rightComp600
+  %__leftColumn602 = extractvalue [4 x <4 x float>] %__matrix311, 1
+  %__leftComp603 = extractelement <4 x float> %__leftColumn602, i32 2
+  %__rightComp604 = extractelement <4 x float> %__rightColumn557, i32 1
+  %__product605 = fmul float %__leftComp603, %__rightComp604
+  %__dotProduct606 = fadd float %__product601, %__product605
+  %__leftColumn607 = extractvalue [4 x <4 x float>] %__matrix311, 2
+  %__leftComp608 = extractelement <4 x float> %__leftColumn607, i32 2
+  %__rightComp609 = extractelement <4 x float> %__rightColumn557, i32 2
+  %__product610 = fmul float %__leftComp608, %__rightComp609
+  %__dotProduct611 = fadd float %__dotProduct606, %__product610
+  %__leftColumn612 = extractvalue [4 x <4 x float>] %__matrix311, 3
+  %__leftComp613 = extractelement <4 x float> %__leftColumn612, i32 2
+  %__rightComp614 = extractelement <4 x float> %__rightColumn557, i32 3
+  %__product615 = fmul float %__leftComp613, %__rightComp614
+  %__dotProduct616 = fadd float %__dotProduct611, %__product615
+  %__column617 = insertelement <4 x float> %__column597, float %__dotProduct616, i32 2
+  %__leftColumn618 = extractvalue [4 x <4 x float>] %__matrix311, 0
+  %__leftComp619 = extractelement <4 x float> %__leftColumn618, i32 3
+  %__rightComp620 = extractelement <4 x float> %__rightColumn557, i32 0
+  %__product621 = fmul float %__leftComp619, %__rightComp620
+  %__leftColumn622 = extractvalue [4 x <4 x float>] %__matrix311, 1
+  %__leftComp623 = extractelement <4 x float> %__leftColumn622, i32 3
+  %__rightComp624 = extractelement <4 x float> %__rightColumn557, i32 1
+  %__product625 = fmul float %__leftComp623, %__rightComp624
+  %__dotProduct626 = fadd float %__product621, %__product625
+  %__leftColumn627 = extractvalue [4 x <4 x float>] %__matrix311, 2
+  %__leftComp628 = extractelement <4 x float> %__leftColumn627, i32 3
+  %__rightComp629 = extractelement <4 x float> %__rightColumn557, i32 2
+  %__product630 = fmul float %__leftComp628, %__rightComp629
+  %__dotProduct631 = fadd float %__dotProduct626, %__product630
+  %__leftColumn632 = extractvalue [4 x <4 x float>] %__matrix311, 3
+  %__leftComp633 = extractelement <4 x float> %__leftColumn632, i32 3
+  %__rightComp634 = extractelement <4 x float> %__rightColumn557, i32 3
+  %__product635 = fmul float %__leftComp633, %__rightComp634
+  %__dotProduct636 = fadd float %__dotProduct631, %__product635
+  %__column637 = insertelement <4 x float> %__column617, float %__dotProduct636, i32 3
+  %__resultMatrix638 = insertvalue [4 x <4 x float>] %__resultMatrix556, <4 x float> %__column637, 3
+  %v639 = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  %287 = alloca <4 x float>
+  %288 = load <4 x float>* %287
+  %__component640 = extractelement <4 x float> %v639, i32 0
+  %__component641 = extractelement <4 x float> %v639, i32 1
+  %__component642 = extractelement <4 x float> %v639, i32 2
+  %__component643 = extractelement <4 x float> %v639, i32 3
+  %__column644 = extractvalue [4 x <4 x float>] %__resultMatrix638, 0
+  %__element645 = extractelement <4 x float> %__column644, i32 0
+  %__product646 = fmul float %__element645, %__component640
+  %__column647 = extractvalue [4 x <4 x float>] %__resultMatrix638, 1
+  %__element648 = extractelement <4 x float> %__column647, i32 0
+  %__product649 = fmul float %__element648, %__component641
+  %__dotProduct650 = fadd float %__product646, %__product649
+  %__column651 = extractvalue [4 x <4 x float>] %__resultMatrix638, 2
+  %__element652 = extractelement <4 x float> %__column651, i32 0
+  %__product653 = fmul float %__element652, %__component642
+  %__dotProduct654 = fadd float %__dotProduct650, %__product653
+  %__column655 = extractvalue [4 x <4 x float>] %__resultMatrix638, 3
+  %__element656 = extractelement <4 x float> %__column655, i32 0
+  %__product657 = fmul float %__element656, %__component643
+  %__dotProduct658 = fadd float %__dotProduct654, %__product657
+  %289 = insertelement <4 x float> %288, float %__dotProduct658, i32 0
+  %__column659 = extractvalue [4 x <4 x float>] %__resultMatrix638, 0
+  %__element660 = extractelement <4 x float> %__column659, i32 1
+  %__product661 = fmul float %__element660, %__component640
+  %__column662 = extractvalue [4 x <4 x float>] %__resultMatrix638, 1
+  %__element663 = extractelement <4 x float> %__column662, i32 1
+  %__product664 = fmul float %__element663, %__component641
+  %__dotProduct665 = fadd float %__product661, %__product664
+  %__column666 = extractvalue [4 x <4 x float>] %__resultMatrix638, 2
+  %__element667 = extractelement <4 x float> %__column666, i32 1
+  %__product668 = fmul float %__element667, %__component642
+  %__dotProduct669 = fadd float %__dotProduct665, %__product668
+  %__column670 = extractvalue [4 x <4 x float>] %__resultMatrix638, 3
+  %__element671 = extractelement <4 x float> %__column670, i32 1
+  %__product672 = fmul float %__element671, %__component643
+  %__dotProduct673 = fadd float %__dotProduct669, %__product672
+  %290 = insertelement <4 x float> %289, float %__dotProduct673, i32 1
+  %__column674 = extractvalue [4 x <4 x float>] %__resultMatrix638, 0
+  %__element675 = extractelement <4 x float> %__column674, i32 2
+  %__product676 = fmul float %__element675, %__component640
+  %__column677 = extractvalue [4 x <4 x float>] %__resultMatrix638, 1
+  %__element678 = extractelement <4 x float> %__column677, i32 2
+  %__product679 = fmul float %__element678, %__component641
+  %__dotProduct680 = fadd float %__product676, %__product679
+  %__column681 = extractvalue [4 x <4 x float>] %__resultMatrix638, 2
+  %__element682 = extractelement <4 x float> %__column681, i32 2
+  %__product683 = fmul float %__element682, %__component642
+  %__dotProduct684 = fadd float %__dotProduct680, %__product683
+  %__column685 = extractvalue [4 x <4 x float>] %__resultMatrix638, 3
+  %__element686 = extractelement <4 x float> %__column685, i32 2
+  %__product687 = fmul float %__element686, %__component643
+  %__dotProduct688 = fadd float %__dotProduct684, %__product687
+  %291 = insertelement <4 x float> %290, float %__dotProduct688, i32 2
+  %__column689 = extractvalue [4 x <4 x float>] %__resultMatrix638, 0
+  %__element690 = extractelement <4 x float> %__column689, i32 3
+  %__product691 = fmul float %__element690, %__component640
+  %__column692 = extractvalue [4 x <4 x float>] %__resultMatrix638, 1
+  %__element693 = extractelement <4 x float> %__column692, i32 3
+  %__product694 = fmul float %__element693, %__component641
+  %__dotProduct695 = fadd float %__product691, %__product694
+  %__column696 = extractvalue [4 x <4 x float>] %__resultMatrix638, 2
+  %__element697 = extractelement <4 x float> %__column696, i32 3
+  %__product698 = fmul float %__element697, %__component642
+  %__dotProduct699 = fadd float %__dotProduct695, %__product698
+  %__column700 = extractvalue [4 x <4 x float>] %__resultMatrix638, 3
+  %__element701 = extractelement <4 x float> %__column700, i32 3
+  %__product702 = fmul float %__element701, %__component643
+  %__dotProduct703 = fadd float %__dotProduct699, %__product702
+  %292 = insertelement <4 x float> %291, float %__dotProduct703, i32 3
+  %FragColor_shadow704 = fadd <4 x float> %284, %292
+  store <4 x float> %FragColor_shadow704, <4 x float>* @FragColor_shadow
+  br label %ifmerge705
+
+ifmerge705:                                       ; preds = %else310, %then242
+  br label %stage-epilogue
+
+stage-epilogue:                                   ; preds = %ifmerge705
+  %293 = load <4 x float>* @FragColor_shadow
+  call void @llvm.gla.fWriteData.v4f32(i32 0, i32 -1, <4 x float> %293)
+  br label %stage-exit
+
+stage-exit:                                       ; preds = %stage-epilogue
+  ret void
+}
+
+declare <3 x float> @llvm.gla.fReadInterpolant.v3f32(i32, i32, i32) nounwind readnone
+
+declare float @llvm.gla.fDot3.f32.v3f32.v3f32(<3 x float>, <3 x float>) nounwind readnone
+
+declare i1 @llvm.gla.any.v4i1(<4 x i1>) nounwind readnone
+
+declare <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32, i32, i32) nounwind readnone
+
+declare float @llvm.gla.fDot4.f32.v4f32.v4f32(<4 x float>, <4 x float>) nounwind readnone
+
+declare i1 @llvm.gla.all.v4i1(<4 x i1>) nounwind readnone
+
+declare void @llvm.gla.fWriteData.v4f32(i32, i32, <4 x float>) nounwind
+
+
+Bottom IR:
+; ModuleID = 'Top'
+
+@colorTransform = external addrspace(2) constant [3 x <3 x float>]
+@un34 = external addrspace(2) constant [4 x <4 x float>]
+@m = external addrspace(2) constant [4 x <4 x float>]
+@n = external addrspace(2) constant [4 x <4 x float>]
+@um43 = external addrspace(2) constant [4 x <4 x float>]
+
+define fastcc void @main() {
+entry:
+  %Color = call <3 x float> @llvm.gla.fReadInterpolant.v3f32(i32 0, i32 -1, i32 1)
+  %__matrix = load [3 x <3 x float>] addrspace(2)* @colorTransform, align 16
+  %__column = extractvalue [3 x <3 x float>] %__matrix, 0
+  %__dot = call float @llvm.gla.fDot3.f32.v3f32.v3f32(<3 x float> %Color, <3 x float> %__column)
+  %__column2 = extractvalue [3 x <3 x float>] %__matrix, 1
+  %__dot3 = call float @llvm.gla.fDot3.f32.v3f32.v3f32(<3 x float> %Color, <3 x float> %__column2)
+  %__column4 = extractvalue [3 x <3 x float>] %__matrix, 2
+  %__dot5 = call float @llvm.gla.fDot3.f32.v3f32.v3f32(<3 x float> %Color, <3 x float> %__column4)
+  %0 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.f32(<4 x float> <float undef, float undef, float undef, float 1.000000e+00>, i32 7, float %__dot, i32 0, float %__dot3, i32 0, float %__dot5, i32 0, float undef, i32 undef)
+  %gla_constGEP = getelementptr [4 x <4 x float>] addrspace(2)* @un34, i32 0, i32 1
+  %1 = load <4 x float> addrspace(2)* %gla_constGEP, align 16
+  %assignment_tmp7 = fadd <4 x float> %1, %0
+  %__matrix8 = load [4 x <4 x float>] addrspace(2)* @m, align 16
+  %__matrix9 = load [4 x <4 x float>] addrspace(2)* @n, align 16
+  %element1 = extractvalue [4 x <4 x float>] %__matrix8, 0
+  %element2 = extractvalue [4 x <4 x float>] %__matrix9, 0
+  %2 = fcmp one <4 x float> %element1, %element2
+  %3 = call i1 @llvm.gla.any.v4i1(<4 x i1> %2)
+  %element110 = extractvalue [4 x <4 x float>] %__matrix8, 1
+  %element211 = extractvalue [4 x <4 x float>] %__matrix9, 1
+  %4 = fcmp one <4 x float> %element110, %element211
+  %5 = call i1 @llvm.gla.any.v4i1(<4 x i1> %4)
+  %6 = or i1 %3, %5
+  %element112 = extractvalue [4 x <4 x float>] %__matrix8, 2
+  %element213 = extractvalue [4 x <4 x float>] %__matrix9, 2
+  %7 = fcmp one <4 x float> %element112, %element213
+  %8 = call i1 @llvm.gla.any.v4i1(<4 x i1> %7)
+  %9 = or i1 %6, %8
+  %element114 = extractvalue [4 x <4 x float>] %__matrix8, 3
+  %element215 = extractvalue [4 x <4 x float>] %__matrix9, 3
+  %10 = fcmp one <4 x float> %element114, %element215
+  %11 = call i1 @llvm.gla.any.v4i1(<4 x i1> %10)
+  %12 = or i1 %9, %11
+  %v = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1, i32 -1, i32 1)
+  br i1 %12, label %then, label %else
+
+then:                                             ; preds = %entry
+  %FragColor_shadow16 = fadd <4 x float> %assignment_tmp7, %v
+  %.pre = extractelement <4 x float> %v, i32 0
+  %.pre707 = extractelement <4 x float> %v, i32 1
+  %.pre709 = extractelement <4 x float> %v, i32 2
+  %.pre711 = extractelement <4 x float> %v, i32 3
+  br label %ifmerge
+
+else:                                             ; preds = %entry
+  %__component = extractelement <4 x float> %v, i32 0
+  %__component19 = extractelement <4 x float> %v, i32 1
+  %__component20 = extractelement <4 x float> %v, i32 2
+  %__component21 = extractelement <4 x float> %v, i32 3
+  %__element = extractelement <4 x float> %element1, i32 0
+  %__product = fmul float %__element, %__component
+  %__element24 = extractelement <4 x float> %element110, i32 0
+  %__product25 = fmul float %__element24, %__component19
+  %__dotProduct = fadd float %__product, %__product25
+  %__element27 = extractelement <4 x float> %element112, i32 0
+  %__product28 = fmul float %__element27, %__component20
+  %__dotProduct29 = fadd float %__dotProduct, %__product28
+  %__element31 = extractelement <4 x float> %element114, i32 0
+  %__product32 = fmul float %__element31, %__component21
+  %__dotProduct33 = fadd float %__dotProduct29, %__product32
+  %__element35 = extractelement <4 x float> %element1, i32 1
+  %__product36 = fmul float %__element35, %__component
+  %__element38 = extractelement <4 x float> %element110, i32 1
+  %__product39 = fmul float %__element38, %__component19
+  %__dotProduct40 = fadd float %__product36, %__product39
+  %__element42 = extractelement <4 x float> %element112, i32 1
+  %__product43 = fmul float %__element42, %__component20
+  %__dotProduct44 = fadd float %__dotProduct40, %__product43
+  %__element46 = extractelement <4 x float> %element114, i32 1
+  %__product47 = fmul float %__element46, %__component21
+  %__dotProduct48 = fadd float %__dotProduct44, %__product47
+  %__element50 = extractelement <4 x float> %element1, i32 2
+  %__product51 = fmul float %__element50, %__component
+  %__element53 = extractelement <4 x float> %element110, i32 2
+  %__product54 = fmul float %__element53, %__component19
+  %__dotProduct55 = fadd float %__product51, %__product54
+  %__element57 = extractelement <4 x float> %element112, i32 2
+  %__product58 = fmul float %__element57, %__component20
+  %__dotProduct59 = fadd float %__dotProduct55, %__product58
+  %__element61 = extractelement <4 x float> %element114, i32 2
+  %__product62 = fmul float %__element61, %__component21
+  %__dotProduct63 = fadd float %__dotProduct59, %__product62
+  %__element65 = extractelement <4 x float> %element1, i32 3
+  %__product66 = fmul float %__element65, %__component
+  %__element68 = extractelement <4 x float> %element110, i32 3
+  %__product69 = fmul float %__element68, %__component19
+  %__dotProduct70 = fadd float %__product66, %__product69
+  %__element72 = extractelement <4 x float> %element112, i32 3
+  %__product73 = fmul float %__element72, %__component20
+  %__dotProduct74 = fadd float %__dotProduct70, %__product73
+  %__element76 = extractelement <4 x float> %element114, i32 3
+  %__product77 = fmul float %__element76, %__component21
+  %__dotProduct78 = fadd float %__dotProduct74, %__product77
+  %13 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.f32(<4 x float> undef, i32 15, float %__dotProduct33, i32 0, float %__dotProduct48, i32 0, float %__dotProduct63, i32 0, float %__dotProduct78, i32 0)
+  %14 = fadd <4 x float> %assignment_tmp7, %13
+  %__column82 = fsub <4 x float> %element1, %element2
+  %__column85 = fsub <4 x float> %element110, %element211
+  %__column88 = fsub <4 x float> %element112, %element213
+  %__column91 = fsub <4 x float> %element114, %element215
+  %__dot93 = call float @llvm.gla.fDot4.f32.v4f32.v4f32(<4 x float> %v, <4 x float> %__column82)
+  %__dot95 = call float @llvm.gla.fDot4.f32.v4f32.v4f32(<4 x float> %v, <4 x float> %__column85)
+  %__dot97 = call float @llvm.gla.fDot4.f32.v4f32.v4f32(<4 x float> %v, <4 x float> %__column88)
+  %__dot99 = call float @llvm.gla.fDot4.f32.v4f32.v4f32(<4 x float> %v, <4 x float> %__column91)
+  %15 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.f32(<4 x float> undef, i32 15, float %__dot93, i32 0, float %__dot95, i32 0, float %__dot97, i32 0, float %__dot99, i32 0)
+  %FragColor_shadow100 = fadd <4 x float> %14, %15
+  br label %ifmerge
+
+ifmerge:                                          ; preds = %else, %then
+  %.pre-phi712 = phi float [ %__component21, %else ], [ %.pre711, %then ]
+  %.pre-phi710 = phi float [ %__component20, %else ], [ %.pre709, %then ]
+  %.pre-phi708 = phi float [ %__component19, %else ], [ %.pre707, %then ]
+  %.pre-phi = phi float [ %__component, %else ], [ %.pre, %then ]
+  %FragColor_shadow706.0 = phi <4 x float> [ %FragColor_shadow100, %else ], [ %FragColor_shadow16, %then ]
+  %u = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 2, i32 -1, i32 1)
+  %16 = call <4 x float> @llvm.gla.fSwizzle.v4f32.v4f32.v4i32(<4 x float> %u, <4 x i32> <i32 2, i32 3, i32 0, i32 0>)
+  %17 = call <4 x float> @llvm.gla.fSwizzle.v4f32.v4f32.v4i32(<4 x float> %u, <4 x i32> <i32 3, i32 0, i32 0, i32 1>)
+  %18 = call <4 x float> @llvm.gla.fSwizzle.v4f32.v4f32.v4i32(<4 x float> %u, <4 x i32> <i32 0, i32 0, i32 1, i32 2>)
+  %19 = extractelement <4 x float> %u, i32 0
+  %20 = fmul float %.pre-phi, %19
+  %21 = extractelement <4 x float> %u, i32 1
+  %22 = fmul float %.pre-phi, %21
+  %23 = extractelement <4 x float> %u, i32 2
+  %24 = fmul float %.pre-phi, %23
+  %25 = extractelement <4 x float> %u, i32 3
+  %26 = fmul float %.pre-phi, %25
+  %27 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.f32(<4 x float> undef, i32 15, float %20, i32 0, float %22, i32 0, float %24, i32 0, float %26, i32 0)
+  %28 = fmul float %.pre-phi708, %19
+  %29 = fmul float %.pre-phi708, %21
+  %30 = fmul float %.pre-phi708, %23
+  %31 = fmul float %.pre-phi708, %25
+  %32 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.f32(<4 x float> undef, i32 15, float %28, i32 0, float %29, i32 0, float %30, i32 0, float %31, i32 0)
+  %33 = fmul float %.pre-phi710, %19
+  %34 = fmul float %.pre-phi710, %21
+  %35 = fmul float %.pre-phi710, %23
+  %36 = fmul float %.pre-phi710, %25
+  %37 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.f32(<4 x float> undef, i32 15, float %33, i32 0, float %34, i32 0, float %35, i32 0, float %36, i32 0)
+  %38 = fmul float %.pre-phi712, %19
+  %39 = fmul float %.pre-phi712, %21
+  %40 = fmul float %.pre-phi712, %23
+  %41 = fmul float %.pre-phi712, %25
+  %42 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.f32(<4 x float> undef, i32 15, float %38, i32 0, float %39, i32 0, float %40, i32 0, float %41, i32 0)
+  %43 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.f32(<4 x float> undef, i32 15, float %.pre-phi, i32 0, float 0.000000e+00, i32 0, float 0.000000e+00, i32 0, float 0.000000e+00, i32 0)
+  %44 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.f32(<4 x float> <float 0.000000e+00, float undef, float undef, float undef>, i32 14, float undef, i32 undef, float %.pre-phi, i32 0, float 0.000000e+00, i32 0, float 0.000000e+00, i32 0)
+  %45 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.f32(<4 x float> <float 0.000000e+00, float 0.000000e+00, float undef, float undef>, i32 12, float undef, i32 undef, float undef, i32 undef, float %.pre-phi, i32 0, float 0.000000e+00, i32 0)
+  %46 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.v4f32(<4 x float> undef, i32 15, float 0.000000e+00, i32 0, float 0.000000e+00, i32 0, float 0.000000e+00, i32 0, <4 x float> %v, i32 0)
+  %__column208 = fadd <4 x float> %27, %43
+  %__column211 = fadd <4 x float> %32, %44
+  %__column214 = fadd <4 x float> %37, %45
+  %__column217 = fadd <4 x float> %42, %46
+  %__column221 = fadd <4 x float> %__column208, %u
+  %__column224 = fadd <4 x float> %__column211, %18
+  %__column227 = fadd <4 x float> %__column214, %17
+  %__column230 = fadd <4 x float> %__column217, %16
+  %__matrix233 = load [4 x <4 x float>] addrspace(2)* @un34, align 16
+  %element2235 = extractvalue [4 x <4 x float>] %__matrix233, 0
+  %47 = fcmp oeq <4 x float> %__column221, %element2235
+  %48 = call i1 @llvm.gla.all.v4i1(<4 x i1> %47)
+  %element2237 = extractvalue [4 x <4 x float>] %__matrix233, 1
+  %49 = fcmp oeq <4 x float> %__column224, %element2237
+  %50 = call i1 @llvm.gla.all.v4i1(<4 x i1> %49)
+  %51 = and i1 %48, %50
+  %element2239 = extractvalue [4 x <4 x float>] %__matrix233, 2
+  %52 = fcmp oeq <4 x float> %__column227, %element2239
+  %53 = call i1 @llvm.gla.all.v4i1(<4 x i1> %52)
+  %54 = and i1 %51, %53
+  %element2241 = extractvalue [4 x <4 x float>] %__matrix233, 3
+  %55 = fcmp oeq <4 x float> %__column230, %element2241
+  %56 = call i1 @llvm.gla.all.v4i1(<4 x i1> %55)
+  %57 = and i1 %54, %56
+  br i1 %57, label %then242, label %else310
+
+then242:                                          ; preds = %ifmerge
+  %__element250 = extractelement <4 x float> %__column221, i32 0
+  %__product251 = fmul float %__element250, %19
+  %__element253 = extractelement <4 x float> %__column224, i32 0
+  %__product254 = fmul float %__element253, %21
+  %__dotProduct255 = fadd float %__product251, %__product254
+  %__element257 = extractelement <4 x float> %__column227, i32 0
+  %__product258 = fmul float %__element257, %23
+  %__dotProduct259 = fadd float %__dotProduct255, %__product258
+  %__element261 = extractelement <4 x float> %__column230, i32 0
+  %__product262 = fmul float %__element261, %25
+  %__dotProduct263 = fadd float %__dotProduct259, %__product262
+  %__element265 = extractelement <4 x float> %__column221, i32 1
+  %__product266 = fmul float %__element265, %19
+  %__element268 = extractelement <4 x float> %__column224, i32 1
+  %__product269 = fmul float %__element268, %21
+  %__dotProduct270 = fadd float %__product266, %__product269
+  %__element272 = extractelement <4 x float> %__column227, i32 1
+  %__product273 = fmul float %__element272, %23
+  %__dotProduct274 = fadd float %__dotProduct270, %__product273
+  %__element276 = extractelement <4 x float> %__column230, i32 1
+  %__product277 = fmul float %__element276, %25
+  %__dotProduct278 = fadd float %__dotProduct274, %__product277
+  %__element280 = extractelement <4 x float> %__column221, i32 2
+  %__product281 = fmul float %__element280, %19
+  %__element283 = extractelement <4 x float> %__column224, i32 2
+  %__product284 = fmul float %__element283, %21
+  %__dotProduct285 = fadd float %__product281, %__product284
+  %__element287 = extractelement <4 x float> %__column227, i32 2
+  %__product288 = fmul float %__element287, %23
+  %__dotProduct289 = fadd float %__dotProduct285, %__product288
+  %__element291 = extractelement <4 x float> %__column230, i32 2
+  %__product292 = fmul float %__element291, %25
+  %__dotProduct293 = fadd float %__dotProduct289, %__product292
+  %__element295 = extractelement <4 x float> %__column221, i32 3
+  %__product296 = fmul float %__element295, %19
+  %__element298 = extractelement <4 x float> %__column224, i32 3
+  %__product299 = fmul float %__element298, %21
+  %__dotProduct300 = fadd float %__product296, %__product299
+  %__element302 = extractelement <4 x float> %__column227, i32 3
+  %__product303 = fmul float %__element302, %23
+  %__dotProduct304 = fadd float %__dotProduct300, %__product303
+  %__element306 = extractelement <4 x float> %__column230, i32 3
+  %__product307 = fmul float %__element306, %25
+  %__dotProduct308 = fadd float %__dotProduct304, %__product307
+  %58 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.f32(<4 x float> undef, i32 15, float %__dotProduct263, i32 0, float %__dotProduct278, i32 0, float %__dotProduct293, i32 0, float %__dotProduct308, i32 0)
+  br label %ifmerge705
+
+else310:                                          ; preds = %ifmerge
+  %__matrix312 = load [4 x <4 x float>] addrspace(2)* @um43, align 16
+  %__rightColumn313 = extractvalue [4 x <4 x float>] %__matrix312, 0
+  %__leftComp = extractelement <4 x float> %element2235, i32 0
+  %__rightComp = extractelement <4 x float> %__rightColumn313, i32 0
+  %__product315 = fmul float %__leftComp, %__rightComp
+  %__leftComp317 = extractelement <4 x float> %element2237, i32 0
+  %__rightComp318 = extractelement <4 x float> %__rightColumn313, i32 1
+  %__product319 = fmul float %__leftComp317, %__rightComp318
+  %__dotProduct320 = fadd float %__product315, %__product319
+  %__leftComp322 = extractelement <4 x float> %element2239, i32 0
+  %__rightComp323 = extractelement <4 x float> %__rightColumn313, i32 2
+  %__product324 = fmul float %__leftComp322, %__rightComp323
+  %__dotProduct325 = fadd float %__dotProduct320, %__product324
+  %__leftComp327 = extractelement <4 x float> %element2241, i32 0
+  %__rightComp328 = extractelement <4 x float> %__rightColumn313, i32 3
+  %__product329 = fmul float %__leftComp327, %__rightComp328
+  %__dotProduct330 = fadd float %__dotProduct325, %__product329
+  %__leftComp333 = extractelement <4 x float> %element2235, i32 1
+  %__product335 = fmul float %__leftComp333, %__rightComp
+  %__leftComp337 = extractelement <4 x float> %element2237, i32 1
+  %__product339 = fmul float %__leftComp337, %__rightComp318
+  %__dotProduct340 = fadd float %__product335, %__product339
+  %__leftComp342 = extractelement <4 x float> %element2239, i32 1
+  %__product344 = fmul float %__leftComp342, %__rightComp323
+  %__dotProduct345 = fadd float %__dotProduct340, %__product344
+  %__leftComp347 = extractelement <4 x float> %element2241, i32 1
+  %__product349 = fmul float %__leftComp347, %__rightComp328
+  %__dotProduct350 = fadd float %__dotProduct345, %__product349
+  %__leftComp353 = extractelement <4 x float> %element2235, i32 2
+  %__product355 = fmul float %__leftComp353, %__rightComp
+  %__leftComp357 = extractelement <4 x float> %element2237, i32 2
+  %__product359 = fmul float %__leftComp357, %__rightComp318
+  %__dotProduct360 = fadd float %__product355, %__product359
+  %__leftComp362 = extractelement <4 x float> %element2239, i32 2
+  %__product364 = fmul float %__leftComp362, %__rightComp323
+  %__dotProduct365 = fadd float %__dotProduct360, %__product364
+  %__leftComp367 = extractelement <4 x float> %element2241, i32 2
+  %__product369 = fmul float %__leftComp367, %__rightComp328
+  %__dotProduct370 = fadd float %__dotProduct365, %__product369
+  %__leftComp373 = extractelement <4 x float> %element2235, i32 3
+  %__product375 = fmul float %__leftComp373, %__rightComp
+  %__leftComp377 = extractelement <4 x float> %element2237, i32 3
+  %__product379 = fmul float %__leftComp377, %__rightComp318
+  %__dotProduct380 = fadd float %__product375, %__product379
+  %__leftComp382 = extractelement <4 x float> %element2239, i32 3
+  %__product384 = fmul float %__leftComp382, %__rightComp323
+  %__dotProduct385 = fadd float %__dotProduct380, %__product384
+  %__leftComp387 = extractelement <4 x float> %element2241, i32 3
+  %__product389 = fmul float %__leftComp387, %__rightComp328
+  %__dotProduct390 = fadd float %__dotProduct385, %__product389
+  %__rightColumn393 = extractvalue [4 x <4 x float>] %__matrix312, 1
+  %__rightComp396 = extractelement <4 x float> %__rightColumn393, i32 0
+  %__product397 = fmul float %__leftComp, %__rightComp396
+  %__rightComp400 = extractelement <4 x float> %__rightColumn393, i32 1
+  %__product401 = fmul float %__leftComp317, %__rightComp400
+  %__dotProduct402 = fadd float %__product397, %__product401
+  %__rightComp405 = extractelement <4 x float> %__rightColumn393, i32 2
+  %__product406 = fmul float %__leftComp322, %__rightComp405
+  %__dotProduct407 = fadd float %__dotProduct402, %__product406
+  %__rightComp410 = extractelement <4 x float> %__rightColumn393, i32 3
+  %__product411 = fmul float %__leftComp327, %__rightComp410
+  %__dotProduct412 = fadd float %__dotProduct407, %__product411
+  %__product417 = fmul float %__leftComp333, %__rightComp396
+  %__product421 = fmul float %__leftComp337, %__rightComp400
+  %__dotProduct422 = fadd float %__product417, %__product421
+  %__product426 = fmul float %__leftComp342, %__rightComp405
+  %__dotProduct427 = fadd float %__dotProduct422, %__product426
+  %__product431 = fmul float %__leftComp347, %__rightComp410
+  %__dotProduct432 = fadd float %__dotProduct427, %__product431
+  %__product437 = fmul float %__leftComp353, %__rightComp396
+  %__product441 = fmul float %__leftComp357, %__rightComp400
+  %__dotProduct442 = fadd float %__product437, %__product441
+  %__product446 = fmul float %__leftComp362, %__rightComp405
+  %__dotProduct447 = fadd float %__dotProduct442, %__product446
+  %__product451 = fmul float %__leftComp367, %__rightComp410
+  %__dotProduct452 = fadd float %__dotProduct447, %__product451
+  %__product457 = fmul float %__leftComp373, %__rightComp396
+  %__product461 = fmul float %__leftComp377, %__rightComp400
+  %__dotProduct462 = fadd float %__product457, %__product461
+  %__product466 = fmul float %__leftComp382, %__rightComp405
+  %__dotProduct467 = fadd float %__dotProduct462, %__product466
+  %__product471 = fmul float %__leftComp387, %__rightComp410
+  %__dotProduct472 = fadd float %__dotProduct467, %__product471
+  %__rightColumn475 = extractvalue [4 x <4 x float>] %__matrix312, 2
+  %__rightComp478 = extractelement <4 x float> %__rightColumn475, i32 0
+  %__product479 = fmul float %__leftComp, %__rightComp478
+  %__rightComp482 = extractelement <4 x float> %__rightColumn475, i32 1
+  %__product483 = fmul float %__leftComp317, %__rightComp482
+  %__dotProduct484 = fadd float %__product479, %__product483
+  %__rightComp487 = extractelement <4 x float> %__rightColumn475, i32 2
+  %__product488 = fmul float %__leftComp322, %__rightComp487
+  %__dotProduct489 = fadd float %__dotProduct484, %__product488
+  %__rightComp492 = extractelement <4 x float> %__rightColumn475, i32 3
+  %__product493 = fmul float %__leftComp327, %__rightComp492
+  %__dotProduct494 = fadd float %__dotProduct489, %__product493
+  %__product499 = fmul float %__leftComp333, %__rightComp478
+  %__product503 = fmul float %__leftComp337, %__rightComp482
+  %__dotProduct504 = fadd float %__product499, %__product503
+  %__product508 = fmul float %__leftComp342, %__rightComp487
+  %__dotProduct509 = fadd float %__dotProduct504, %__product508
+  %__product513 = fmul float %__leftComp347, %__rightComp492
+  %__dotProduct514 = fadd float %__dotProduct509, %__product513
+  %__product519 = fmul float %__leftComp353, %__rightComp478
+  %__product523 = fmul float %__leftComp357, %__rightComp482
+  %__dotProduct524 = fadd float %__product519, %__product523
+  %__product528 = fmul float %__leftComp362, %__rightComp487
+  %__dotProduct529 = fadd float %__dotProduct524, %__product528
+  %__product533 = fmul float %__leftComp367, %__rightComp492
+  %__dotProduct534 = fadd float %__dotProduct529, %__product533
+  %__product539 = fmul float %__leftComp373, %__rightComp478
+  %__product543 = fmul float %__leftComp377, %__rightComp482
+  %__dotProduct544 = fadd float %__product539, %__product543
+  %__product548 = fmul float %__leftComp382, %__rightComp487
+  %__dotProduct549 = fadd float %__dotProduct544, %__product548
+  %__product553 = fmul float %__leftComp387, %__rightComp492
+  %__dotProduct554 = fadd float %__dotProduct549, %__product553
+  %__rightColumn557 = extractvalue [4 x <4 x float>] %__matrix312, 3
+  %__rightComp560 = extractelement <4 x float> %__rightColumn557, i32 0
+  %__product561 = fmul float %__leftComp, %__rightComp560
+  %__rightComp564 = extractelement <4 x float> %__rightColumn557, i32 1
+  %__product565 = fmul float %__leftComp317, %__rightComp564
+  %__dotProduct566 = fadd float %__product561, %__product565
+  %__rightComp569 = extractelement <4 x float> %__rightColumn557, i32 2
+  %__product570 = fmul float %__leftComp322, %__rightComp569
+  %__dotProduct571 = fadd float %__dotProduct566, %__product570
+  %__rightComp574 = extractelement <4 x float> %__rightColumn557, i32 3
+  %__product575 = fmul float %__leftComp327, %__rightComp574
+  %__dotProduct576 = fadd float %__dotProduct571, %__product575
+  %__product581 = fmul float %__leftComp333, %__rightComp560
+  %__product585 = fmul float %__leftComp337, %__rightComp564
+  %__dotProduct586 = fadd float %__product581, %__product585
+  %__product590 = fmul float %__leftComp342, %__rightComp569
+  %__dotProduct591 = fadd float %__dotProduct586, %__product590
+  %__product595 = fmul float %__leftComp347, %__rightComp574
+  %__dotProduct596 = fadd float %__dotProduct591, %__product595
+  %__product601 = fmul float %__leftComp353, %__rightComp560
+  %__product605 = fmul float %__leftComp357, %__rightComp564
+  %__dotProduct606 = fadd float %__product601, %__product605
+  %__product610 = fmul float %__leftComp362, %__rightComp569
+  %__dotProduct611 = fadd float %__dotProduct606, %__product610
+  %__product615 = fmul float %__leftComp367, %__rightComp574
+  %__dotProduct616 = fadd float %__dotProduct611, %__product615
+  %__product621 = fmul float %__leftComp373, %__rightComp560
+  %__product625 = fmul float %__leftComp377, %__rightComp564
+  %__dotProduct626 = fadd float %__product621, %__product625
+  %__product630 = fmul float %__leftComp382, %__rightComp569
+  %__dotProduct631 = fadd float %__dotProduct626, %__product630
+  %__product635 = fmul float %__leftComp387, %__rightComp574
+  %__dotProduct636 = fadd float %__dotProduct631, %__product635
+  %__product646 = fmul float %__dotProduct330, %.pre-phi
+  %__product649 = fmul float %__dotProduct412, %.pre-phi708
+  %__dotProduct650 = fadd float %__product646, %__product649
+  %__product653 = fmul float %__dotProduct494, %.pre-phi710
+  %__dotProduct654 = fadd float %__dotProduct650, %__product653
+  %__product657 = fmul float %__dotProduct576, %.pre-phi712
+  %__dotProduct658 = fadd float %__dotProduct654, %__product657
+  %__product661 = fmul float %__dotProduct350, %.pre-phi
+  %__product664 = fmul float %__dotProduct432, %.pre-phi708
+  %__dotProduct665 = fadd float %__product661, %__product664
+  %__product668 = fmul float %__dotProduct514, %.pre-phi710
+  %__dotProduct669 = fadd float %__dotProduct665, %__product668
+  %__product672 = fmul float %__dotProduct596, %.pre-phi712
+  %__dotProduct673 = fadd float %__dotProduct669, %__product672
+  %__product676 = fmul float %__dotProduct370, %.pre-phi
+  %__product679 = fmul float %__dotProduct452, %.pre-phi708
+  %__dotProduct680 = fadd float %__product676, %__product679
+  %__product683 = fmul float %__dotProduct534, %.pre-phi710
+  %__dotProduct684 = fadd float %__dotProduct680, %__product683
+  %__product687 = fmul float %__dotProduct616, %.pre-phi712
+  %__dotProduct688 = fadd float %__dotProduct684, %__product687
+  %__product691 = fmul float %__dotProduct390, %.pre-phi
+  %__product694 = fmul float %__dotProduct472, %.pre-phi708
+  %__dotProduct695 = fadd float %__product691, %__product694
+  %__product698 = fmul float %__dotProduct554, %.pre-phi710
+  %__dotProduct699 = fadd float %__dotProduct695, %__product698
+  %__product702 = fmul float %__dotProduct636, %.pre-phi712
+  %__dotProduct703 = fadd float %__dotProduct699, %__product702
+  %59 = call <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.f32(<4 x float> undef, i32 15, float %__dotProduct658, i32 0, float %__dotProduct673, i32 0, float %__dotProduct688, i32 0, float %__dotProduct703, i32 0)
+  br label %ifmerge705
+
+ifmerge705:                                       ; preds = %else310, %then242
+  %.pn = phi <4 x float> [ %58, %then242 ], [ %59, %else310 ]
+  %FragColor_shadow706.1 = fadd <4 x float> %FragColor_shadow706.0, %.pn
+  call void @llvm.gla.fWriteData.v4f32(i32 0, i32 -1, <4 x float> %FragColor_shadow706.1)
+  br label %stage-epilogue
+
+stage-epilogue:                                   ; preds = %ifmerge705
+  br label %stage-exit
+
+stage-exit:                                       ; preds = %stage-epilogue
+  ret void
+}
+
+declare <3 x float> @llvm.gla.fReadInterpolant.v3f32(i32, i32, i32) nounwind readnone
+
+declare float @llvm.gla.fDot3.f32.v3f32.v3f32(<3 x float>, <3 x float>) nounwind readnone
+
+declare i1 @llvm.gla.any.v4i1(<4 x i1>) nounwind readnone
+
+declare <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32, i32, i32) nounwind readnone
+
+declare float @llvm.gla.fDot4.f32.v4f32.v4f32(<4 x float>, <4 x float>) nounwind readnone
+
+declare i1 @llvm.gla.all.v4i1(<4 x i1>) nounwind readnone
+
+declare void @llvm.gla.fWriteData.v4f32(i32, i32, <4 x float>) nounwind
+
+declare <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.f32(<4 x float>, i32, float, i32, float, i32, float, i32, float, i32) nounwind readnone
+
+declare <4 x float> @llvm.gla.fMultiInsert.v4f32.v4f32.f32.f32.f32.v4f32(<4 x float>, i32, float, i32, float, i32, float, i32, <4 x float>, i32) nounwind readnone
+
+declare <4 x float> @llvm.gla.fSwizzle.v4f32.v4f32.v4i32(<4 x float>, <4 x i32>) nounwind readnone
+compiling matrix.frag...
+uniform mat3 colorTransform ; 
+varying vec3 Color ; 
+uniform mat4 m , n ; 
+uniform mat4 um43 ; 
+uniform mat4 un34 ; 
+varying vec4 v ; 
+varying vec4 u ; 
+void  main (){
+gl_FragColor = vec4 ( un34 [ 1 ] ) ; gl_FragColor += vec4 ( Color * colorTransform , 1.000000 ) ; if ( m != n ) gl_FragColor += v ; else {
+gl_FragColor += m * v ; gl_FragColor += v * m - n ; }
+mat4 m34 = mat4 ( v . x * u . x , v . x * u . y , v . x * u . z , v . x * u . w , v . y * u . x , v . y * u . y , v . y * u . z , v . y * u . w , v . z * u . x , v . z * u . y , v . z * u . z , v . z * u . w , v . w * u . x , v . w * u . y , v . w * u . z , v . w * u . w ) ; m34 += mat4 ( v . x ) ; m34 += mat4 ( u , u . x , u , u . x , u , u . x , u . x ) ; if ( m34 == un34 ) gl_FragColor += m34 * u ; else gl_FragColor += un34 * um43 * v ; }
+
+
+
+(
+(declare (in ) vec4 u)
+(declare (in ) vec4 v)
+(declare (uniform ) mat4 un34)
+(declare (uniform ) mat4 um43)
+(declare (uniform ) mat4 n)
+(declare (uniform ) mat4 m)
+(declare (in ) vec3 Color)
+(declare (uniform ) mat3 colorTransform)
+(declare (out ) vec4 gl_FragColor)
+(function main
+  (signature void
+    (parameters
+    )
+    (
+      (declare (temporary ) vec4 vec_ctor)
+      (assign (constant bool (1)) (w) (var_ref vec_ctor)  (constant float (1.000000)) ) 
+      (assign (constant bool (1)) (xyz) (var_ref vec_ctor)  (expression vec3 * (var_ref Color) (var_ref colorTransform) ) ) 
+      (declare (temporary ) vec4 assignment_tmp)
+      (assign (constant bool (1)) (xyzw) (var_ref assignment_tmp)  (expression vec4 + (array_ref (var_ref un34) (constant int (1)) ) (var_ref vec_ctor) ) ) 
+      (assign (constant bool (1)) (xyzw) (var_ref gl_FragColor)  (var_ref assignment_tmp) ) 
+      (if (expression bool any_nequal (var_ref m) (var_ref n) ) (
+        (assign (constant bool (1)) (xyzw) (var_ref gl_FragColor)  (expression vec4 + (var_ref assignment_tmp) (var_ref v) ) ) 
+      )
+      (
+        (assign (constant bool (1)) (xyzw) (var_ref gl_FragColor)  (expression vec4 + (expression vec4 + (var_ref gl_FragColor) (expression vec4 * (var_ref m) (var_ref v) ) ) (expression vec4 * (var_ref v) (expression mat4 - (var_ref m) (var_ref n) ) ) ) ) 
+      ))
+
+      (declare (temporary ) mat4 mat_ctor)
+      (assign (constant bool (1)) (x) (array_ref (var_ref mat_ctor) (constant uint (0)) )  (expression float * (swiz x (var_ref v) )(swiz x (var_ref u) )) ) 
+      (assign (constant bool (1)) (y) (array_ref (var_ref mat_ctor) (constant uint (0)) )  (expression float * (swiz x (var_ref v) )(swiz y (var_ref u) )) ) 
+      (assign (constant bool (1)) (z) (array_ref (var_ref mat_ctor) (constant uint (0)) )  (expression float * (swiz x (var_ref v) )(swiz z (var_ref u) )) ) 
+      (assign (constant bool (1)) (w) (array_ref (var_ref mat_ctor) (constant uint (0)) )  (expression float * (swiz x (var_ref v) )(swiz w (var_ref u) )) ) 
+      (assign (constant bool (1)) (x) (array_ref (var_ref mat_ctor) (constant uint (1)) )  (expression float * (swiz y (var_ref v) )(swiz x (var_ref u) )) ) 
+      (assign (constant bool (1)) (y) (array_ref (var_ref mat_ctor) (constant uint (1)) )  (expression float * (swiz y (var_ref v) )(swiz y (var_ref u) )) ) 
+      (assign (constant bool (1)) (z) (array_ref (var_ref mat_ctor) (constant uint (1)) )  (expression float * (swiz y (var_ref v) )(swiz z (var_ref u) )) ) 
+      (assign (constant bool (1)) (w) (array_ref (var_ref mat_ctor) (constant uint (1)) )  (expression float * (swiz y (var_ref v) )(swiz w (var_ref u) )) ) 
+      (assign (constant bool (1)) (x) (array_ref (var_ref mat_ctor) (constant uint (2)) )  (expression float * (swiz z (var_ref v) )(swiz x (var_ref u) )) ) 
+      (assign (constant bool (1)) (y) (array_ref (var_ref mat_ctor) (constant uint (2)) )  (expression float * (swiz z (var_ref v) )(swiz y (var_ref u) )) ) 
+      (assign (constant bool (1)) (z) (array_ref (var_ref mat_ctor) (constant uint (2)) )  (expression float * (swiz z (var_ref v) )(swiz z (var_ref u) )) ) 
+      (assign (constant bool (1)) (w) (array_ref (var_ref mat_ctor) (constant uint (2)) )  (expression float * (swiz z (var_ref v) )(swiz w (var_ref u) )) ) 
+      (assign (constant bool (1)) (x) (array_ref (var_ref mat_ctor) (constant uint (3)) )  (expression float * (swiz w (var_ref v) )(swiz x (var_ref u) )) ) 
+      (assign (constant bool (1)) (y) (array_ref (var_ref mat_ctor) (constant uint (3)) )  (expression float * (swiz w (var_ref v) )(swiz y (var_ref u) )) ) 
+      (assign (constant bool (1)) (z) (array_ref (var_ref mat_ctor) (constant uint (3)) )  (expression float * (swiz w (var_ref v) )(swiz z (var_ref u) )) ) 
+      (assign (constant bool (1)) (w) (array_ref (var_ref mat_ctor) (constant uint (3)) )  (expression float * (swiz w (var_ref v) )(swiz w (var_ref u) )) ) 
+      (declare (temporary ) mat4 mat_ctor)
+      (declare (temporary ) vec4 mat_ctor_vec)
+      (assign (constant bool (1)) (xyzw) (var_ref mat_ctor_vec)  (constant vec4 (0.000000 0.000000 0.000000 0.000000)) ) 
+      (assign (constant bool (1)) (x) (var_ref mat_ctor_vec)  (swiz x (var_ref v) )) 
+      (assign (constant bool (1)) (xyzw) (array_ref (var_ref mat_ctor) (constant uint (0)) )  (swiz xyyy (var_ref mat_ctor_vec) )) 
+      (assign (constant bool (1)) (xyzw) (array_ref (var_ref mat_ctor) (constant uint (1)) )  (swiz yxyy (var_ref mat_ctor_vec) )) 
+      (assign (constant bool (1)) (xyzw) (array_ref (var_ref mat_ctor) (constant uint (2)) )  (swiz yyxy (var_ref mat_ctor_vec) )) 
+      (assign (constant bool (1)) (xyzw) (array_ref (var_ref mat_ctor) (constant uint (3)) )  (swiz yyyx (var_ref mat_ctor_vec) )) 
+      (declare (temporary ) mat4 mat_ctor)
+      (assign (constant bool (1)) (xyzw) (array_ref (var_ref mat_ctor) (constant uint (0)) )  (var_ref u) ) 
+      (assign (constant bool (1)) (x) (array_ref (var_ref mat_ctor) (constant uint (1)) )  (swiz x (var_ref u) )) 
+      (assign (constant bool (1)) (yzw) (array_ref (var_ref mat_ctor) (constant uint (1)) )  (swiz xyz (var_ref u) )) 
+      (assign (constant bool (1)) (x) (array_ref (var_ref mat_ctor) (constant uint (2)) )  (swiz w (var_ref u) )) 
+      (assign (constant bool (1)) (y) (array_ref (var_ref mat_ctor) (constant uint (2)) )  (swiz x (var_ref u) )) 
+      (assign (constant bool (1)) (zw) (array_ref (var_ref mat_ctor) (constant uint (2)) )  (swiz xy (var_ref u) )) 
+      (assign (constant bool (1)) (xy) (array_ref (var_ref mat_ctor) (constant uint (3)) )  (swiz zw (var_ref u) )) 
+      (assign (constant bool (1)) (z) (array_ref (var_ref mat_ctor) (constant uint (3)) )  (swiz x (var_ref u) )) 
+      (assign (constant bool (1)) (w) (array_ref (var_ref mat_ctor) (constant uint (3)) )  (swiz x (var_ref u) )) 
+      (declare (temporary ) mat4 assignment_tmp)
+      (assign (constant bool (1)) () (var_ref assignment_tmp)  (expression mat4 + (expression mat4 + (var_ref mat_ctor) (var_ref mat_ctor) ) (var_ref mat_ctor) ) ) 
+      (if (expression bool all_equal (var_ref assignment_tmp) (var_ref un34) ) (
+        (assign (constant bool (1)) (xyzw) (var_ref gl_FragColor)  (expression vec4 + (var_ref gl_FragColor) (expression vec4 * (var_ref assignment_tmp) (var_ref u) ) ) ) 
+      )
+      (
+        (assign (constant bool (1)) (xyzw) (var_ref gl_FragColor)  (expression vec4 + (var_ref gl_FragColor) (expression vec4 * (expression mat4 * (var_ref un34) (var_ref um43) ) (var_ref v) ) ) ) 
+      ))
+
+    ))
+
+)
+
+
+)
+// LunarGOO output
+#version 130
+uniform vec3[3] colorTransform;
+uniform vec4[4] un34;
+uniform vec4[4] m;
+uniform vec4[4] n;
+uniform vec4[4] um43;
+in vec3 Color;
+const vec4 const34 = vec4(0.0, 0.0, 0.0, 1.0);
+in vec4 v;
+in vec4 u;
+const float const121_0f = 0.0;
+const vec4 const123 = vec4(0.0, 0.0, 0.0, 0.0);
+const vec4 const125 = vec4(0.0, 0.0, 0.0, 0.0);
+
+void main()
+{
+    float _pre_phi712;
+    float _pre_phi710;
+    float _pre_phi708;
+    float _pre_phi;
+    vec4 FragColor_shadow706_0;
+    vec4 _pn;
+    vec3 __column = colorTransform[0];
+    float __dot = dot(Color, __column);
+    vec3 __column2 = colorTransform[1];
+    float __dot3 = dot(Color, __column2);
+    vec3 __column4 = colorTransform[2];
+    float __dot5 = dot(Color, __column4);
+    vec4 temp33 = const34;
+    temp33.xyz = vec3(__dot, __dot3, __dot5);
+    vec4 temp35 = un34[1];
+    vec4 assignment_tmp7 = temp35 + temp33;
+    vec4 element1 = m[0];
+    vec4 element2 = n[0];
+    bvec4 temp39 = notEqual(element1, element2);
+    bool temp40 = any(temp39);
+    vec4 element110 = m[1];
+    vec4 element211 = n[1];
+    bvec4 temp43 = notEqual(element110, element211);
+    bool temp44 = any(temp43);
+    bool temp45 = temp40 || temp44;
+    vec4 element112 = m[2];
+    vec4 element213 = n[2];
+    bvec4 temp48 = notEqual(element112, element213);
+    bool temp49 = any(temp48);
+    bool temp50 = temp45 || temp49;
+    vec4 element114 = m[3];
+    vec4 element215 = n[3];
+    bvec4 temp53 = notEqual(element114, element215);
+    bool temp54 = any(temp53);
+    bool temp55 = temp50 || temp54;
+    if (temp55) {
+        vec4 FragColor_shadow16 = assignment_tmp7 + v;
+        _pre_phi712 = v.w;
+        _pre_phi710 = v.z;
+        _pre_phi708 = v.y;
+        _pre_phi = v.x;
+        FragColor_shadow706_0 = FragColor_shadow16;
+    }
+    else {
+        float __product = element1.x * v.x;
+        float __product25 = element110.x * v.y;
+        float __dotProduct = __product + __product25;
+        float __product28 = element112.x * v.z;
+        float __dotProduct29 = __dotProduct + __product28;
+        float __product32 = element114.x * v.w;
+        float __dotProduct33 = __dotProduct29 + __product32;
+        float __product36 = element1.y * v.x;
+        float __product39 = element110.y * v.y;
+        float __dotProduct40 = __product36 + __product39;
+        float __product43 = element112.y * v.z;
+        float __dotProduct44 = __dotProduct40 + __product43;
+        float __product47 = element114.y * v.w;
+        float __dotProduct48 = __dotProduct44 + __product47;
+        float __product51 = element1.z * v.x;
+        float __product54 = element110.z * v.y;
+        float __dotProduct55 = __product51 + __product54;
+        float __product58 = element112.z * v.z;
+        float __dotProduct59 = __dotProduct55 + __product58;
+        float __product62 = element114.z * v.w;
+        float __dotProduct63 = __dotProduct59 + __product62;
+        float __product66 = element1.w * v.x;
+        float __product69 = element110.w * v.y;
+        float __dotProduct70 = __product66 + __product69;
+        float __product73 = element112.w * v.z;
+        float __dotProduct74 = __dotProduct70 + __product73;
+        float __product77 = element114.w * v.w;
+        float __dotProduct78 = __dotProduct74 + __product77;
+        vec4 temp85 = vec4(__dotProduct33, __dotProduct48, __dotProduct63, __dotProduct78);
+        vec4 temp86 = assignment_tmp7 + temp85;
+        vec4 __column82 = element1 - element2;
+        vec4 __column85 = element110 - element211;
+        vec4 __column88 = element112 - element213;
+        vec4 __column91 = element114 - element215;
+        float __dot93 = dot(v, __column82);
+        float __dot95 = dot(v, __column85);
+        float __dot97 = dot(v, __column88);
+        float __dot99 = dot(v, __column91);
+        vec4 temp95 = vec4(__dot93, __dot95, __dot97, __dot99);
+        vec4 FragColor_shadow100 = temp86 + temp95;
+        _pre_phi712 = v.w;
+        _pre_phi710 = v.z;
+        _pre_phi708 = v.y;
+        _pre_phi = v.x;
+        FragColor_shadow706_0 = FragColor_shadow100;
+    }
+    
+    vec4 temp97 = u.zwxx;
+    vec4 temp98 = u.wxxy;
+    vec4 temp99 = u.xxyz;
+    float temp100 = _pre_phi * u.x;
+    float temp101 = _pre_phi * u.y;
+    float temp102 = _pre_phi * u.z;
+    float temp103 = _pre_phi * u.w;
+    vec4 temp104 = vec4(temp100, temp101, temp102, temp103);
+    float temp105 = _pre_phi708 * u.x;
+    float temp106 = _pre_phi708 * u.y;
+    float temp107 = _pre_phi708 * u.z;
+    float temp108 = _pre_phi708 * u.w;
+    vec4 temp109 = vec4(temp105, temp106, temp107, temp108);
+    float temp110 = _pre_phi710 * u.x;
+    float temp111 = _pre_phi710 * u.y;
+    float temp112 = _pre_phi710 * u.z;
+    float temp113 = _pre_phi710 * u.w;
+    vec4 temp114 = vec4(temp110, temp111, temp112, temp113);
+    float temp115 = _pre_phi712 * u.x;
+    float temp116 = _pre_phi712 * u.y;
+    float temp117 = _pre_phi712 * u.z;
+    float temp118 = _pre_phi712 * u.w;
+    vec4 temp119 = vec4(temp115, temp116, temp117, temp118);
+    vec4 temp120 = vec4(_pre_phi, const121_0f, const121_0f, const121_0f);
+    vec4 temp122 = const123;
+    temp122.yzw = vec3(_pre_phi, const121_0f, const121_0f);
+    vec4 temp124 = const125;
+    temp124.zw = vec2(_pre_phi, const121_0f);
+    vec4 temp126 = vec4(const121_0f, const121_0f, const121_0f, v.x);
+    vec4 __column208 = temp104 + temp120;
+    vec4 __column211 = temp109 + temp122;
+    vec4 __column214 = temp114 + temp124;
+    vec4 __column217 = temp119 + temp126;
+    vec4 __column221 = __column208 + u;
+    vec4 __column224 = __column211 + temp99;
+    vec4 __column227 = __column214 + temp98;
+    vec4 __column230 = __column217 + temp97;
+    vec4 element2235 = un34[0];
+    bvec4 temp136 = equal(__column221, element2235);
+    bool temp137 = all(temp136);
+    vec4 element2237 = un34[1];
+    bvec4 temp139 = equal(__column224, element2237);
+    bool temp140 = all(temp139);
+    bool temp141 = temp137 && temp140;
+    vec4 element2239 = un34[2];
+    bvec4 temp143 = equal(__column227, element2239);
+    bool temp144 = all(temp143);
+    bool temp145 = temp141 && temp144;
+    vec4 element2241 = un34[3];
+    bvec4 temp147 = equal(__column230, element2241);
+    bool temp148 = all(temp147);
+    bool temp149 = temp145 && temp148;
+    if (temp149) {
+        float __product251 = __column221.x * u.x;
+        float __product254 = __column224.x * u.y;
+        float __dotProduct255 = __product251 + __product254;
+        float __product258 = __column227.x * u.z;
+        float __dotProduct259 = __dotProduct255 + __product258;
+        float __product262 = __column230.x * u.w;
+        float __dotProduct263 = __dotProduct259 + __product262;
+        float __product266 = __column221.y * u.x;
+        float __product269 = __column224.y * u.y;
+        float __dotProduct270 = __product266 + __product269;
+        float __product273 = __column227.y * u.z;
+        float __dotProduct274 = __dotProduct270 + __product273;
+        float __product277 = __column230.y * u.w;
+        float __dotProduct278 = __dotProduct274 + __product277;
+        float __product281 = __column221.z * u.x;
+        float __product284 = __column224.z * u.y;
+        float __dotProduct285 = __product281 + __product284;
+        float __product288 = __column227.z * u.z;
+        float __dotProduct289 = __dotProduct285 + __product288;
+        float __product292 = __column230.z * u.w;
+        float __dotProduct293 = __dotProduct289 + __product292;
+        float __product296 = __column221.w * u.x;
+        float __product299 = __column224.w * u.y;
+        float __dotProduct300 = __product296 + __product299;
+        float __product303 = __column227.w * u.z;
+        float __dotProduct304 = __dotProduct300 + __product303;
+        float __product307 = __column230.w * u.w;
+        float __dotProduct308 = __dotProduct304 + __product307;
+        vec4 temp178 = vec4(__dotProduct263, __dotProduct278, __dotProduct293, __dotProduct308);
+        _pn = temp178;
+    }
+    else {
+        vec4 __rightColumn313 = um43[0];
+        float __product315 = element2235.x * __rightColumn313.x;
+        float __product319 = element2237.x * __rightColumn313.y;
+        float __dotProduct320 = __product315 + __product319;
+        float __product324 = element2239.x * __rightColumn313.z;
+        float __dotProduct325 = __dotProduct320 + __product324;
+        float __product329 = element2241.x * __rightColumn313.w;
+        float __dotProduct330 = __dotProduct325 + __product329;
+        float __product335 = element2235.y * __rightColumn313.x;
+        float __product339 = element2237.y * __rightColumn313.y;
+        float __dotProduct340 = __product335 + __product339;
+        float __product344 = element2239.y * __rightColumn313.z;
+        float __dotProduct345 = __dotProduct340 + __product344;
+        float __product349 = element2241.y * __rightColumn313.w;
+        float __dotProduct350 = __dotProduct345 + __product349;
+        float __product355 = element2235.z * __rightColumn313.x;
+        float __product359 = element2237.z * __rightColumn313.y;
+        float __dotProduct360 = __product355 + __product359;
+        float __product364 = element2239.z * __rightColumn313.z;
+        float __dotProduct365 = __dotProduct360 + __product364;
+        float __product369 = element2241.z * __rightColumn313.w;
+        float __dotProduct370 = __dotProduct365 + __product369;
+        float __product375 = element2235.w * __rightColumn313.x;
+        float __product379 = element2237.w * __rightColumn313.y;
+        float __dotProduct380 = __product375 + __product379;
+        float __product384 = element2239.w * __rightColumn313.z;
+        float __dotProduct385 = __dotProduct380 + __product384;
+        float __product389 = element2241.w * __rightColumn313.w;
+        float __dotProduct390 = __dotProduct385 + __product389;
+        vec4 __rightColumn393 = um43[1];
+        float __product397 = element2235.x * __rightColumn393.x;
+        float __product401 = element2237.x * __rightColumn393.y;
+        float __dotProduct402 = __product397 + __product401;
+        float __product406 = element2239.x * __rightColumn393.z;
+        float __dotProduct407 = __dotProduct402 + __product406;
+        float __product411 = element2241.x * __rightColumn393.w;
+        float __dotProduct412 = __dotProduct407 + __product411;
+        float __product417 = element2235.y * __rightColumn393.x;
+        float __product421 = element2237.y * __rightColumn393.y;
+        float __dotProduct422 = __product417 + __product421;
+        float __product426 = element2239.y * __rightColumn393.z;
+        float __dotProduct427 = __dotProduct422 + __product426;
+        float __product431 = element2241.y * __rightColumn393.w;
+        float __dotProduct432 = __dotProduct427 + __product431;
+        float __product437 = element2235.z * __rightColumn393.x;
+        float __product441 = element2237.z * __rightColumn393.y;
+        float __dotProduct442 = __product437 + __product441;
+        float __product446 = element2239.z * __rightColumn393.z;
+        float __dotProduct447 = __dotProduct442 + __product446;
+        float __product451 = element2241.z * __rightColumn393.w;
+        float __dotProduct452 = __dotProduct447 + __product451;
+        float __product457 = element2235.w * __rightColumn393.x;
+        float __product461 = element2237.w * __rightColumn393.y;
+        float __dotProduct462 = __product457 + __product461;
+        float __product466 = element2239.w * __rightColumn393.z;
+        float __dotProduct467 = __dotProduct462 + __product466;
+        float __product471 = element2241.w * __rightColumn393.w;
+        float __dotProduct472 = __dotProduct467 + __product471;
+        vec4 __rightColumn475 = um43[2];
+        float __product479 = element2235.x * __rightColumn475.x;
+        float __product483 = element2237.x * __rightColumn475.y;
+        float __dotProduct484 = __product479 + __product483;
+        float __product488 = element2239.x * __rightColumn475.z;
+        float __dotProduct489 = __dotProduct484 + __product488;
+        float __product493 = element2241.x * __rightColumn475.w;
+        float __dotProduct494 = __dotProduct489 + __product493;
+        float __product499 = element2235.y * __rightColumn475.x;
+        float __product503 = element2237.y * __rightColumn475.y;
+        float __dotProduct504 = __product499 + __product503;
+        float __product508 = element2239.y * __rightColumn475.z;
+        float __dotProduct509 = __dotProduct504 + __product508;
+        float __product513 = element2241.y * __rightColumn475.w;
+        float __dotProduct514 = __dotProduct509 + __product513;
+        float __product519 = element2235.z * __rightColumn475.x;
+        float __product523 = element2237.z * __rightColumn475.y;
+        float __dotProduct524 = __product519 + __product523;
+        float __product528 = element2239.z * __rightColumn475.z;
+        float __dotProduct529 = __dotProduct524 + __product528;
+        float __product533 = element2241.z * __rightColumn475.w;
+        float __dotProduct534 = __dotProduct529 + __product533;
+        float __product539 = element2235.w * __rightColumn475.x;
+        float __product543 = element2237.w * __rightColumn475.y;
+        float __dotProduct544 = __product539 + __product543;
+        float __product548 = element2239.w * __rightColumn475.z;
+        float __dotProduct549 = __dotProduct544 + __product548;
+        float __product553 = element2241.w * __rightColumn475.w;
+        float __dotProduct554 = __dotProduct549 + __product553;
+        vec4 __rightColumn557 = um43[3];
+        float __product561 = element2235.x * __rightColumn557.x;
+        float __product565 = element2237.x * __rightColumn557.y;
+        float __dotProduct566 = __product561 + __product565;
+        float __product570 = element2239.x * __rightColumn557.z;
+        float __dotProduct571 = __dotProduct566 + __product570;
+        float __product575 = element2241.x * __rightColumn557.w;
+        float __dotProduct576 = __dotProduct571 + __product575;
+        float __product581 = element2235.y * __rightColumn557.x;
+        float __product585 = element2237.y * __rightColumn557.y;
+        float __dotProduct586 = __product581 + __product585;
+        float __product590 = element2239.y * __rightColumn557.z;
+        float __dotProduct591 = __dotProduct586 + __product590;
+        float __product595 = element2241.y * __rightColumn557.w;
+        float __dotProduct596 = __dotProduct591 + __product595;
+        float __product601 = element2235.z * __rightColumn557.x;
+        float __product605 = element2237.z * __rightColumn557.y;
+        float __dotProduct606 = __product601 + __product605;
+        float __product610 = element2239.z * __rightColumn557.z;
+        float __dotProduct611 = __dotProduct606 + __product610;
+        float __product615 = element2241.z * __rightColumn557.w;
+        float __dotProduct616 = __dotProduct611 + __product615;
+        float __product621 = element2235.w * __rightColumn557.x;
+        float __product625 = element2237.w * __rightColumn557.y;
+        float __dotProduct626 = __product621 + __product625;
+        float __product630 = element2239.w * __rightColumn557.z;
+        float __dotProduct631 = __dotProduct626 + __product630;
+        float __product635 = element2241.w * __rightColumn557.w;
+        float __dotProduct636 = __dotProduct631 + __product635;
+        float __product646 = __dotProduct330 * _pre_phi;
+        float __product649 = __dotProduct412 * _pre_phi708;
+        float __dotProduct650 = __product646 + __product649;
+        float __product653 = __dotProduct494 * _pre_phi710;
+        float __dotProduct654 = __dotProduct650 + __product653;
+        float __product657 = __dotProduct576 * _pre_phi712;
+        float __dotProduct658 = __dotProduct654 + __product657;
+        float __product661 = __dotProduct350 * _pre_phi;
+        float __product664 = __dotProduct432 * _pre_phi708;
+        float __dotProduct665 = __product661 + __product664;
+        float __product668 = __dotProduct514 * _pre_phi710;
+        float __dotProduct669 = __dotProduct665 + __product668;
+        float __product672 = __dotProduct596 * _pre_phi712;
+        float __dotProduct673 = __dotProduct669 + __product672;
+        float __product676 = __dotProduct370 * _pre_phi;
+        float __product679 = __dotProduct452 * _pre_phi708;
+        float __dotProduct680 = __product676 + __product679;
+        float __product683 = __dotProduct534 * _pre_phi710;
+        float __dotProduct684 = __dotProduct680 + __product683;
+        float __product687 = __dotProduct616 * _pre_phi712;
+        float __dotProduct688 = __dotProduct684 + __product687;
+        float __product691 = __dotProduct390 * _pre_phi;
+        float __product694 = __dotProduct472 * _pre_phi708;
+        float __dotProduct695 = __product691 + __product694;
+        float __product698 = __dotProduct554 * _pre_phi710;
+        float __dotProduct699 = __dotProduct695 + __product698;
+        float __product702 = __dotProduct636 * _pre_phi712;
+        float __dotProduct703 = __dotProduct699 + __product702;
+        vec4 temp323 = vec4(__dotProduct658, __dotProduct673, __dotProduct688, __dotProduct703);
+        _pn = temp323;
+    }
+    
+    vec4 FragColor_shadow706_1 = FragColor_shadow706_0 + _pn;
+    gl_FragColor = FragColor_shadow706_1;
+    
+}

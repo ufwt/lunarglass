@@ -1,0 +1,32 @@
+
+***Unsupported functionality: Matrix operation
+compiling test.vert...
+uniform mat4 transform ; 
+attribute vec4 position ; 
+in vec2 uv_in ; 
+out vec2 uv ; 
+void  main (){
+uv = uv_in ; gl_Position = position + ftransform ( ) ; }
+
+
+
+(
+(declare (out ) vec2 uv)
+(declare (in ) vec2 uv_in)
+(declare (in ) vec4 position)
+(declare (out ) vec4 gl_Position)
+(declare (in ) vec4 gl_Vertex)
+(declare (uniform ) mat4 gl_ModelViewProjectionMatrix)
+(function main
+  (signature void
+    (parameters
+    )
+    (
+      (assign (constant bool (1)) (xy) (var_ref uv)  (var_ref uv_in) ) 
+      (assign (constant bool (1)) (xyzw) (var_ref gl_Position)  (expression vec4 + (var_ref position) (expression vec4 ftransform (var_ref gl_ModelViewProjectionMatrix) (var_ref gl_Vertex) ) ) ) 
+    ))
+
+)
+
+
+)

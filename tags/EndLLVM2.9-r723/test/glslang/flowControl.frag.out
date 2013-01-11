@@ -1,0 +1,147 @@
+
+Top IR:
+; ModuleID = 'Top'
+
+@BaseColor_shadow = internal global <4 x float> zeroinitializer
+@otherColor = external addrspace(2) constant <4 x float>
+@c_shadow = internal global float 0.000000e+00
+@d = external addrspace(2) constant float
+@bigColor = external addrspace(2) constant <4 x float>
+@smallColor = external addrspace(2) constant <4 x float>
+@FragColor_shadow = internal global <4 x float> zeroinitializer
+
+define fastcc void @main() {
+entry:
+  %color2 = alloca <4 x float>
+  %color = alloca <4 x float>
+  %BaseColor__ = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 0, i32 -1, i32 1)
+  store <4 x float> %BaseColor__, <4 x float>* @BaseColor_shadow
+  %color1 = load <4 x float>* @BaseColor_shadow
+  store <4 x float> %color1, <4 x float>* %color
+  %color22 = load <4 x float> addrspace(2)* @otherColor
+  store <4 x float> %color22, <4 x float>* %color2
+  %c__ = call float @llvm.gla.fReadInterpolant.f32(i32 1, i32 -1, i32 1)
+  store float %c__, float* @c_shadow
+  %0 = load float* @c_shadow
+  %1 = load float addrspace(2)* @d
+  %2 = fcmp ogt float %0, %1
+  br i1 %2, label %then, label %else
+
+then:                                             ; preds = %entry
+  %3 = load <4 x float> addrspace(2)* @bigColor
+  %4 = load <4 x float>* %color
+  %color3 = fadd <4 x float> %4, %3
+  store <4 x float> %color3, <4 x float>* %color
+  br label %ifmerge
+
+else:                                             ; preds = %entry
+  %5 = load <4 x float> addrspace(2)* @smallColor
+  %6 = load <4 x float>* %color
+  %color4 = fadd <4 x float> %6, %5
+  store <4 x float> %color4, <4 x float>* %color
+  br label %ifmerge
+
+ifmerge:                                          ; preds = %else, %then
+  %7 = load <4 x float>* %color
+  %8 = load <4 x float>* %color2
+  %FragColor_shadow = fmul <4 x float> %7, %8
+  store <4 x float> %FragColor_shadow, <4 x float>* @FragColor_shadow
+  br label %stage-epilogue
+
+stage-epilogue:                                   ; preds = %ifmerge
+  %9 = load <4 x float>* @FragColor_shadow
+  call void @llvm.gla.fWriteData.v4f32(i32 0, i32 -1, <4 x float> %9)
+  br label %stage-exit
+
+stage-exit:                                       ; preds = %stage-epilogue
+  ret void
+}
+
+declare <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32, i32, i32) nounwind readnone
+
+declare float @llvm.gla.fReadInterpolant.f32(i32, i32, i32) nounwind readnone
+
+declare void @llvm.gla.fWriteData.v4f32(i32, i32, <4 x float>) nounwind
+
+
+Bottom IR:
+; ModuleID = 'Top'
+
+@otherColor = external addrspace(2) constant <4 x float>
+@d = external addrspace(2) constant float
+@bigColor = external addrspace(2) constant <4 x float>
+@smallColor = external addrspace(2) constant <4 x float>
+
+define fastcc void @main() {
+entry:
+  %BaseColor__ = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 0, i32 -1, i32 1)
+  %color22 = load <4 x float> addrspace(2)* @otherColor, align 16
+  %c__ = call float @llvm.gla.fReadInterpolant.f32(i32 1, i32 -1, i32 1)
+  %0 = load float addrspace(2)* @d, align 4
+  %1 = fcmp ogt float %c__, %0
+  %bigColor.val = load <4 x float> addrspace(2)* @bigColor, align 16
+  %smallColor.val = load <4 x float> addrspace(2)* @smallColor, align 16
+  %.pn = select i1 %1, <4 x float> %bigColor.val, <4 x float> %smallColor.val
+  %color.0 = fadd <4 x float> %BaseColor__, %.pn
+  %FragColor_shadow = fmul <4 x float> %color.0, %color22
+  call void @llvm.gla.fWriteData.v4f32(i32 0, i32 -1, <4 x float> %FragColor_shadow)
+  br label %stage-epilogue
+
+stage-epilogue:                                   ; preds = %entry
+  br label %stage-exit
+
+stage-exit:                                       ; preds = %stage-epilogue
+  ret void
+}
+
+declare <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32, i32, i32) nounwind readnone
+
+declare float @llvm.gla.fReadInterpolant.f32(i32, i32, i32) nounwind readnone
+
+declare void @llvm.gla.fWriteData.v4f32(i32, i32, <4 x float>) nounwind
+#### BEGIN COMPILER 0 INFO LOG ####
+#### END COMPILER 0 INFO LOG ####
+#### BEGIN LINKER INFO LOG ####
+#### END LINKER INFO LOG ####
+
+// LunarGOO(r722) output
+#version 130
+uniform vec4 otherColor;
+uniform float d;
+uniform vec4 bigColor;
+uniform vec4 smallColor;
+in vec4 BaseColor;
+in float c;
+
+void main()
+{
+    bool temp21 = c > d;
+    vec4 _pn = temp21 ? bigColor : smallColor;
+    vec4 color_0 = BaseColor + _pn;
+    vec4 FragColor_shadow = color_0 * otherColor;
+    gl_FragColor = FragColor_shadow;
+    
+}
+#### BEGIN COMPILER 0 INFO LOG ####
+#### END COMPILER 0 INFO LOG ####
+#### BEGIN LINKER INFO LOG ####
+#### END LINKER INFO LOG ####
+
+// LunarGOO(r722) output
+#version 130
+uniform float d;
+uniform vec4 bigColor;
+uniform vec4 smallColor;
+uniform vec4 otherColor;
+in float c;
+in vec4 BaseColor;
+
+void main()
+{
+    bool temp211 = c > d;
+    vec4 ternary_0 = temp211 ? bigColor : smallColor;
+    vec4 color_05 = BaseColor + ternary_0;
+    vec4 FragColor_shadow6 = color_05 * otherColor;
+    gl_FragColor = FragColor_shadow6;
+    
+}

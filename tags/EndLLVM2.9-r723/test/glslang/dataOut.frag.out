@@ -1,0 +1,76 @@
+
+Top IR:
+; ModuleID = 'Top'
+
+@FragData_shadow = internal global [32 x <4 x float>] zeroinitializer
+@Color_shadow = internal global <4 x float> zeroinitializer
+
+define fastcc void @main() {
+entry:
+  %Color__ = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 0, i32 -1, i32 1)
+  store <4 x float> %Color__, <4 x float>* @Color_shadow
+  %0 = load <4 x float>* @Color_shadow
+  store <4 x float> %0, <4 x float>* getelementptr inbounds ([32 x <4 x float>]* @FragData_shadow, i32 0, i32 1)
+  br label %stage-epilogue
+
+stage-epilogue:                                   ; preds = %entry
+  %1 = load <4 x float>* getelementptr inbounds ([32 x <4 x float>]* @FragData_shadow, i32 0, i32 1)
+  call void @llvm.gla.fWriteData.v4f32(i32 1, i32 -1, <4 x float> %1)
+  br label %stage-exit
+
+stage-exit:                                       ; preds = %stage-epilogue
+  ret void
+}
+
+declare <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32, i32, i32) nounwind readnone
+
+declare void @llvm.gla.fWriteData.v4f32(i32, i32, <4 x float>) nounwind
+
+
+Bottom IR:
+; ModuleID = 'Top'
+
+define fastcc void @main() {
+entry:
+  %Color__ = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 0, i32 -1, i32 1)
+  call void @llvm.gla.fWriteData.v4f32(i32 1, i32 -1, <4 x float> %Color__)
+  br label %stage-epilogue
+
+stage-epilogue:                                   ; preds = %entry
+  br label %stage-exit
+
+stage-exit:                                       ; preds = %stage-epilogue
+  ret void
+}
+
+declare <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32, i32, i32) nounwind readnone
+
+declare void @llvm.gla.fWriteData.v4f32(i32, i32, <4 x float>) nounwind
+#### BEGIN COMPILER 0 INFO LOG ####
+#### END COMPILER 0 INFO LOG ####
+#### BEGIN LINKER INFO LOG ####
+#### END LINKER INFO LOG ####
+
+// LunarGOO(r722) output
+#version 130
+in vec4 Color;
+
+void main()
+{
+    gl_FragData[1] = Color;
+    
+}
+#### BEGIN COMPILER 0 INFO LOG ####
+#### END COMPILER 0 INFO LOG ####
+#### BEGIN LINKER INFO LOG ####
+#### END LINKER INFO LOG ####
+
+// LunarGOO(r722) output
+#version 130
+in vec4 Color;
+
+void main()
+{
+    gl_FragData[1] = Color;
+    
+}
