@@ -1,6 +1,8 @@
 #summary Instructions for Building LunarGLASS
 #labels Phase-Implementation
 
+The following are for building with LLVM 3.2 and the glslang front end.  If you want to build for LLVM 2.9 with the glsl2 front end, see [Building29 Building for LLVM 2.9].
+
 This project is based on a copy of mesa from freedesktop.org and LLVM from llvm.org.  It makes a "stand alone" compiler stack, not integrated with a driver, that outputs text.
 
 == Build instructions for Linux ==
