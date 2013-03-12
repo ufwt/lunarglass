@@ -1,133 +1,98 @@
 #summary Instructions for Building LunarGLASS
 #labels Phase-Implementation
 
-The following are for building with LLVM 3.2 and the glslang front end.  If you want to build for LLVM 2.9 with the glsl2 front end, see [Building29 Building for LLVM 2.9].
+The following are for building with LLVM 3.2 and the glslang front end. 
+It makes a "stand alone" compiler stack, not integrated with a driver, that reads shader files and outputs textual translations. 
 
-This project is based on a copy of mesa from freedesktop.org and LLVM from llvm.org.  It makes a "stand alone" compiler stack, not integrated with a driver, that outputs text.
-
-== Build instructions for Linux ==
-
-=== Automatic instructions ===
-{{{
-mkdir LunarGLASS  # or whatever you want to call the directory
-cd LunarGLASS
-svn checkout https://lunarglass.googlecode.com/svn/trunk/ .
-./install
-}}}
-
-That should fetch all the needed code (including Mesa and LLVM), build the project, and put the binary in ./bin.
-
-The install tool assumes you have bash, libffi-dev, flex, bison, git, subversion, and wget installed, in addition to the standard build tools (found in build-essential on Ubuntu).
-
-To test it out, try
-{{{
-./tools/LunarGLASS ./test/test.frag
-}}}
-
-=== Manual instructions ===
-
-==== Get the Code ====
-
-First, fetch the code following the method presented in [Building#Getting_the_Code Getting the Code]
-
-==== Building ====
-
-  # Install build dependencies
-{{{
-sudo apt-get install build-essential libffi-dev flex bison
-}}}
-  # Build LLVM 2.9 (with LunarGLASS modifications)
-{{{
-mkdir Core/LLVM/llvm-2.9/build
-cd Core/LLVM/llvm-2.9/build
-../configure
-make
-make install DESTDIR=`pwd`/install
-}}}
-  # Build Mesa 7.10.1 (with LunarGLASS modifications)
-{{{
-cd Standalone
-make
-}}}
-  # You can execute the compiler on a test in the test directory by
-{{{
-./StandAlone ../test/test.frag
-}}}
-
-
-
-== Build instructions for Windows ==
-
-It is a bit cumbersome, so far done just for proof of concept purposes.  More streamlined setup and instructions will be forthcoming.
-
-Note: This will overwrite some mesa files, so you will want to do this in a separate location than other mesa development.
-
-=== Get the Code ===
-
-First, fetch the code following the method presented in [Building#Getting_the_Code Getting the Code]
-
-=== Building ===
-
-==== On Visual Studio 2010 ====
-
-For LLVM, create a visual studio solution that creates all the libs and headers:
-
-  # Download and install CMake for Windows.  We used version 2.8.3 at http://www.cmake.org/cmake/resources/software.html.
-  # Run CMake as Administrator
-  # Put the path to your LunarGLASS\Core\LLVM\llvm-2.9 location in "Where is the source code:" and add "\build" to it (LunarGLASS\Core\LLVM\llvm-2.9\build) in "Where to build the binaries:"
-  # Press "Configure" button in CMake and say yes to create the build directory.
-  # Select Visual Studio 10 and "Use default native compilers" and "Finish".
-  # Change CMAKE_INSTALL_PREFIX to "install" (no path).
-  # Press "Configure" again.
-  # Press "Generate" button in CMake.
-  # Open new LLVM.sln just created in llvm-2.9\build and build the INSTALL project (not the solution, just the INSTALL project for "Debug Win32").  This step takes a while...
-
-For LunarGLASS
-
-  * Open "LunarGLASS/Standalone/StandAlone.sln" and build the "standalone" project.
-
-In the directory "LunarGLASS/test" is a run script that shows how to execute the compiler on a test file.
-
+Note: If you want to build for LLVM 2.9 with the glsl2 front end, see [Building29 Building for LLVM 2.9].
 
 == Getting the Code ==
 
-Overview:  Mesa and LLVM will be sibling tree structures; both children of your LunarGLASS directory.  They will then be overlaid by LunarGLASS files.  
+Overview:  The glslang front end and LunarGLASS are two separate projects from two SVN servers.  They will be sibling tree structures, which you will put in a location of your choice, i.e.,
 
-1. Make a directory (e.g., "LunarGLASS", which will be the name used in these instructions) where you want this project to live.  It will correspond to the svn/trunk/ directory in the google SVN repository for LunarGLASS.
-
-2. To get mesa, make a directory "mesa" under "LunarGLASS".  Then get [ftp://freedesktop.org/pub/mesa/7.10.1/MesaLib-7.10.1.tar.bz2 Mesa 7.10.1].  Extract to the LunarGLASS/mesa directory.
-
-Example:
 {{{
-cd LunarGLASS
-wget ftp://freedesktop.org/pub/mesa/7.10.1/MesaLib-7.10.1.tar.bz2
-tar -xjf MesaLib-7.10.1.tar.bz2
-mv Mesa-7.10.1 mesa
-rm MesaLib-7.10.1*
+    PathOfYourChoice/glslang
+    PathOfYourChoice/LunarGLASS
 }}}
 
-Verify you are left with the directory "LunarGLASS/mesa/src" et. al.
-
-3. To get LLVM, make a directory "LLVM" under "LunarGLASS". Download [http://llvm.org/releases/2.9/llvm-2.9.tgz LLVM 2.9] and extract it into your "LunarGLASS/Core/LLVM" directory.  Verify this left LLVM in the directory "LunarGLASS/Core/LLVM/llvm-2.9".
-
-Example:
+  # Make these two directories (above). They will map to the SVN roots of the two projects.
+  # To get glslang, TBD.
+  # To get LLVM, download LLVM 3.2 source code from [http://llvm.org/releases/download.html#3.2 LLVM 3.2] and extract it into your "LunarGLASS/Core/LLVM" directory, leaving it in the directory "LunarGLASS/Core/LLVM/llvm-3.2.src".  For example:
 {{{
 cd LunarGLASS
 mkdir -p Core/LLVM
 cd Core/LLVM
-wget http://llvm.org/releases/2.9/llvm-2.9.tgz
-tar -zxf llvm-2.9.tgz
-rm llvm-2.9.tgz
+wget http://llvm.org/releases/3.2/llvm-3.2.src.tar.gz
+gunzip llvm-3.2.src.tar.gz
+tar -xf llvm-3.2.src.tar
 }}}
-
-4. To get LunarGLASS, you will need SVN commands or an SVN client like Tortoise.  Use your SVN client to check out from google's code site //lunarglass.googlecode.com/svn/trunk to your directory "LunarGLASS".
-
-This got most the files, but did not yet replace files that need to be replace.  To do that, you must revert all files at the LunarGLASS level.  In Tortoise, right click LunarGLASS|Tortoise SVN|Revert...  Select all files and revert.
-
-If you are using SVN from the command line, these steps look like:
+  # To get LunarGLASS, you will need SVN commands or an SVN client like Tortoise.  Use your SVN client to check out from google's code site //lunarglass.googlecode.com/svn/trunk to your directory "LunarGLASS". This got most the files, but did not yet replace files that need to be replace.  To do that, you must revert all files at the LunarGLASS level.  In Tortoise, right click LunarGLASS|Tortoise SVN|Revert...  Select all files and revert. If you are using SVN from the command line, these steps look like:
 {{{
 # cd to the LunarGLASS directory you made...
 cd LunarGLASS
 svn checkout --force https://lunarglass.googlecode.com/svn/trunk/ .
 svn revert --depth=infinity .
 }}}
+
+== Build instructions for Linux ==
+
+  # Install build dependencies
+{{{
+sudo apt-get install build-essential libffi-dev flex bison
+}}}
+  # Build glslang directly using the Standalone Makefile 
+{{{
+cd glslang/Standalone
+make
+}}}  
+   or by using the higher-level script
+{{{
+cd glslang
+./BuildLinux.sh
+}}}
+   which will also run a quick test to emit textual AST to verify it worked.
+  # Build LLVM 3.2 (with LunarGLASS modifications)
+{{{
+cd LunarGLASS/Core/LLVM/llvm-3.2.src/build
+../configure
+make
+make install DESTDIR=`pwd`/install
+}}}
+  # Build LunarGLASS
+{{{
+cd LunarGLASS/
+TBD
+}}}
+  # You can execute complete LunarGLASS stack on a test in the test directory by
+{{{
+cd LunarGLASS/test
+../Build/TBD/glslang.exe test.frag
+}}}
+
+== Build instructions for Windows ==
+
+This uses Microsoft Visual Studio 2012. However, it should trivially work on version 10 as well.
+
+For LLVM, create a visual studio solution that creates all the libs and headers:
+
+  # Download and install CMake for Windows.  We used version 2.8.10.2 to get support for VS 2012.  Get CMake at http://www.cmake.org/cmake/resources/software.html.
+  # Put the full path to your LunarGLASS\Core\LLVM\llvm-3.2.src location in "Where is the source code:" and add "\build" to it (LunarGLASS\Core\LLVM\llvm-3.2.src\build) in "Where to build the binaries:"
+  # Press "Configure" button in CMake and say yes to create the build directory.
+  # Select Visual Studio 11 (2012) and "Use default native compilers" and "Finish".
+  # Change CMAKE_INSTALL_PREFIX to "install" (no path).
+  # Press "Configure" again.
+  # Press "Generate" button in CMake.
+  # Open the LLVM.sln just created in llvm-3.2.src\build and build the just the INSTALL project (not the solution, just the INSTALL project for "Debug Win32").  This step takes a while.
+
+For LunarGLASS
+
+  # Open "LunarGLASS\Build\LunarGLASS.sln".
+  # Build the "glslang" project.
+
+Here is an example of running the full stack:
+{{{
+cd LunarGLASS/test
+../Build/Debug/glslang.exe test.frag
+}}}
+
+There is also a "runglslang" script that runs the stack against a set of tests.
