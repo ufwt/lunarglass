@@ -55,18 +55,20 @@ cd glslang
 {{{
 cd LunarGLASS/Core/LLVM/llvm-3.2.src/build
 ../configure
-make
+make -j 8
 make install DESTDIR=`pwd`/install
 }}}
   # Build LunarGLASS
 {{{
-cd LunarGLASS/
-TBD
+cd LunarGLASS/Build
+make
 }}}
-  # You can execute complete LunarGLASS stack on a test in the test directory by
+   This step also copied the resulting executable 'glslang' to the test directory.
+  # You can execute the complete LunarGLASS stack on a test in the test directory by
 {{{
 cd LunarGLASS/test
-../Build/TBD/glslang.exe test.frag
+chmod +x ./runglslang
+./glslang test.frag
 }}}
 
 == Build instructions for Windows ==
