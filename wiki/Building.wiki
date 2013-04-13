@@ -42,7 +42,7 @@ sudo apt-get install build-essential libffi-dev flex bison
 }}}
   # Build glslang directly using the Standalone Makefile 
 {{{
-cd glslang/Standalone
+cd glslang/StandAlone
 make
 }}}  
    or by using the higher-level script
@@ -53,8 +53,15 @@ cd glslang
    which will also run a quick test to emit textual AST to verify it worked.
   # Build LLVM 3.2 (with LunarGLASS modifications)
 {{{
-cd LunarGLASS/Core/LLVM/llvm-3.2.src/build
+# first time only
+cd LunarGLASS/Core/LLVM/llvm-3.2.src
+mkdir build
+cd build
 ../configure
+}}}
+{{{
+# build or rebuild
+cd LunarGLASS/Core/LLVM/llvm-3.2.src/build
 make -j 8
 make install DESTDIR=`pwd`/install
 }}}
