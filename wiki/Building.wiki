@@ -2,9 +2,7 @@
 #labels Phase-Implementation
 
 The following are for building with LLVM 3.2 and the glslang front end. 
-It makes a "stand alone" compiler stack, not integrated with a driver, that reads shader files and outputs textual translations. 
-
-Note: If you want to build for LLVM 2.9 with the glsl2 front end, see [Building29 Building for LLVM 2.9].
+It makes a standalone compiler stack, not integrated with a driver, that reads shader files and outputs textual translations. 
 
 == Getting the Code ==
 
@@ -16,7 +14,12 @@ Overview:  The glslang front end and LunarGLASS are two separate projects from t
 }}}
 
   # Make these two directories (above). They will map to the SVN roots of the two projects.
-  # To get glslang, TBD.
+  # To get glslang 
+{{{
+cd glslang
+svn checkout https://cvs.khronos.org/svn/repos/ogl/trunk/ecosystem/public/sdk/tools/glslang .
+}}}
+
   # To get LLVM, download LLVM 3.2 source code from [http://llvm.org/releases/download.html#3.2 LLVM 3.2] and extract it into your "LunarGLASS/Core/LLVM" directory, leaving it in the directory "LunarGLASS/Core/LLVM/llvm-3.2.src".  For example:
 {{{
 cd LunarGLASS
