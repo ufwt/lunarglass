@@ -95,7 +95,7 @@ For LLVM, create a visual studio solution that creates all the libs and headers:
   # Change CMAKE_INSTALL_PREFIX to "install" (no path).
   # Press "Configure" again.
   # Press "Generate" button in CMake.
-  # Open the LLVM.sln just created in llvm-3.2.src\build and build the just the INSTALL project (not the solution, just the INSTALL project for "Debug Win32").  This step takes a while.
+  # Open the LLVM.sln just created in llvm-3.2.src\build and build the INSTALL project (not the whole solution, just the INSTALL project, for "Debug Win32").  This step takes a while.
 
 For LunarGLASS
 
