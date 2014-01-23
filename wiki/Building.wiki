@@ -97,9 +97,16 @@ For LLVM, create a visual studio solution that creates all the libs and headers:
   # Press "Generate" button in CMake.
   # Open the LLVM.sln just created in llvm-3.2.src\build and build the INSTALL project (not the whole solution, just the INSTALL project, for "Debug Win32").  This step takes a while.
 
+For the glslang library used by LunarGLASS
+
+  # Open "glslang\standalone.sln".
+  # Select the "Debug CRT DLL" configuration.
+  # Build the glslang project (or the whole solution).
+
 For LunarGLASS
 
   # Open "LunarGLASS\Build\LunarGLASS.sln".
+  # Select the "Debug" configuration.
   # Build the "glslang" project.
 
 Here is an example of running the full stack:
