@@ -1,0 +1,228 @@
+
+Top IR:
+; ModuleID = 'Top'
+
+@colorOut_shadow = internal global [6 x <4 x float>] zeroinitializer
+@color_shadow = internal global <4 x float> zeroinitializer
+@Position_shadow = internal global <4 x float> zeroinitializer
+@VertexID_shadow = internal global i32 0
+
+define fastcc void @main() {
+entry:
+  %i = alloca i32
+  store i32 1, i32* %i
+  br label %loop-header
+
+loop-header:                                      ; preds = %post-loop-continue, %ifmerge, %entry
+  %0 = load i32* %i
+  %1 = icmp slt i32 %0, 5
+  %2 = xor i1 %1, true
+  br i1 %2, label %then, label %ifmerge
+
+then:                                             ; preds = %loop-header
+  br label %loop-merge
+
+post-loop-break:                                  ; No predecessors!
+  br label %ifmerge
+
+ifmerge:                                          ; preds = %loop-header, %post-loop-break
+  %3 = load i32* %i
+  %color = call <4 x float> @llvm.gla.fReadData.v4f32(i32 1030, i32 -1), !gla.input !5
+  store <4 x float> %color, <4 x float>* @color_shadow
+  %4 = load <4 x float>* @color_shadow
+  %5 = getelementptr [6 x <4 x float>]* @colorOut_shadow, i32 0, i32 %3
+  store <4 x float> %4, <4 x float>* %5
+  %6 = load i32* %i
+  %i1 = add i32 %6, 1
+  store i32 %i1, i32* %i
+  br label %loop-header
+
+post-loop-continue:                               ; No predecessors!
+  br label %loop-header
+
+loop-merge:                                       ; preds = %then
+  %Position_shadow = load <4 x float>* getelementptr inbounds ([6 x <4 x float>]* @colorOut_shadow, i32 0, i32 2)
+  store <4 x float> %Position_shadow, <4 x float>* @Position_shadow
+  br label %stage-epilogue
+
+stage-epilogue:                                   ; preds = %loop-merge
+  %7 = load <4 x float>* getelementptr inbounds ([6 x <4 x float>]* @colorOut_shadow, i32 0, i32 0)
+  call void @llvm.gla.fWriteData.v4f32(i32 1024, i32 -1, <4 x float> %7), !gla.output !1
+  %8 = load <4 x float>* getelementptr inbounds ([6 x <4 x float>]* @colorOut_shadow, i32 0, i32 1)
+  call void @llvm.gla.fWriteData.v4f32(i32 1025, i32 -1, <4 x float> %8), !gla.output !1
+  %9 = load <4 x float>* getelementptr inbounds ([6 x <4 x float>]* @colorOut_shadow, i32 0, i32 2)
+  call void @llvm.gla.fWriteData.v4f32(i32 1026, i32 -1, <4 x float> %9), !gla.output !1
+  %10 = load <4 x float>* getelementptr inbounds ([6 x <4 x float>]* @colorOut_shadow, i32 0, i32 3)
+  call void @llvm.gla.fWriteData.v4f32(i32 1027, i32 -1, <4 x float> %10), !gla.output !1
+  %11 = load <4 x float>* getelementptr inbounds ([6 x <4 x float>]* @colorOut_shadow, i32 0, i32 4)
+  call void @llvm.gla.fWriteData.v4f32(i32 1028, i32 -1, <4 x float> %11), !gla.output !1
+  %12 = load <4 x float>* getelementptr inbounds ([6 x <4 x float>]* @colorOut_shadow, i32 0, i32 5)
+  call void @llvm.gla.fWriteData.v4f32(i32 1029, i32 -1, <4 x float> %12), !gla.output !1
+  %13 = load <4 x float>* @Position_shadow
+  call void @llvm.gla.fWriteData.v4f32(i32 1031, i32 -1, <4 x float> %13), !gla.output !3
+  br label %stage-exit
+
+stage-exit:                                       ; preds = %stage-epilogue
+  ret void
+}
+
+declare <4 x float> @llvm.gla.fReadData.v4f32(i32, i32) nounwind readonly
+
+declare void @llvm.gla.fWriteData.v4f32(i32, i32, <4 x float>) nounwind
+
+!gla.entrypoint = !{!0}
+!gla.outputs = !{!1, !3}
+!gla.inputs = !{!5, !7}
+!gla.noStaticUse = !{!7}
+
+!0 = metadata !{metadata !"main", i32 15}
+!1 = metadata !{metadata !"colorOut", i32 7, [6 x <4 x float>]* @colorOut_shadow_typeProxy, metadata !2}
+!2 = metadata !{i32 0, i32 0, i32 1024, null, i32 1}
+!3 = metadata !{metadata !"gl_Position", i32 8, <4 x float>* @Position_shadow_typeProxy, metadata !4}
+!4 = metadata !{i32 0, i32 0, i32 1031, null, i32 0}
+!5 = metadata !{metadata !"color", i32 1, <4 x float>* @color_shadow_typeProxy, metadata !6}
+!6 = metadata !{i32 0, i32 0, i32 1030, null, i32 0}
+!7 = metadata !{metadata !"gl_VertexID", i32 2, i32* @VertexID_shadow_typeProxy, metadata !8}
+!8 = metadata !{i32 0, i32 0, i32 1032, null, i32 0}
+
+
+Bottom IR:
+; ModuleID = 'Top'
+
+@colorOut_shadow = internal unnamed_addr global [6 x <4 x float>] zeroinitializer
+
+define fastcc void @main() {
+entry:
+  %color = call <4 x float> @llvm.gla.fReadData.v4f32(i32 1030, i32 -1), !gla.input !5
+  %gla_constGEP = getelementptr [6 x <4 x float>]* @colorOut_shadow, i32 0, i32 1
+  store <4 x float> %color, <4 x float>* %gla_constGEP, align 16
+  %color.1 = call <4 x float> @llvm.gla.fReadData.v4f32(i32 1030, i32 -1), !gla.input !5
+  %gla_constGEP4 = getelementptr [6 x <4 x float>]* @colorOut_shadow, i32 0, i32 2
+  store <4 x float> %color.1, <4 x float>* %gla_constGEP4, align 16
+  %color.2 = call <4 x float> @llvm.gla.fReadData.v4f32(i32 1030, i32 -1), !gla.input !5
+  %gla_constGEP5 = getelementptr [6 x <4 x float>]* @colorOut_shadow, i32 0, i32 3
+  store <4 x float> %color.2, <4 x float>* %gla_constGEP5, align 16
+  %color.3 = call <4 x float> @llvm.gla.fReadData.v4f32(i32 1030, i32 -1), !gla.input !5
+  %gla_constGEP6 = getelementptr [6 x <4 x float>]* @colorOut_shadow, i32 0, i32 4
+  store <4 x float> %color.3, <4 x float>* %gla_constGEP6, align 16
+  %gla_constGEP7 = getelementptr [6 x <4 x float>]* @colorOut_shadow, i32 0, i32 0
+  %0 = load <4 x float>* %gla_constGEP7, align 16
+  call void @llvm.gla.fWriteData.v4f32(i32 1024, i32 -1, <4 x float> %0), !gla.output !1
+  %gla_constGEP8 = getelementptr [6 x <4 x float>]* @colorOut_shadow, i32 0, i32 1
+  %1 = load <4 x float>* %gla_constGEP8, align 16
+  call void @llvm.gla.fWriteData.v4f32(i32 1025, i32 -1, <4 x float> %1), !gla.output !1
+  %gla_constGEP9 = getelementptr [6 x <4 x float>]* @colorOut_shadow, i32 0, i32 2
+  %2 = load <4 x float>* %gla_constGEP9, align 16
+  call void @llvm.gla.fWriteData.v4f32(i32 1026, i32 -1, <4 x float> %2), !gla.output !1
+  %gla_constGEP10 = getelementptr [6 x <4 x float>]* @colorOut_shadow, i32 0, i32 3
+  %3 = load <4 x float>* %gla_constGEP10, align 16
+  call void @llvm.gla.fWriteData.v4f32(i32 1027, i32 -1, <4 x float> %3), !gla.output !1
+  %gla_constGEP11 = getelementptr [6 x <4 x float>]* @colorOut_shadow, i32 0, i32 4
+  %4 = load <4 x float>* %gla_constGEP11, align 16
+  call void @llvm.gla.fWriteData.v4f32(i32 1028, i32 -1, <4 x float> %4), !gla.output !1
+  %gla_constGEP12 = getelementptr [6 x <4 x float>]* @colorOut_shadow, i32 0, i32 5
+  %5 = load <4 x float>* %gla_constGEP12, align 16
+  call void @llvm.gla.fWriteData.v4f32(i32 1029, i32 -1, <4 x float> %5), !gla.output !1
+  call void @llvm.gla.fWriteData.v4f32(i32 1031, i32 -1, <4 x float> %color.1), !gla.output !3
+  br label %stage-epilogue
+
+stage-epilogue:                                   ; preds = %entry
+  br label %stage-exit
+
+stage-exit:                                       ; preds = %stage-epilogue
+  ret void
+}
+
+declare <4 x float> @llvm.gla.fReadData.v4f32(i32, i32) nounwind readonly
+
+declare void @llvm.gla.fWriteData.v4f32(i32, i32, <4 x float>) nounwind
+
+!gla.entrypoint = !{!0}
+!gla.outputs = !{!1, !3}
+!gla.inputs = !{!5, !7}
+!gla.noStaticUse = !{!7}
+
+!0 = metadata !{metadata !"main", i32 15}
+!1 = metadata !{metadata !"colorOut", i32 7, [6 x <4 x float>]* @colorOut_shadow_typeProxy, metadata !2}
+!2 = metadata !{i32 0, i32 0, i32 1024, null, i32 1}
+!3 = metadata !{metadata !"gl_Position", i32 8, <4 x float>* @Position_shadow_typeProxy, metadata !4}
+!4 = metadata !{i32 0, i32 0, i32 1031, null, i32 0}
+!5 = metadata !{metadata !"color", i32 1, <4 x float>* @color_shadow_typeProxy, metadata !6}
+!6 = metadata !{i32 0, i32 0, i32 1030, null, i32 0}
+!7 = metadata !{metadata !"gl_VertexID", i32 2, i32* @VertexID_shadow_typeProxy, metadata !8}
+!8 = metadata !{i32 0, i32 0, i32 1032, null, i32 0}
+
+***Unsupported functionality: missing metadata on load 0 colorOut_shadow
+
+***Unsupported functionality: missing metadata on load 0 colorOut_shadow
+
+***Unsupported functionality: missing metadata on load 0 colorOut_shadow
+
+***Unsupported functionality: missing metadata on load 0 colorOut_shadow
+
+***Unsupported functionality: missing metadata on load 0 colorOut_shadow
+
+***Unsupported functionality: missing metadata on load 0 colorOut_shadow
+#### BEGIN COMPILER 0 INFO LOG ####
+Warning, version 130 is not yet complete; most features are present, but a few are missing.
+WARNING: 0:3: attribute deprecated in version 130; may be removed in future release
+WARNING: 0:4: varying deprecated in version 130; may be removed in future release
+#### END COMPILER 0 INFO LOG ####
+#### BEGIN LINKER INFO LOG ####
+#### END LINKER INFO LOG ####
+#version 130
+// LunarGOO output (r722)
+in vec4 color;
+out vec4 colorOut[6];
+vec4 colorOut_shadow[6];
+
+void main()
+{
+    colorOut_shadow[1] = color;
+    colorOut_shadow[2] = color;
+    colorOut_shadow[3] = color;
+    colorOut_shadow[4] = color;
+    colorOut[0] = colorOut_shadow[0];
+    colorOut[1] = colorOut_shadow[1];
+    colorOut[2] = colorOut_shadow[2];
+    colorOut[3] = colorOut_shadow[3];
+    colorOut[4] = colorOut_shadow[4];
+    colorOut[5] = colorOut_shadow[5];
+    gl_Position = color;
+    
+}
+
+#### BEGIN COMPILER 0 INFO LOG ####
+Warning, version 130 is not yet complete; most features are present, but a few are missing.
+#### END COMPILER 0 INFO LOG ####
+#### BEGIN LINKER INFO LOG ####
+#### END LINKER INFO LOG ####
+#version 130
+// LunarGOO output (r722)
+in vec4 color;
+out vec4 colorOut[6];
+vec4 colorOut_shadow[6];
+vec4 colorOut_shadow1[6];
+
+void main()
+{
+    colorOut_shadow[1] = color;
+    colorOut_shadow[2] = color;
+    colorOut_shadow[3] = color;
+    colorOut_shadow[4] = color;
+    colorOut_shadow1[0] = colorOut_shadow[0];
+    colorOut_shadow1[1] = color;
+    colorOut_shadow1[2] = color;
+    colorOut_shadow1[3] = color;
+    colorOut_shadow1[4] = color;
+    colorOut_shadow1[5] = colorOut_shadow[5];
+    colorOut[0] = colorOut_shadow[0];
+    colorOut[1] = colorOut_shadow1[1];
+    colorOut[2] = colorOut_shadow1[2];
+    colorOut[3] = colorOut_shadow1[3];
+    colorOut[4] = colorOut_shadow1[4];
+    colorOut[5] = colorOut_shadow1[5];
+    gl_Position = color;
+    
+}
+

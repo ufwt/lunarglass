@@ -1,0 +1,158 @@
+#!/usr/bin/env bash
+DESCRIPTION="\
+Description: Run the glslang test suite, record output
+"
+
+USAGE="\
+Usage: ./run [options]
+
+       Options:
+         -h --help                 Print out this Usage info
+         -l --linux                Run for linux
+         -w --windows              (default) Run for windows
+         -o --enable-obfuscate     Do obfuscation tests
+         -t --testfile <testfile>  Run on a single test file
+         -r --release              Run with release build
+         -v --verbose              Prints more info
+"
+
+# put this back when full stack is LLVM 3.2:
+#       forLoop.frag            \
+#       loops.frag              \
+#       doWhileLoop.frag        \
+
+# Add more tests here as they are created
+TESTS=(test.frag               \
+       flowControl.frag        \
+       deepRvalue.frag         \
+       Operations.frag         \
+       block.frag              \
+       conversion.frag         \
+       length.frag             \
+       prepost.frag            \
+       swizzle.frag            \
+       simpleFunctionCall.frag \
+       functionCall.frag       \
+       functionSemantics.frag  \
+       forwardFun.frag         \
+       voidFunction.frag       \
+       loopsArtificial.frag    \
+       earlyReturnDiscard.frag \
+       discard-dce.frag        \
+       always-discard.frag     \
+       always-discard2.frag    \
+       syntaxError.frag        \
+       depthOut.frag           \
+       dataOut.frag            \
+       dataOutIndirect.frag    \
+       dataOutIndirect.vert    \
+       varyingArray.frag       \
+       varyingArrayIndirect.frag \
+       uniformArray.frag       \
+       variableArrayIndex.frag \
+       simpleMat.vert          \
+       matrix.frag             \
+       matrix2.frag            \
+       matrixAgg.frag          \
+       matFun.vert             \
+       structure.frag          \
+       structAssignment.frag   \
+       structDeref.frag        \
+       localAggregates.frag    \
+       aggOps.frag             \
+       texture.frag            \
+       texture.vert            \
+       newTexture.frag         \
+       types.frag              \
+       uint.frag               \
+       test.vert               \
+       conditionalDiscard.frag \
+       qualifiers.vert         \
+       qualifiers.frag         \
+       precision.frag          \
+	   100ops.frag             \
+       300BuiltIns.frag        \
+       300BuiltIns.vert        \
+       300layout.vert          \
+       300layout.frag          \
+       switch.frag             \
+       whileLoop.frag          \
+	   doWhileLoop.frag        \
+	   loops.frag              \
+	   forLoop.frag            \
+	   noMain.frag             \
+      )
+
+# $1 is the test
+# Rest are options to the runcommand
+function runSingleTest {
+    $RUNCMD ${OPTIONS[@]} ${@:2:${#@}} $1 > temp.stdout 2> temp.errout
+#   $RUNCMD ${OPTIONS[@]} ${@:2:${#@}} $1 > /dev/null 2>&1
+}
+
+function runTests {
+    for t in ${TESTS[@]}; do
+        printf "Running $t\n"
+        
+        runSingleTest $t 
+        EXTENSION=${t##*.}
+        cat temp.errout temp.stdout > glslang/$t.out.tmp
+        cp temp.stdout tempglsl.$EXTENSION
+        runSingleTest tempglsl.$EXTENSION
+        tail -5 temp.errout >> glslang/$t.out.tmp
+        cat temp.stdout >> glslang/$t.out.tmp
+        tr -d '\r' < glslang/$t.out.tmp > glslang/$t.out
+        rm glslang/$t.out.tmp
+        rm tempglsl.$EXTENSION
+
+    done
+    rm temp.stdout* temp.errout
+}
+
+# Default is for windows
+RUNCMD=../Build/Debug/glslang.exe
+OPTIONS=(-a)
+GLSL_OP="--glsl"
+OBFUSCATE_OP="-f"
+DO_OBFUSCATE=""
+VERBOSE=""
+
+# Command-line argument Handling
+
+# Arguments passed
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -l|--linux)
+            RUNCMD=./glslang.exe
+            ;;
+        -h|--h)
+            showHelp
+            exit 0
+            ;;
+        -t|--testfile)
+            TESTS=("$2")
+            if [ ! -e "$2" ]
+            then
+                echo "Error: testfile $2 not found"
+                exit 1
+            fi
+            shift
+            ;;
+        -r|--release)
+            RUNCMD=../Build/Release/glslang.exe
+            ;;
+        -v|--verbose)
+            VERBOSE="true"
+            ;;
+        -o|--do-obfuscate)
+            DO_OBFUSCATE="true"
+            ;;
+        *)
+            showHelp
+            exit 1
+            ;;
+    esac
+    shift
+done
+
+runTests

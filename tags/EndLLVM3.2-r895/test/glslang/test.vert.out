@@ -1,0 +1,163 @@
+
+Top IR:
+; ModuleID = 'Top'
+
+@uv_shadow = internal global <2 x float> zeroinitializer
+@uv_in_shadow = internal global <2 x float> zeroinitializer
+@Position_shadow = internal global <4 x float> zeroinitializer
+@position_shadow = internal global <4 x float> zeroinitializer
+@gl_Vertex_sim = internal global <4 x float> zeroinitializer
+@gl_ModelViewProjectionMatrix_sim = internal global <4 x float> zeroinitializer
+@transform = external addrspace(2) constant [4 x <4 x float>]
+@VertexID_shadow = internal global i32 0
+
+define fastcc void @main() {
+entry:
+  %uv_in = call <2 x float> @llvm.gla.fReadData.v2f32(i32 1025, i32 -1), !gla.input !5
+  store <2 x float> %uv_in, <2 x float>* @uv_in_shadow
+  %uv_shadow = load <2 x float>* @uv_in_shadow
+  store <2 x float> %uv_shadow, <2 x float>* @uv_shadow
+  %position = call <4 x float> @llvm.gla.fReadData.v4f32(i32 1027, i32 -1), !gla.input !7
+  store <4 x float> %position, <4 x float>* @position_shadow
+  %0 = load <4 x float>* @position_shadow
+  %1 = load <4 x float>* @gl_ModelViewProjectionMatrix_sim
+  %2 = load <4 x float>* @gl_Vertex_sim
+  %3 = call <4 x float> @llvm.gla.fFixedTransform.v4f32.v4f32.v4f32(<4 x float> %2, <4 x float> %1)
+  %Position_shadow = fadd <4 x float> %0, %3
+  store <4 x float> %Position_shadow, <4 x float>* @Position_shadow
+  br label %stage-epilogue
+
+stage-epilogue:                                   ; preds = %entry
+  %4 = load <2 x float>* @uv_shadow
+  call void @llvm.gla.fWriteData.v2f32(i32 1024, i32 -1, <2 x float> %4), !gla.output !1
+  %5 = load <4 x float>* @Position_shadow
+  call void @llvm.gla.fWriteData.v4f32(i32 1026, i32 -1, <4 x float> %5), !gla.output !3
+  br label %stage-exit
+
+stage-exit:                                       ; preds = %stage-epilogue
+  ret void
+}
+
+declare <2 x float> @llvm.gla.fReadData.v2f32(i32, i32) nounwind readonly
+
+declare <4 x float> @llvm.gla.fReadData.v4f32(i32, i32) nounwind readonly
+
+declare <4 x float> @llvm.gla.fFixedTransform.v4f32.v4f32.v4f32(<4 x float>, <4 x float>) nounwind readnone
+
+declare void @llvm.gla.fWriteData.v2f32(i32, i32, <2 x float>) nounwind
+
+declare void @llvm.gla.fWriteData.v4f32(i32, i32, <4 x float>) nounwind
+
+!gla.entrypoint = !{!0}
+!gla.outputs = !{!1, !3}
+!gla.inputs = !{!5, !7, !9}
+!gla.uniforms = !{!11}
+!gla.noStaticUse = !{!11, !9}
+
+!0 = metadata !{metadata !"main", i32 15}
+!1 = metadata !{metadata !"uv", i32 7, <2 x float>* @uv_shadow_typeProxy, metadata !2}
+!2 = metadata !{i32 0, i32 0, i32 1024, null, i32 1}
+!3 = metadata !{metadata !"gl_Position", i32 8, <4 x float>* @Position_shadow_typeProxy, metadata !4}
+!4 = metadata !{i32 0, i32 0, i32 1026, null, i32 0}
+!5 = metadata !{metadata !"uv_in", i32 1, <2 x float>* @uv_in_shadow_typeProxy, metadata !6}
+!6 = metadata !{i32 0, i32 0, i32 1025, null, i32 0}
+!7 = metadata !{metadata !"position", i32 1, <4 x float>* @position_shadow_typeProxy, metadata !8}
+!8 = metadata !{i32 0, i32 0, i32 1027, null, i32 0}
+!9 = metadata !{metadata !"gl_VertexID", i32 2, i32* @VertexID_shadow_typeProxy, metadata !10}
+!10 = metadata !{i32 0, i32 0, i32 1028, null, i32 0}
+!11 = metadata !{metadata !"transform", i32 12, [4 x <4 x float>]* @transform_typeProxy, metadata !12}
+!12 = metadata !{i32 3, i32 0, i32 1024, null}
+
+
+Bottom IR:
+; ModuleID = 'Top'
+
+define fastcc void @main() {
+entry:
+  %0 = call <4 x float> @llvm.gla.fFixedTransform.v4f32.v4f32.v4f32(<4 x float> zeroinitializer, <4 x float> zeroinitializer)
+  %position = call <4 x float> @llvm.gla.fReadData.v4f32(i32 1027, i32 -1), !gla.input !7
+  %Position_shadow = fadd <4 x float> %0, %position
+  %uv_in = call <2 x float> @llvm.gla.fReadData.v2f32(i32 1025, i32 -1), !gla.input !5
+  call void @llvm.gla.fWriteData.v2f32(i32 1024, i32 -1, <2 x float> %uv_in), !gla.output !1
+  call void @llvm.gla.fWriteData.v4f32(i32 1026, i32 -1, <4 x float> %Position_shadow), !gla.output !3
+  br label %stage-epilogue
+
+stage-epilogue:                                   ; preds = %entry
+  br label %stage-exit
+
+stage-exit:                                       ; preds = %stage-epilogue
+  ret void
+}
+
+declare <2 x float> @llvm.gla.fReadData.v2f32(i32, i32) nounwind readonly
+
+declare <4 x float> @llvm.gla.fReadData.v4f32(i32, i32) nounwind readonly
+
+declare <4 x float> @llvm.gla.fFixedTransform.v4f32.v4f32.v4f32(<4 x float>, <4 x float>) nounwind readnone
+
+declare void @llvm.gla.fWriteData.v2f32(i32, i32, <2 x float>) nounwind
+
+declare void @llvm.gla.fWriteData.v4f32(i32, i32, <4 x float>) nounwind
+
+!gla.entrypoint = !{!0}
+!gla.outputs = !{!1, !3}
+!gla.inputs = !{!5, !7, !9}
+!gla.uniforms = !{!11}
+!gla.noStaticUse = !{!11, !9}
+
+!0 = metadata !{metadata !"main", i32 15}
+!1 = metadata !{metadata !"uv", i32 7, <2 x float>* @uv_shadow_typeProxy, metadata !2}
+!2 = metadata !{i32 0, i32 0, i32 1024, null, i32 1}
+!3 = metadata !{metadata !"gl_Position", i32 8, <4 x float>* @Position_shadow_typeProxy, metadata !4}
+!4 = metadata !{i32 0, i32 0, i32 1026, null, i32 0}
+!5 = metadata !{metadata !"uv_in", i32 1, <2 x float>* @uv_in_shadow_typeProxy, metadata !6}
+!6 = metadata !{i32 0, i32 0, i32 1025, null, i32 0}
+!7 = metadata !{metadata !"position", i32 1, <4 x float>* @position_shadow_typeProxy, metadata !8}
+!8 = metadata !{i32 0, i32 0, i32 1027, null, i32 0}
+!9 = metadata !{metadata !"gl_VertexID", i32 2, i32* @VertexID_shadow_typeProxy, metadata !10}
+!10 = metadata !{i32 0, i32 0, i32 1028, null, i32 0}
+!11 = metadata !{metadata !"transform", i32 12, [4 x <4 x float>]* @transform_typeProxy, metadata !12}
+!12 = metadata !{i32 3, i32 0, i32 1024, null}
+#### BEGIN COMPILER 0 INFO LOG ####
+Warning, version 130 is not yet complete; most features are present, but a few are missing.
+WARNING: 0:5: attribute deprecated in version 130; may be removed in future release
+#### END COMPILER 0 INFO LOG ####
+#### BEGIN LINKER INFO LOG ####
+#### END LINKER INFO LOG ####
+#version 130
+// LunarGOO output (r722)
+uniform mat4 transform;
+in vec2 uv_in;
+in vec4 position;
+out vec2 uv;
+
+void main()
+{
+    vec4 temp21 = ftransform();
+    vec4 Position_shadow = temp21 + position;
+    uv = uv_in;
+    gl_Position = Position_shadow;
+    
+}
+
+#### BEGIN COMPILER 0 INFO LOG ####
+Warning, version 130 is not yet complete; most features are present, but a few are missing.
+#### END COMPILER 0 INFO LOG ####
+#### BEGIN LINKER INFO LOG ####
+#### END LINKER INFO LOG ####
+#version 130
+// LunarGOO output (r722)
+uniform mat4 transform;
+in vec4 position;
+in vec2 uv_in;
+out vec2 uv;
+
+void main()
+{
+    vec4 temp211 = ftransform();
+    vec4 Position_shadow2 = position + temp211;
+    uv = uv_in;
+    gl_Position = Position_shadow2;
+    
+}
+

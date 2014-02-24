@@ -1,0 +1,238 @@
+
+Top IR:
+; ModuleID = 'Top'
+
+@outVi_shadow = internal global <4 x float> zeroinitializer
+@inVc_shadow = internal global <4 x float> zeroinitializer
+@inVs_shadow = internal global <4 x float> zeroinitializer
+@inVf_shadow = internal global <4 x float> zeroinitializer
+@inVn_shadow = internal global <4 x float> zeroinitializer
+@inVcn_shadow = internal global <4 x float> zeroinitializer
+@buf = external addrspace(2) constant <4 x float>
+@inV_shadow = internal global <4 x float> zeroinitializer
+@imageVc = external addrspace(1) constant i32
+@imageVv = external addrspace(1) constant i32
+@imageVr = external addrspace(1) constant i32
+@imageVro = external addrspace(1) constant i32
+@imageVwo = external addrspace(1) constant i32
+@imageVall = external addrspace(1) constant i32
+
+define fastcc void @main() {
+entry:
+  %inVc = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1025, i32 -1, i32 513), !gla.input !3
+  store <4 x float> %inVc, <4 x float>* @inVc_shadow
+  %0 = load <4 x float>* @inVc_shadow
+  %inVs = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1026, i32 -1, i32 1), !gla.input !5
+  store <4 x float> %inVs, <4 x float>* @inVs_shadow
+  %1 = load <4 x float>* @inVs_shadow
+  %2 = fadd <4 x float> %0, %1
+  %inVf = call <4 x float> @llvm.gla.fReadData.v4f32(i32 1027, i32 -1), !gla.input !7
+  store <4 x float> %inVf, <4 x float>* @inVf_shadow
+  %3 = load <4 x float>* @inVf_shadow
+  %4 = fadd <4 x float> %2, %3
+  %inVn = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1028, i32 -1, i32 2), !gla.input !9
+  store <4 x float> %inVn, <4 x float>* @inVn_shadow
+  %5 = load <4 x float>* @inVn_shadow
+  %6 = fadd <4 x float> %4, %5
+  %inVcn = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1029, i32 -1, i32 514), !gla.input !11
+  store <4 x float> %inVcn, <4 x float>* @inVcn_shadow
+  %7 = load <4 x float>* @inVcn_shadow
+  %outVi_shadow = fadd <4 x float> %6, %7
+  store <4 x float> %outVi_shadow, <4 x float>* @outVi_shadow
+  br label %stage-epilogue
+
+stage-epilogue:                                   ; preds = %entry
+  %8 = load <4 x float>* @outVi_shadow
+  call void @llvm.gla.fWriteData.v4f32(i32 1024, i32 -1, <4 x float> %8), !gla.output !1
+  br label %stage-exit
+
+stage-exit:                                       ; preds = %stage-epilogue
+  ret void
+}
+
+declare <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32, i32, i32) nounwind readnone
+
+declare <4 x float> @llvm.gla.fReadData.v4f32(i32, i32) nounwind readonly
+
+declare void @llvm.gla.fWriteData.v4f32(i32, i32, <4 x float>) nounwind
+
+!gla.entrypoint = !{!0}
+!gla.outputs = !{!1}
+!gla.invariant = !{!1}
+!gla.inputs = !{!3, !5, !7, !9, !11, !13}
+!gla.uniforms = !{!15, !17, !20, !23, !26, !29, !32}
+!gla.noStaticUse = !{!15, !13, !17, !20, !23, !26, !29, !32}
+
+!0 = metadata !{metadata !"main", i32 15}
+!1 = metadata !{metadata !"outVi", i32 7, <4 x float>* @outVi_shadow_typeProxy, metadata !2}
+!2 = metadata !{i32 0, i32 0, i32 1024, null, i32 0}
+!3 = metadata !{metadata !"inVc", i32 1, <4 x float>* @inVc_shadow_typeProxy, metadata !4}
+!4 = metadata !{i32 0, i32 0, i32 1025, null, i32 513}
+!5 = metadata !{metadata !"inVs", i32 1, <4 x float>* @inVs_shadow_typeProxy, metadata !6}
+!6 = metadata !{i32 0, i32 0, i32 1026, null, i32 1}
+!7 = metadata !{metadata !"inVf", i32 1, <4 x float>* @inVf_shadow_typeProxy, metadata !8}
+!8 = metadata !{i32 0, i32 0, i32 1027, null, i32 0}
+!9 = metadata !{metadata !"inVn", i32 1, <4 x float>* @inVn_shadow_typeProxy, metadata !10}
+!10 = metadata !{i32 0, i32 0, i32 1028, null, i32 2}
+!11 = metadata !{metadata !"inVcn", i32 1, <4 x float>* @inVcn_shadow_typeProxy, metadata !12}
+!12 = metadata !{i32 0, i32 0, i32 1029, null, i32 514}
+!13 = metadata !{metadata !"inV", i32 1, <4 x float>* @inV_shadow_typeProxy, metadata !14}
+!14 = metadata !{i32 0, i32 0, i32 1030, null, i32 257}
+!15 = metadata !{metadata !"buf", i32 12, <4 x float>* @buf_typeProxy, metadata !16}
+!16 = metadata !{i32 0, i32 0, i32 1024, null}
+!17 = metadata !{metadata !"imageVc", i32 12, i32* @imageVc_typeProxy, metadata !18}
+!18 = metadata !{i32 5, i32 0, i32 1024, metadata !19}
+!19 = metadata !{i32 1, i32* @imageVc_typeProxy, i32 1, i1 false, i1 false, i32 0}
+!20 = metadata !{metadata !"imageVv", i32 12, i32* @imageVv_typeProxy, metadata !21}
+!21 = metadata !{i32 5, i32 0, i32 1024, metadata !22}
+!22 = metadata !{i32 1, i32* @imageVv_typeProxy, i32 1, i1 false, i1 false, i32 0}
+!23 = metadata !{metadata !"imageVr", i32 12, i32* @imageVr_typeProxy, metadata !24}
+!24 = metadata !{i32 5, i32 0, i32 1024, metadata !25}
+!25 = metadata !{i32 1, i32* @imageVr_typeProxy, i32 1, i1 false, i1 false, i32 0}
+!26 = metadata !{metadata !"imageVro", i32 12, i32* @imageVro_typeProxy, metadata !27}
+!27 = metadata !{i32 5, i32 0, i32 1024, metadata !28}
+!28 = metadata !{i32 1, i32* @imageVro_typeProxy, i32 1, i1 false, i1 false, i32 0}
+!29 = metadata !{metadata !"imageVwo", i32 12, i32* @imageVwo_typeProxy, metadata !30}
+!30 = metadata !{i32 5, i32 0, i32 1024, metadata !31}
+!31 = metadata !{i32 1, i32* @imageVwo_typeProxy, i32 1, i1 false, i1 false, i32 0}
+!32 = metadata !{metadata !"imageVall", i32 12, i32* @imageVall_typeProxy, metadata !33}
+!33 = metadata !{i32 5, i32 0, i32 1024, metadata !34}
+!34 = metadata !{i32 1, i32* @imageVall_typeProxy, i32 1, i1 false, i1 false, i32 0}
+
+
+Bottom IR:
+; ModuleID = 'Top'
+
+define fastcc void @main() {
+entry:
+  %inVs = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1026, i32 -1, i32 1), !gla.input !5
+  %inVc = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1025, i32 -1, i32 513), !gla.input !3
+  %inVf = call <4 x float> @llvm.gla.fReadData.v4f32(i32 1027, i32 -1), !gla.input !7
+  %0 = fadd <4 x float> %inVs, %inVc
+  %inVn = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1028, i32 -1, i32 2), !gla.input !9
+  %1 = fadd <4 x float> %0, %inVf
+  %inVcn = call <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32 1029, i32 -1, i32 514), !gla.input !11
+  %2 = fadd <4 x float> %1, %inVn
+  %outVi_shadow = fadd <4 x float> %2, %inVcn
+  call void @llvm.gla.fWriteData.v4f32(i32 1024, i32 -1, <4 x float> %outVi_shadow), !gla.output !1
+  br label %stage-epilogue
+
+stage-epilogue:                                   ; preds = %entry
+  br label %stage-exit
+
+stage-exit:                                       ; preds = %stage-epilogue
+  ret void
+}
+
+declare <4 x float> @llvm.gla.fReadInterpolant.v4f32(i32, i32, i32) nounwind readnone
+
+declare <4 x float> @llvm.gla.fReadData.v4f32(i32, i32) nounwind readonly
+
+declare void @llvm.gla.fWriteData.v4f32(i32, i32, <4 x float>) nounwind
+
+!gla.entrypoint = !{!0}
+!gla.outputs = !{!1}
+!gla.invariant = !{!1}
+!gla.inputs = !{!3, !5, !7, !9, !11, !13}
+!gla.uniforms = !{!15, !17, !20, !23, !26, !29, !32}
+!gla.noStaticUse = !{!15, !13, !17, !20, !23, !26, !29, !32}
+
+!0 = metadata !{metadata !"main", i32 15}
+!1 = metadata !{metadata !"outVi", i32 7, <4 x float>* @outVi_shadow_typeProxy, metadata !2}
+!2 = metadata !{i32 0, i32 0, i32 1024, null, i32 0}
+!3 = metadata !{metadata !"inVc", i32 1, <4 x float>* @inVc_shadow_typeProxy, metadata !4}
+!4 = metadata !{i32 0, i32 0, i32 1025, null, i32 513}
+!5 = metadata !{metadata !"inVs", i32 1, <4 x float>* @inVs_shadow_typeProxy, metadata !6}
+!6 = metadata !{i32 0, i32 0, i32 1026, null, i32 1}
+!7 = metadata !{metadata !"inVf", i32 1, <4 x float>* @inVf_shadow_typeProxy, metadata !8}
+!8 = metadata !{i32 0, i32 0, i32 1027, null, i32 0}
+!9 = metadata !{metadata !"inVn", i32 1, <4 x float>* @inVn_shadow_typeProxy, metadata !10}
+!10 = metadata !{i32 0, i32 0, i32 1028, null, i32 2}
+!11 = metadata !{metadata !"inVcn", i32 1, <4 x float>* @inVcn_shadow_typeProxy, metadata !12}
+!12 = metadata !{i32 0, i32 0, i32 1029, null, i32 514}
+!13 = metadata !{metadata !"inV", i32 1, <4 x float>* @inV_shadow_typeProxy, metadata !14}
+!14 = metadata !{i32 0, i32 0, i32 1030, null, i32 257}
+!15 = metadata !{metadata !"buf", i32 12, <4 x float>* @buf_typeProxy, metadata !16}
+!16 = metadata !{i32 0, i32 0, i32 1024, null}
+!17 = metadata !{metadata !"imageVc", i32 12, i32* @imageVc_typeProxy, metadata !18}
+!18 = metadata !{i32 5, i32 0, i32 1024, metadata !19}
+!19 = metadata !{i32 1, i32* @imageVc_typeProxy, i32 1, i1 false, i1 false, i32 0}
+!20 = metadata !{metadata !"imageVv", i32 12, i32* @imageVv_typeProxy, metadata !21}
+!21 = metadata !{i32 5, i32 0, i32 1024, metadata !22}
+!22 = metadata !{i32 1, i32* @imageVv_typeProxy, i32 1, i1 false, i1 false, i32 0}
+!23 = metadata !{metadata !"imageVr", i32 12, i32* @imageVr_typeProxy, metadata !24}
+!24 = metadata !{i32 5, i32 0, i32 1024, metadata !25}
+!25 = metadata !{i32 1, i32* @imageVr_typeProxy, i32 1, i1 false, i1 false, i32 0}
+!26 = metadata !{metadata !"imageVro", i32 12, i32* @imageVro_typeProxy, metadata !27}
+!27 = metadata !{i32 5, i32 0, i32 1024, metadata !28}
+!28 = metadata !{i32 1, i32* @imageVro_typeProxy, i32 1, i1 false, i1 false, i32 0}
+!29 = metadata !{metadata !"imageVwo", i32 12, i32* @imageVwo_typeProxy, metadata !30}
+!30 = metadata !{i32 5, i32 0, i32 1024, metadata !31}
+!31 = metadata !{i32 1, i32* @imageVwo_typeProxy, i32 1, i1 false, i1 false, i32 0}
+!32 = metadata !{metadata !"imageVall", i32 12, i32* @imageVall_typeProxy, metadata !33}
+!33 = metadata !{i32 5, i32 0, i32 1024, metadata !34}
+!34 = metadata !{i32 1, i32* @imageVall_typeProxy, i32 1, i1 false, i1 false, i32 0}
+#### BEGIN COMPILER 0 INFO LOG ####
+Warning, version 430 is not yet complete; some version-specific features are present, but many are missing.
+#### END COMPILER 0 INFO LOG ####
+#### BEGIN LINKER INFO LOG ####
+#### END LINKER INFO LOG ####
+#version 430 core
+// LunarGOO output (r722)
+uniform vec4 buf;
+uniform image2D imageVc;
+uniform image2D imageVv;
+uniform image2D imageVr;
+uniform image2D imageVro;
+uniform image2D imageVwo;
+uniform image2D imageVall;
+centroid in vec4 inVc;
+in vec4 inVs;
+flat in vec4 inVf;
+noperspective in vec4 inVn;
+centroid noperspective in vec4 inVcn;
+sample in vec4 inV;
+out vec4 outVi;
+
+void main()
+{
+    vec4 temp21 = inVs + inVc;
+    vec4 temp22 = temp21 + inVf;
+    vec4 temp23 = temp22 + inVn;
+    vec4 outVi_shadow = temp23 + inVcn;
+    outVi = outVi_shadow;
+    
+}
+
+#### BEGIN COMPILER 0 INFO LOG ####
+Warning, version 430 is not yet complete; some version-specific features are present, but many are missing.
+#### END COMPILER 0 INFO LOG ####
+#### BEGIN LINKER INFO LOG ####
+#### END LINKER INFO LOG ####
+#version 430 core
+// LunarGOO output (r722)
+uniform vec4 buf;
+uniform image2D imageVc;
+uniform image2D imageVv;
+uniform image2D imageVr;
+uniform image2D imageVro;
+uniform image2D imageVwo;
+uniform image2D imageVall;
+in vec4 inVs;
+centroid in vec4 inVc;
+flat in vec4 inVf;
+noperspective in vec4 inVn;
+centroid noperspective in vec4 inVcn;
+sample in vec4 inV;
+out vec4 outVi;
+
+void main()
+{
+    vec4 temp211 = inVc + inVs;
+    vec4 temp222 = temp211 + inVf;
+    vec4 temp233 = temp222 + inVn;
+    vec4 outVi_shadow4 = temp233 + inVcn;
+    outVi = outVi_shadow4;
+    
+}
+
