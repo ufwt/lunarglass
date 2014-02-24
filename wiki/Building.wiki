@@ -1,7 +1,7 @@
 #summary Instructions for Building LunarGLASS
 #labels Phase-Implementation
 
-The following are for building with LLVM 3.2 and the glslang front end. 
+The following are for building with LLVM 3.4 and the glslang front end. 
 It makes a standalone compiler stack, not integrated with a driver, that reads shader files and outputs textual translations. 
 
 == Getting the Code ==
@@ -20,14 +20,14 @@ cd glslang
 svn checkout https://cvs.khronos.org/svn/repos/ogl/trunk/ecosystem/public/sdk/tools/glslang .
 }}}
 
-  # To get LLVM, download LLVM 3.2 source code from [http://llvm.org/releases/download.html#3.2 LLVM 3.2] and extract it into your "LunarGLASS/Core/LLVM" directory, leaving it in the directory "LunarGLASS/Core/LLVM/llvm-3.2.src".  For example:
+  # To get LLVM, download LLVM 3.4 source code from [http://llvm.org/releases/download.html#3.4 LLVM 3.4] and extract it into your "LunarGLASS/Core/LLVM" directory, leaving it in the directory "LunarGLASS/Core/LLVM/llvm-3.4".  For example:
 {{{
 cd LunarGLASS
 mkdir -p Core/LLVM
 cd Core/LLVM
-wget http://llvm.org/releases/3.2/llvm-3.2.src.tar.gz
-gunzip llvm-3.2.src.tar.gz
-tar -xf llvm-3.2.src.tar
+wget http://llvm.org/releases/3.4/llvm-3.4.src.tar.gz
+gunzip llvm-3.4.src.tar.gz
+tar -xf llvm-3.4.src.tar
 }}}
   # To get LunarGLASS, you will need SVN commands or an SVN client like Tortoise.  Use your SVN client to check out from google's code site //lunarglass.googlecode.com/svn/trunk to your directory "LunarGLASS". This got most the files, but did not yet replace files that need to be replace.  To do that, you must revert all files at the LunarGLASS level.  In Tortoise, right click LunarGLASS|Tortoise SVN|Revert...  Select all files and revert. If you are using SVN from the command line, these steps look like:
 {{{
@@ -54,17 +54,17 @@ cd glslang
 ./BuildLinux.sh
 }}}
    which will also run a quick test to emit textual AST to verify it worked.
-  # Build LLVM 3.2 (with LunarGLASS modifications)
+  # Build LLVM 3.4 (with LunarGLASS modifications)
 {{{
 # first time only
-cd LunarGLASS/Core/LLVM/llvm-3.2.src
+cd LunarGLASS/Core/LLVM/llvm-3.4.src
 mkdir build
 cd build
 ../configure
 }}}
 {{{
 # build or rebuild
-cd LunarGLASS/Core/LLVM/llvm-3.2.src/build
+cd LunarGLASS/Core/LLVM/llvm-3.4/build
 make -j 8
 make install DESTDIR=`pwd`/install
 }}}
@@ -88,14 +88,14 @@ This uses Microsoft Visual Studio 2012. However, it should trivially work on ver
 For LLVM, create a visual studio solution that creates all the libs and headers:
 
   # Install version 2.7x of Python (version 3 causes a CMake error).  Get it from http://www.python.org/download/releases/2.7.6/.
-  # Download and install CMake for Windows.  We used version 2.8.10.2 to get support for VS 2012.  Get CMake at http://www.cmake.org/cmake/resources/software.html.
-  # Put the full path to your LunarGLASS\Core\LLVM\llvm-3.2.src location in "Where is the source code:" and add "\build" to it (LunarGLASS\Core\LLVM\llvm-3.2.src\build) in "Where to build the binaries:"
+  # Run CMake 2.8.  Get CMake at http://www.cmake.org/cmake/resources/software.html.
+  # Put the full path to your LunarGLASS\Core\LLVM\llvm-3.4 location in "Where is the source code:" and add "\build" to it (LunarGLASS\Core\LLVM\llvm-3.4\build) in "Where to build the binaries:"
   # Press "Configure" button in CMake and say yes to create the build directory.
   # Select Visual Studio 11 (2012) and "Use default native compilers" and "Finish".
   # Change CMAKE_INSTALL_PREFIX to "install" (no path).
   # Press "Configure" again.
   # Press "Generate" button in CMake.
-  # Open the LLVM.sln just created in llvm-3.2.src\build and build the INSTALL project (not the whole solution, just the INSTALL project, for "Debug Win32").  This step takes a while.
+  # Open the LLVM.sln just created in llvm-3.4\build and build the INSTALL project (not the whole solution, just the INSTALL project, for "Debug Win32").  This step takes a while.
 
 For the glslang library used by LunarGLASS
 
