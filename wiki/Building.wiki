@@ -19,7 +19,6 @@ Overview:  The glslang front end and LunarGLASS are two separate projects from t
 cd glslang
 svn checkout https://cvs.khronos.org/svn/repos/ogl/trunk/ecosystem/public/sdk/tools/glslang .
 }}}
-
   # To get LLVM, download LLVM 3.4 source code from [http://llvm.org/releases/download.html#3.4 LLVM 3.4] and extract it into your "LunarGLASS/Core/LLVM" directory, leaving it in the directory "LunarGLASS/Core/LLVM/llvm-3.4".  For example:
 {{{
 cd LunarGLASS
