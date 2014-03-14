@@ -87,7 +87,7 @@ make install
 }}}
     This leaves the command-line executable in build/install/bin/LunarGOO.exe.  This procedure is also captured in the script
 {{{
-cd glslang
+cd LunarGLASS
 ./SetupLinux.sh
 }}}
     which will also run a quick test to emit GLSL to verify it worked (translated GLSL to GLSL).
