@@ -25,7 +25,7 @@ cd LunarGLASS
 mkdir -p Core/LLVM
 cd Core/LLVM
 wget http://llvm.org/releases/3.4/llvm-3.4.src.tar.gz
-tar --gzip -xf llvm-3.4.src.tar
+tar --gzip -xf llvm-3.4.src.tar.gz
 }}}
   # To get LunarGLASS, you will need SVN commands or an SVN client like Tortoise.  Use your SVN client to check out from google's code site //lunarglass.googlecode.com/svn/trunk to your directory "LunarGLASS". This got most the files, but did not yet replace files that need to be replace.  To do that, you must revert all files at the LunarGLASS level.  In Tortoise, right click LunarGLASS|Tortoise SVN|Revert...  Select all files and revert. If you are using SVN from the command line, these steps look like:
 {{{
