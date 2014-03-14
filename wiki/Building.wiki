@@ -25,8 +25,7 @@ cd LunarGLASS
 mkdir -p Core/LLVM
 cd Core/LLVM
 wget http://llvm.org/releases/3.4/llvm-3.4.src.tar.gz
-gunzip llvm-3.4.src.tar.gz
-tar -xf llvm-3.4.src.tar
+tar --gzip -xf llvm-3.4.src.tar
 }}}
   # To get LunarGLASS, you will need SVN commands or an SVN client like Tortoise.  Use your SVN client to check out from google's code site //lunarglass.googlecode.com/svn/trunk to your directory "LunarGLASS". This got most the files, but did not yet replace files that need to be replace.  To do that, you must revert all files at the LunarGLASS level.  In Tortoise, right click LunarGLASS|Tortoise SVN|Revert...  Select all files and revert. If you are using SVN from the command line, these steps look like:
 {{{
@@ -38,21 +37,30 @@ svn revert --depth=infinity .
 
 == Build instructions for Linux ==
 
+Summary:  LLVM uses a configure script while glslang and LunarGLASS use CMake. All three locate the build in a "build" subdirectory and the final results in their respective build/install.
+
+You need bison to build glslang, and bison version 2.7 is the fully tested version, though other versions are likely to work as well.
+
   # Install build dependencies
 {{{
 sudo apt-get install build-essential libffi-dev flex bison
 }}}
-  # Build glslang directly using the Standalone Makefile 
-{{{
-cd glslang/StandAlone
-make
-}}}  
-   or by using the higher-level script
+  # Build glslang: Change to your glslang directory, set up CMake, and build:
 {{{
 cd glslang
-./BuildLinux.sh
+mkdir build
+cd build
+cmake ..
+cmake .. # run twice to get install directory correctly set
+make
+make install
 }}}
-   which will also run a quick test to emit textual AST to verify it worked.
+    This leaves the command-line executable in the build/install/bin/glslangValidator.exe, and libraries for LunarGLASS in build/install/lib.  This procedure is also captured in the script
+{{{
+cd glslang
+./BuildLinuxCMake.sh
+}}}
+    which will also run a quick test to emit textual AST to verify it worked.
   # Build LLVM 3.4 (with LunarGLASS modifications)
 {{{
 # first time only
@@ -67,51 +75,67 @@ cd LunarGLASS/Core/LLVM/llvm-3.4/build
 make -j 8
 make install DESTDIR=`pwd`/install
 }}}
-  # Build LunarGLASS
+  # Build LunarGOO: Change to your directory for LunarGLASS, set up CMake, and build
 {{{
-cd LunarGLASS/Build
+cd LunarGLASS
+mkdir build
+cd build
+cmake ..
+cmake .. # run twice to get install directory correctly set
 make
+make install
 }}}
-   This step also copied the resulting executable 'glslang' to the test directory.
-  # You can execute the complete LunarGLASS stack on a test in the test directory by
+    This leaves the command-line executable in build/install/bin/LunarGOO.exe.  This procedure is also captured in the script
 {{{
-cd LunarGLASS/test
-chmod +x ./runglslang
-./glslang test.frag
+cd glslang
+./BuildLinuxCMake.sh
 }}}
+    which will also run a quick test to emit GLSL to verify it worked (translated GLSL to GLSL).
 
 == Build instructions for Windows ==
 
-This uses Microsoft Visual Studio 2012. However, it should trivially work on version 10 as well.
+Summary:  LLVM, glslang, and LunarGLASS all use CMake to generate Visual Studio solutions, with the build located in a "build" subdirectory (for each of the three) and the final results in build/install.
 
-For LLVM, create a visual studio solution that creates all the libs and headers:
+For all three components:
 
   # Install version 2.7x of Python (version 3 causes a CMake error).  Get it from http://www.python.org/download/releases/2.7.6/.
-  # Run CMake 2.8.  Get CMake at http://www.cmake.org/cmake/resources/software.html.
-  # Put the full path to your LunarGLASS\Core\LLVM\llvm-3.4 location in "Where is the source code:" and add "\build" to it (LunarGLASS\Core\LLVM\llvm-3.4\build) in "Where to build the binaries:"
+  # Use CMake 2.8.  Get CMake at http://www.cmake.org/cmake/resources/software.html.
+
+To build LLVM:
+
+Get it from http://www.python.org/download/releases/2.7.6/.
+  # Run CMake.
+  # Put the full path to your LunarGLASS/Core/LLVM/llvm-3.4 location in "Where is the source code:" and add "/build" to it (LunarGLASS/Core/LLVM/llvm-3.4/build) in "Where to build the binaries:"
   # Press "Configure" button in CMake and say yes to create the build directory.
-  # Select Visual Studio 11 (2012) and "Use default native compilers" and "Finish".
+  # Select your Visual Studio and "Use default native compilers" and "Finish".
   # Change CMAKE_INSTALL_PREFIX to "install" (no path).
   # Press "Configure" again.
   # Press "Generate" button in CMake.
-  # Open the LLVM.sln just created in llvm-3.4\build and build the INSTALL project (not the whole solution, just the INSTALL project, for "Debug Win32").  This step takes a while.
+  # Open the LLVM.sln just created in llvm-3.4/build and build the INSTALL project (not the whole solution, just the INSTALL project, for "Debug Win32").  This step takes a while.
 
-For the glslang library used by LunarGLASS
+For glslang:
 
-  # Open "glslang\standalone.sln".
-  # Select the "Debug CRT DLL" configuration.
-  # Build the glslang project (or the whole solution).
+  # Run CMake.
+  # Similarly for LLVM, run the source from your glslang directory, add "/build" for the binaries, and "install" for the install prefix, though that latter should happen automatically.
+  # After pressing "Configure", press "Generate" until the red goes away.
+  # Open the glslang.sln just created in "build" and build the INSTALL project.
 
-For LunarGLASS
+This leaves the command-line executable in build/install/bin/glslangValidator.exe, and libraries for LunarGLASS in 
+build/install/lib.
 
-  # Open "LunarGLASS\Build\LunarGLASS.sln".
-  # Select the "Debug" configuration.
-  # Build the "glslang" project.
+For LunarGLASS:
+
+  # Run CMake.
+  # Similarly for the others, run with source from your LunarGLASS directory, add "/build" for the binaries, and "install" for the install prefix, though that latter should happen automatically.
+  # After pressing "Configure", press "Generate" until the red goes away.
+  # Open the LunarGLASS.sln just created in "build" and build the INSTALL project.
+
+This leaves the command-line executable in build/install/bin/LunarGOO.exe.
 
 Here is an example of running the full stack:
 {{{
 cd LunarGLASS/test
-../Build/Debug/glslang.exe test.frag
+../build/install/bin/LunarGOO test.frag
 }}}
 
-There is also a "runglslang" script that runs the stack against a set of tests.
+There is also a "runtests" script that runs the stack against a set of tests.
