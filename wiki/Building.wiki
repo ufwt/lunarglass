@@ -58,7 +58,7 @@ make install
     This leaves the command-line executable in the build/install/bin/glslangValidator.exe, and libraries for LunarGLASS in build/install/lib.  This procedure is also captured in the script
 {{{
 cd glslang
-./BuildLinuxCMake.sh
+./SetupLinux.sh
 }}}
     which will also run a quick test to emit textual AST to verify it worked.
   # Build LLVM 3.4 (with LunarGLASS modifications)
@@ -88,7 +88,7 @@ make install
     This leaves the command-line executable in build/install/bin/LunarGOO.exe.  This procedure is also captured in the script
 {{{
 cd glslang
-./BuildLinuxCMake.sh
+./SetupLinux.sh
 }}}
     which will also run a quick test to emit GLSL to verify it worked (translated GLSL to GLSL).
 
